@@ -102,11 +102,11 @@ const WCApp = {
             const isHomeA = tA.homeAway === 'home';
             const isHomeB = tB.homeAway === 'home';
             const homeAbbr = isHomeA ? abbrA : abbrB;
-            const awayAbbr = isHomeB ? abbrB : abbrA;
+            const awayAbbr = isHomeA ? abbrB : abbrA;
             const homeTeamId = isHomeA ? tA.team?.id : tB.team?.id;
-            const awayTeamId = isHomeB ? tB.team?.id : tA.team?.id;
+            const awayTeamId = isHomeA ? tB.team?.id : tA.team?.id;
             const homeScore = parseInt(isHomeA ? (tA.score || '0') : (tB.score || '0'));
-            const awayScore = parseInt(isHomeB ? (tB.score || '0') : (tA.score || '0'));
+            const awayScore = parseInt(isHomeA ? (tB.score || '0') : (tA.score || '0'));
 
             // For upcoming matches, keep scores as null
             const finalStatus = this._mapESPNStatus(statusType);
@@ -228,7 +228,7 @@ const WCApp = {
       if (dayMatches[key2]) {
         // Swapped: ESPN has it away-home, flip scores
         const m = dayMatches[key2];
-        return { ...m, home: m.away, away: m.home, homeScore: m.awayScore, awayScore: m.homeScore };
+        return { ...m, home: m.away, away: m.home, homeScore: m.awayScore, awayScore: m.homeScore, homeTeamId: m.awayTeamId, awayTeamId: m.homeTeamId };
       }
     }
     return null;
