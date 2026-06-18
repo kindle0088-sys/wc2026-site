@@ -270,6 +270,11 @@ const WCApp = {
         }
       }
 
+      // Compute goal difference after all matches processed
+      for (const tCode of Object.keys(stats)) {
+        stats[tCode].gd = stats[tCode].gf - stats[tCode].ga;
+      }
+
       // Apply to teams
       for (const t of teams) {
         const s = stats[t.code];
