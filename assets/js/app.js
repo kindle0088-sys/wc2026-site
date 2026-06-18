@@ -103,6 +103,8 @@ const WCApp = {
             const isHomeB = tB.homeAway === 'home';
             const homeAbbr = isHomeA ? abbrA : abbrB;
             const awayAbbr = isHomeB ? abbrB : abbrA;
+            const homeTeamId = isHomeA ? tA.team?.id : tB.team?.id;
+            const awayTeamId = isHomeB ? tB.team?.id : tA.team?.id;
             const homeScore = parseInt(isHomeA ? (tA.score || '0') : (tB.score || '0'));
             const awayScore = parseInt(isHomeB ? (tB.score || '0') : (tA.score || '0'));
 
@@ -118,6 +120,7 @@ const WCApp = {
             const key = `${homeAbbr}-${awayAbbr}`;
             fullDateMap[date][key] = {
               home: homeAbbr, away: awayAbbr,
+              homeTeamId, awayTeamId,
               homeScore: finalHomeScore, awayScore: finalAwayScore,
               status, eventId: ev.id,
               hasDetails: comp.details && comp.details.length > 0,
@@ -149,6 +152,7 @@ const WCApp = {
         if (typeof WC_DATA !== 'undefined') {
           WC_DATA.groups = this.data.groups;
           WC_DATA.stats = this.data.stats;
+          WC_DATA.topScorers = this.data.topScorers;
         }
       }
       // Always update timestamps with ESPN fetch time
@@ -205,6 +209,8 @@ const WCApp = {
       // Recompute stats
       this._recomputeStats();
     }
+    // Always extract top scorers from ESPN details (even if no score change)
+    this._extractScorers();
 
     return changed;
   },
@@ -339,6 +345,69 @@ const WCApp = {
       homeWins,
       awayWins
     };
+  },
+
+  // === Top Scorers Extraction (from ESPN details) ===
+  _extractScorers() {
+    if (!this.espnStatus?.dateMap) return;
+    
+    // Build ESPN team ID → our team code mapping
+    const idToCode = {};
+    for (const date of Object.keys(this.espnStatus.dateMap)) {
+      for (const key of Object.keys(this.espnStatus.dateMap[date])) {
+        const m = this.espnStatus.dateMap[date][key];
+        if (m.home && m.homeTeamId) idToCode[m.homeTeamId] = m.home;
+        if (m.away && m.awayTeamId) idToCode[m.awayTeamId] = m.away;
+      }
+    }
+    if (Object.keys(idToCode).length === 0) return;
+
+    // Extract goals from ESPN details
+    const scorerMap = {};
+    for (const date of Object.keys(this.espnStatus.dateMap)) {
+      for (const key of Object.keys(this.espnStatus.dateMap[date])) {
+        const match = this.espnStatus.dateMap[date][key];
+        if (match.status !== 'completed' || !match.details?.length) continue;
+
+        for (const d of match.details) {
+          if (d.type?.id !== '70' && d.type?.id !== '94' && d.type?.id !== '137' && d.type?.id !== '95' && d.type?.id !== '98') continue;
+          // Goal type IDs: 70=Goal, 94=Yellow (skip), 137=Goal-Header, 95=Red (skip), 98=Penalty
+          if (d.type?.id === '94' || d.type?.id === '95') continue;
+          
+          const athletes = d.athletesInvolved || [];
+          const scorer = athletes[0];
+          if (!scorer?.displayName) continue;
+          
+          const name = scorer.displayName;
+          const teamId = scorer.team?.id;
+          const teamCode = idToCode[teamId] || '';
+          if (!name || !teamCode) continue;
+
+          if (!scorerMap[name]) {
+            scorerMap[name] = { name, teamCode, goals: 0, matches: new Set() };
+          }
+          scorerMap[name].goals++;
+          scorerMap[name].matches.add(match.eventId);
+        }
+      }
+    }
+
+    // Build sorted top scorers array
+    const scorers = Object.values(scorerMap)
+      .map(s => ({
+        rank: 0,
+        name: s.name,
+        team: this._getTeamName(s.teamCode) || s.teamCode,
+        flag: this._findTeam(s.teamCode)?.flag || '',
+        goals: s.goals,
+        assists: 0,
+        matches: s.matches.size
+      }))
+      .sort((a, b) => b.goals - a.goals)
+      .map((s, i) => ({ ...s, rank: i + 1 }))
+      .slice(0, 30); // Top 30
+
+    this.data.topScorers = scorers;
   },
 
   _getTeamName(code) {
