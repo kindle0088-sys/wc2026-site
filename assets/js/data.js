@@ -191,16 +191,16 @@ const WC_DATA = {
       teams: [
         { code: 'POR', name: 'Portugal', flag: '🇵🇹', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1, status: 'qualifying' },
         { code: 'COD', name: 'DR Congo', flag: '🇨🇩', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1, status: 'qualifying' },
-        { code: 'UZB', name: 'Uzbekistan', flag: '🇺🇿', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0, status: 'qualifying' },
-        { code: 'COL', name: 'Colombia', flag: '🇨🇴', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0, status: 'qualifying' }
+        { code: 'UZB', name: 'Uzbekistan', flag: '🇺🇿', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 3, gd: -2, pts: 0, status: 'qualifying' },
+        { code: 'COL', name: 'Colombia', flag: '🇨🇴', played: 1, won: 1, drawn: 0, lost: 0, gf: 3, ga: 1, gd: 2, pts: 3, status: 'qualifying' }
       ],
       matches: [
-        { round: 1, date: 'Jun 17', home: 'POR', away: 'UZB', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Seattle' },
-        { round: 1, date: 'Jun 17', home: 'COD', away: 'COL', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Houston' },
-        { round: 2, date: 'Jun 23', home: 'POR', away: 'COD', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Monterrey' },
-        { round: 2, date: 'Jun 23', home: 'COL', away: 'UZB', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Dallas' },
+        { round: 1, date: 'Jun 17', home: 'POR', away: 'COD', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Seattle' },
+        { round: 1, date: 'Jun 17', home: 'UZB', away: 'COL', homeScore: 1, awayScore: 3, status: 'completed', venue: 'Houston' },
+        { round: 2, date: 'Jun 23', home: 'POR', away: 'UZB', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Monterrey' },
+        { round: 2, date: 'Jun 23', home: 'COL', away: 'COD', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Dallas' },
         { round: 3, date: 'Jun 27', home: 'COL', away: 'POR', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Dallas' },
-        { round: 3, date: 'Jun 27', home: 'UZB', away: 'COD', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Monterrey' }
+        { round: 3, date: 'Jun 27', home: 'COD', away: 'UZB', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Monterrey' }
       ]
     },
     L: {
@@ -208,16 +208,16 @@ const WC_DATA = {
       teams: [
         { code: 'ENG', name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', played: 1, won: 1, drawn: 0, lost: 0, gf: 4, ga: 2, gd: 2, pts: 3, status: 'qualifying' },
         { code: 'CRO', name: 'Croatia', flag: '🇭🇷', played: 1, won: 0, drawn: 0, lost: 1, gf: 2, ga: 4, gd: -2, pts: 0, status: 'qualifying' },
-        { code: 'GHA', name: 'Ghana', flag: '🇬🇭', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0, status: 'qualifying' },
-        { code: 'PAN', name: 'Panama', flag: '🇵🇦', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0, status: 'qualifying' }
+        { code: 'GHA', name: 'Ghana', flag: '🇬🇭', played: 1, won: 1, drawn: 0, lost: 0, gf: 1, ga: 0, gd: 1, pts: 3, status: 'qualifying' },
+        { code: 'PAN', name: 'Panama', flag: '🇵🇦', played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 1, gd: -1, pts: 0, status: 'qualifying' }
       ],
       matches: [
-        { round: 1, date: 'Jun 17', home: 'ENG', away: 'GHA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Monterrey' },
-        { round: 1, date: 'Jun 17', home: 'CRO', away: 'PAN', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Atlanta' },
-        { round: 2, date: 'Jun 23', home: 'ENG', away: 'CRO', homeScore: 4, awayScore: 2, status: 'completed', venue: 'Miami' },
-        { round: 2, date: 'Jun 23', home: 'PAN', away: 'GHA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Orlando' },
-        { round: 3, date: 'Jun 27', home: 'PAN', away: 'ENG', homeScore: null, awayScore: null, status: 'upcoming', venue: 'NY/NJ' },
-        { round: 3, date: 'Jun 27', home: 'GHA', away: 'CRO', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Miami' }
+        { round: 1, date: 'Jun 17', home: 'ENG', away: 'CRO', homeScore: 4, awayScore: 2, status: 'completed', venue: 'Monterrey' },
+        { round: 1, date: 'Jun 17', home: 'GHA', away: 'PAN', homeScore: 1, awayScore: 0, status: 'completed', venue: 'Atlanta' },
+        { round: 2, date: 'Jun 23', home: 'ENG', away: 'GHA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Miami' },
+        { round: 2, date: 'Jun 23', home: 'PAN', away: 'CRO', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Orlando' },
+        { round: 3, date: 'Jun 27', home: 'CRO', away: 'GHA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Miami' },
+        { round: 3, date: 'Jun 27', home: 'PAN', away: 'ENG', homeScore: null, awayScore: null, status: 'upcoming', venue: 'NY/NJ' }
       ]
     }
   },
