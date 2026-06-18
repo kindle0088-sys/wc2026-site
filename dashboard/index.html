@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据看板 · 2026 世界杯</title>
+  <meta name="description" content="2026 世界杯数据看板 — 积分榜、射手榜、精彩看点、出线形势">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .dashboard {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1rem 2rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent-gold);
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: 0.25rem;
+      margin: 1rem 0 1.5rem;
+      background: var(--bg-secondary);
+      padding: 0.25rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .tab-btn.active {
+      background: var(--accent-gold);
+      color: #000;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Advancement probability cards */
+    .adv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+
+    .adv-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+
+    .adv-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .adv-card-header h3 {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .adv-team-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.85rem;
+    }
+
+    .adv-team-row:last-child {
+      border-bottom: none;
+    }
+
+    .adv-team-flag {
+      font-size: 1.2rem;
+      width: 1.5rem;
+      text-align: center;
+    }
+
+    .adv-team-name {
+      flex: 1;
+      font-weight: 600;
+    }
+
+    .adv-team-pts {
+      color: var(--accent-gold);
+      font-weight: 700;
+      min-width: 2rem;
+      text-align: center;
+    }
+
+    .adv-team-bar-wrap {
+      flex: 0 0 80px;
+      height: 12px;
+      background: var(--bg-secondary);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .adv-team-bar {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    .adv-team-bar.high { background: linear-gradient(90deg, var(--accent-green), #4ade80); }
+    .adv-team-bar.medium { background: linear-gradient(90deg, var(--accent-gold), #facc15); }
+    .adv-team-bar.low { background: linear-gradient(90deg, var(--accent-red), #f87171); }
+
+    .adv-team-pct {
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-width: 2.5rem;
+      text-align: right;
+    }
+
+    /* Player detail popover */
+    .player-popover {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      padding: 2rem 1rem;
+      overflow-y: auto;
+    }
+
+    .player-popover.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .player-popover-card {
+      background: var(--bg-card);
+      border: 1px solid var(--accent-gold);
+      border-radius: var(--radius);
+      max-width: 480px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .player-popover-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .adv-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="../" class="nav-brand">
+        <span class="trophy">🏆</span>
+        <span>WC 2026</span>
+        <span class="sub">· 赛事中心</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="../matches/">📋 赛事信息</a></li>
+        <li><a href="../dashboard/" class="active">📊 数据看板</a></li>
+        <li><a href="../news/">📰 资讯博客</a></li>
+        <li><a href="../teams/">🏟️ 球队</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>📊 数据看板</h1>
+    <p class="subtitle">2026 美加墨世界杯 · 实时数据总览</p>
+  </div>
+
+  <div class="dashboard">
+
+    <!-- Stats Bar -->
+    <div id="stats-bar" class="stats-bar"></div>
+
+    <!-- Highlights -->
+    <h2 class="section-title">🔥 精彩看点</h2>
+    <div id="highlights" class="highlights-grid"></div>
+
+    <!-- Tab: Scorers / Advancement -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="tab-scorers">⚽ 射手榜</button>
+      <button class="tab-btn" data-tab="tab-advancement">📈 出线形势</button>
+    </div>
+
+    <div class="tab-wrapper">
+      <div id="tab-scorers" class="tab-content active">
+        <div id="top-scorers"></div>
+      </div>
+      <div id="tab-advancement" class="tab-content">
+        <div id="advancement-section"></div>
+      </div>
+    </div>
+
+    <!-- All Groups -->
+    <h2 class="section-title">📊 全部小组积分总览</h2>
+    <div id="all-groups-table"></div>
+  </div>
+
+  <footer class="site-footer">
+    <p>⚽ 2026 FIFA World Cup · Unofficial Fan Site</p>
+    <p class="update-note">Data updated June 18, 2026 · Group stage in progress</p>
+  </footer>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof WC_DATA === 'undefined') return;
+
+      // ===== Tab System for dashboard =====
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.dataset.tab;
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          document.getElementById(target)?.classList.add('active');
+          if (target === 'tab-advancement') renderAdvancement();
+        });
+      });
+
+      // ===== Advancement Probability =====
+      function renderAdvancement() {
+        const container = document.getElementById('advancement-section');
+        if (!container) return;
+
+        const groups = WC_DATA.groups;
+        let html = '<div class="adv-grid">';
+
+        Object.entries(groups).forEach(([key, group]) => {
+          const maxPtsPossible = 9; // 3 matches, 3 pts each
+          const teams = group.teams.map(t => {
+            const remaining = 3 - t.played;
+            const maxPts = t.pts + remaining * 3;
+
+            // Simple probability based on current pts and remaining matches
+            let prob;
+            const totalTeams = 4;
+            const maxPtsOthers = Math.max(...group.teams.filter(x => x.code !== t.code).map(x => x.pts + (3 - x.played) * 3));
+
+            if (t.played === 3) {
+              // All matches played
+              const sorted = [...group.teams].sort((a, b) => b.pts - a.pts || b.gd - a.gd);
+              const rank = sorted.findIndex(x => x.code === t.code);
+              prob = rank < 2 ? 100 : 0;
+            } else if (t.pts === 0 && remaining === 0) {
+              prob = t.gd > 0 ? 5 : 0;
+            } else {
+              if (maxPts > maxPtsOthers) prob = 85;
+              else if (maxPts === maxPtsOthers) prob = 50;
+              else {
+                const gap = maxPtsOthers - maxPts;
+                prob = Math.max(0, 50 - gap * 20);
+              }
+              // Clamp
+              prob = Math.max(2, Math.min(98, prob));
+            }
+
+            let barClass = prob >= 70 ? 'high' : prob >= 30 ? 'medium' : 'low';
+            return { ...t, prob, barClass, maxPts, remaining };
+          });
+
+          // Sort by probability descending
+          teams.sort((a, b) => b.prob - a.prob);
+
+          html += `
+            <div class="adv-card">
+              <div class="adv-card-header">
+                <h3>${group.name}</h3>
+                <span style="font-size:0.8rem;color:var(--text-muted)">${teams[0].prob >= 70 ? '🔒' : teams[0].prob >= 40 ? '⚔️' : '🔮'} 预测</span>
+              </div>
+              ${teams.map(t => `
+                <div class="adv-team-row">
+                  <span class="adv-team-flag">${t.flag || ''}</span>
+                  <span class="adv-team-name">${t.name}</span>
+                  <span class="adv-team-pts">${t.pts}p</span>
+                  <div class="adv-team-bar-wrap">
+                    <div class="adv-team-bar ${t.barClass}" style="width:${t.prob}%"></div>
+                  </div>
+                  <span class="adv-team-pct" style="color:${t.prob >= 70 ? 'var(--accent-green)' : t.prob >= 30 ? 'var(--accent-gold)' : 'var(--accent-red)'}">${t.prob}%</span>
+                </div>
+              `).join('')}
+            </div>`;
+        });
+
+        html += '</div>';
+        html += `
+          <div style="margin-top:1rem;padding:1rem;background:var(--bg-secondary);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-secondary);line-height:1.8">
+            <strong>📌 出线概率说明</strong><br>
+            基于当前积分 + 剩余赛程理论最高分 + 小组形势综合估算，仅供参考。<br>
+            🟢 ≥70% 优势明显 · 🟡 30-70% 形势激烈 · 🔴 &lt;30% 需要奇迹
+          </div>`;
+
+        container.innerHTML = html;
+      }
+
+      // ===== Initialize dashboard stats (from app.js) =====
+      // renderDashboardStats, renderTopScorers, renderHighlights, renderAllGroupsTable
+      // are already called by app.js DOMContentLoaded
+
+      // But since app.js loaded before our inline script, we need to
+      // also render advancement on initial load
+      renderAdvancement();
+    });
+  </script>
+
+</body>
+</html>

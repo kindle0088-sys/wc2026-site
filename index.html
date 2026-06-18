@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 世界杯 · 赛事中心</title>
+  <meta name="description" content="2026 FIFA World Cup — 赛程、比分、数据看板。48 队 · 104 场 · 16 城">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Landing page specific styles */
+    .hero {
+      max-width: 1400px;
+      margin: 3rem auto 2rem;
+      padding: 3rem 2rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.02));
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: var(--radius);
+    }
+
+    .hero .emblem {
+      font-size: 4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero .hosts {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero .meta-info {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .hero .meta-info span {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* Module cards */
+    .modules {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .module-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .module-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .module-card .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .module-card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .module-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .module-card .btn {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      background: rgba(245,158,11,0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(245,158,11,0.3);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .module-card .btn:hover {
+      background: rgba(245,158,11,0.25);
+      border-color: var(--accent-gold);
+    }
+
+    /* Quick stats on landing */
+    .quick-stats {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.8rem; }
+      .hero .emblem { font-size: 3rem; }
+      .hero { padding: 2rem 1rem; margin-top: 1rem; }
+      .hero .meta-info { gap: 1rem; font-size: 0.8rem; }
+      .modules { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-brand">
+        <span class="trophy">🏆</span>
+        <span>WC 2026</span>
+        <span class="sub">· 赛事中心</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+      <ul class="nav-links">
+              <li><a href="matches/">📋 赛事信息</a></li>
+              <li><a href="dashboard/">📊 数据看板</a></li>
+              <li><a href="news/">📰 资讯博客</a></li>
+              <li><a href="teams/">🏟️ 球队</a></li>
+            </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="emblem">🌎</div>
+    <h1>2026 FIFA World Cup</h1>
+    <p class="hosts">🇨🇦 Canada · 🇲🇽 Mexico · 🇺🇸 United States</p>
+    <div class="meta-info">
+      <span>🏟️ 16 Host Cities</span>
+      <span>👥 48 Teams</span>
+      <span>⚽ 104 Matches</span>
+      <span>📅 Jun 11 – Jul 19</span>
+    </div>
+  </section>
+
+  <section class="modules">
+    <a href="matches/" class="module-card">
+      <div class="icon">📋</div>
+      <h2>赛事信息</h2>
+      <p>小组赛看板模式 · 淘汰赛树形图<br>实时比分 · 赛程安排</p>
+      <span class="btn">进入赛事信息 →</span>
+    </a>
+
+    <a href="dashboard/" class="module-card">
+      <div class="icon">📊</div>
+      <h2>数据看板</h2>
+      <p>积分总览 · 射手榜 · 精彩看点<br>各小组横向对比</p>
+      <span class="btn">进入数据看板 →</span>
+    </a>
+
+    <a href="news/" class="module-card">
+      <div class="icon">📰</div>
+      <h2>资讯博客</h2>
+      <p>AI 自动战报 · 深度分析<br>数据解读 · 每日更新</p>
+      <span class="btn">阅读最新文章 →</span>
+    </a>
+
+    <a href="teams/" class="module-card">
+      <div class="icon">🏟️</div>
+      <h2>球队数据</h2>
+      <p>48 支球队详情 · 赛程<br>战绩走势 · 积分排名</p>
+      <span class="btn">查看球队 →</span>
+    </a>
+  </section>
+
+  <!-- Quick stats from data -->
+  <section class="quick-stats">
+    <div id="stats-bar" class="stats-bar"></div>
+  </section>
+
+  <footer class="site-footer">
+    <p>⚽ 2026 FIFA World Cup · Unofficial Fan Site</p>
+    <p class="update-note">Data updated June 18, 2026 · Group stage in progress</p>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

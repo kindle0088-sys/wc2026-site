@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>资讯博客 · 2026 世界杯</title>
+  <meta name="description" content="2026 世界杯资讯博客 — 战报、深度分析、数据解读">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="../" class="nav-brand">
+        <span class="trophy">🏆</span>
+        <span>WC 2026</span>
+        <span class="sub">· 赛事中心</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="../matches/">📋 赛事信息</a></li>
+                <li><a href="../dashboard/">📊 数据看板</a></li>
+                <li><a href="../news/">📰 资讯博客</a></li>
+                <li><a href="../teams/">🏟️ 球队</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>📰 资讯博客</h1>
+    <p class="subtitle">2026 美加墨世界杯 · 最新资讯 &amp; 深度分析</p>
+  </div>
+
+  <div class="blog-grid" id="blogApp">
+    <div class="blog-loading" id="loadingState">
+      <div class="spinner"></div>
+      <p>加载文章...</p>
+    </div>
+  </div>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('blogApp');
+      if (!container || typeof WC_DATA === 'undefined') return;
+
+      const articles = WC_DATA.articles || [];
+      const sorted = [...articles].sort((a, b) => b.date.localeCompare(a.date));
+
+      // Build tag counts for sidebar
+      const tagCounts = {};
+      sorted.forEach(a => a.tags.forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+
+      container.innerHTML = `
+        <div class="blog-list">
+          ${sorted.length === 0
+            ? `<div class="article-empty">
+                <div class="empty-icon">📰</div>
+                <p>暂无文章，敬请期待！</p>
+              </div>`
+            : sorted.map(a => `
+              <a href="article.html?id=${a.id}" class="blog-card">
+                <div class="blog-card-title">${a.title}</div>
+                <div class="blog-card-meta">
+                  <span>📅 ${a.date}</span>
+                  <span>✍️ ${a.author}</span>
+                  <span class="blog-card-tags">
+                    ${a.tags.map(t => `<span class="blog-tag ${t}">${t === 'match-report' ? '⚽ 战报' : t === 'deep' ? '🔍 深度' : t === 'stats' ? '📊 数据' : t}</span>`).join('')}
+                  </span>
+                </div>
+                <div class="blog-card-excerpt">${a.excerpt}</div>
+              </a>
+            `).join('')}
+        </div>
+        <div class="blog-sidebar">
+          <div class="blog-sidebar-card">
+            <h3>📂 分类</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+              ${Object.entries(tagCounts).map(([tag, count]) => `
+                <span class="blog-tag ${tag}" style="font-size:0.8rem;padding:4px 12px">
+                  ${tag === 'match-report' ? '⚽ 战报' : tag === 'deep' ? '🔍 深度' : tag === 'stats' ? '📊 数据' : tag} (${count})
+                </span>
+              `).join('')}
+            </div>
+          </div>
+          <div class="blog-sidebar-card">
+            <h3>📊 赛事快报</h3>
+            <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.8">
+              <div>⚽ 已赛：<strong>${WC_DATA.stats.totalMatches}</strong> 场</div>
+              <div>⚽ 总进球：<strong>${WC_DATA.stats.totalGoals}</strong> 球</div>
+              <div>📈 场均：<strong>${WC_DATA.stats.avgGoalsPerMatch}</strong> 球</div>
+              <div>🏆 最大比分：${WC_DATA.stats.biggestWin.split('(')[0].trim()}</div>
+            </div>
+          </div>
+          <div class="blog-sidebar-card">
+            <h3>🔗 快速导航</h3>
+            <div style="display:flex;flex-direction:column;gap:0.5rem">
+              <a href="../matches/" style="color:var(--text-secondary);font-size:0.85rem">📋 查看赛事信息</a>
+              <a href="../dashboard/" style="color:var(--text-secondary);font-size:0.85rem">📊 查看数据看板</a>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  </script>
+
+</body>
+</html>

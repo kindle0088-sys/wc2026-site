@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>赛事信息 · 2026 世界杯</title>
+  <meta name="description" content="2026 世界杯赛事信息 — 分组看板 & 淘汰赛树形图">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="../" class="nav-brand">
+        <span class="trophy">🏆</span>
+        <span>WC 2026</span>
+        <span class="sub">· 赛事中心</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="../matches/" class="active">📋 赛事信息</a></li>
+        <li><a href="../dashboard/">📊 数据看板</a></li>
+        <li><a href="../news/">📰 资讯博客</a></li>
+        <li><a href="../teams/">🏟️ 球队</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>📋 赛事信息</h1>
+    <p class="subtitle">2026 美加墨世界杯 · 小组赛 &amp; 淘汰赛赛程</p>
+  </div>
+
+  <div class="tab-wrapper" style="max-width:1400px;margin:0 auto;padding:0 1rem">
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="group-stage">📋 小组赛 · 看板模式</button>
+      <button class="tab-btn" data-tab="knockout">🏆 淘汰赛 · 树形图</button>
+    </div>
+
+    <!-- Group Stage Tab -->
+    <div id="group-stage" class="tab-content active">
+      <div id="group-cards" class="group-grid"></div>
+    </div>
+
+    <!-- Knockout Tab -->
+    <div id="knockout" class="tab-content">
+      <div id="knockout-bracket" class="bracket-container"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>⚽ 2026 FIFA World Cup · Unofficial Fan Site</p>
+    <p class="update-note">Data updated June 18, 2026 · Group stage in progress</p>
+  </footer>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

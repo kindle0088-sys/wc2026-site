@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章 · 2026 世界杯</title>
+  <meta name="description" content="2026 世界杯资讯博客文章">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="../" class="nav-brand">
+        <span class="trophy">🏆</span>
+        <span>WC 2026</span>
+        <span class="sub">· 赛事中心</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="../matches/">📋 赛事信息</a></li>
+        <li><a href="../dashboard/">📊 数据看板</a></li>
+        <li><a href="../news/">📰 资讯博客</a></li>
+        <li><a href="../teams/">🏟️ 球队</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="article-page" id="articleApp">
+    <div class="blog-loading" id="loadingState">
+      <div class="spinner"></div>
+      <p>加载文章...</p>
+    </div>
+  </div>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('articleApp');
+      if (!container || typeof WC_DATA === 'undefined') return;
+
+      const params = new URLSearchParams(location.search);
+      const articleId = params.get('id');
+
+      const articles = WC_DATA.articles || [];
+
+      if (!articleId || !articles.length) {
+        container.innerHTML = `
+          <a href="../news/" class="article-back">← 返回资讯博客</a>
+          <div class="article-empty">
+            <div class="empty-icon">🔍</div>
+            <p>文章未找到或参数无效。</p>
+            <p><a href="../news/" style="color:var(--accent-gold)">返回文章列表</a></p>
+          </div>
+        `;
+        return;
+      }
+
+      const article = articles.find(a => a.id === articleId);
+      if (!article) {
+        container.innerHTML = `
+          <a href="../news/" class="article-back">← 返回资讯博客</a>
+          <div class="article-empty">
+            <div class="empty-icon">🔍</div>
+            <p>文章不存在或已被删除。</p>
+            <p><a href="../news/" style="color:var(--accent-gold)">返回文章列表</a></p>
+          </div>
+        `;
+        return;
+      }
+
+      // Find prev/next articles
+      const currentIdx = articles.findIndex(a => a.id === articleId);
+      const prevArticle = currentIdx > 0 ? articles[currentIdx - 1] : null;
+      const nextArticle = currentIdx < articles.length - 1 ? articles[currentIdx + 1] : null;
+
+      // Build match reference if available
+      let matchRefHtml = '';
+      if (article.matchRef) {
+        const mr = article.matchRef;
+        const get = (code) => {
+          const t = WC_DATA.getTeam(code);
+          return t ? `${t.flag} ${t.name}` : code;
+        };
+        matchRefHtml = `
+          <div class="article-match-ref">
+            <div>
+              <div class="teams-big">${get(mr.home)} vs ${get(mr.away)}</div>
+              <div class="match-info">${mr.group ? 'Group ' + mr.group : ''} · ${mr.date}</div>
+            </div>
+            <div class="score-big">${mr.homeScore} - ${mr.awayScore}</div>
+          </div>
+        `;
+      }
+
+      function mdToHtml(md) {
+        return md
+          .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+          .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/^- (.+)$/gm, '<li>$1</li>')
+          .replace(/(<li>.+<\/li>\n?)+/g, m => '<ul>' + m.replace(/\n$/, '') + '</ul>')
+          .replace(/\n\n/g, '</p><p>')
+          .replace(/\|(.+)\|/g, '<code>$1</code>')
+          .replace(/^(.+)$/gm, (m) => {
+            if (m.startsWith('<') || m.startsWith('</') || m.trim() === '') return m;
+            return '<p>' + m + '</p>';
+          })
+          .replace(/<p><\/p>/g, '')
+          .replace(/(<ul>[\s\S]*?<\/ul>)/g, m => m.replace(/<p>/g, '').replace(/<\/p>/g, ''));
+      }
+
+      container.innerHTML = `
+        <a href="../news/" class="article-back">← 返回资讯博客</a>
+
+        <div class="article-header">
+          <h1>${article.title}</h1>
+          <div class="article-meta-bar">
+            <span>📅 ${article.date}</span>
+            <span>✍️ ${article.author}</span>
+            <span class="blog-card-tags">
+              ${article.tags.map(t => `<span class="blog-tag ${t}">${t === 'match-report' ? '⚽ 战报' : t === 'deep' ? '🔍 深度' : t === 'stats' ? '📊 数据' : t}</span>`).join('')}
+            </span>
+          </div>
+        </div>
+
+        ${matchRefHtml}
+
+        <div class="article-content">
+          ${mdToHtml(article.content)}
+        </div>
+
+        <div class="article-nav">
+          ${prevArticle
+            ? `<a href="article.html?id=${prevArticle.id}">← ${prevArticle.title}</a>`
+            : '<span></span>'}
+          ${nextArticle
+            ? `<a href="article.html?id=${nextArticle.id}" class="nav-next">${nextArticle.title} →</a>`
+            : ''}
+        </div>
+      `;
+    });
+  </script>
+
+</body>
+</html>

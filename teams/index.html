@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>球队数据 · 2026 世界杯</title>
+  <meta name="description" content="2026 世界杯球队数据 — 48 支参赛球队详情">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .teams-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1rem 2rem;
+    }
+
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .team-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .team-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .team-card-flag {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    .team-card-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .team-card-group {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .team-stats-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .team-stats-row span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .team-stats-row .stat-val {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    .team-status-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .team-status-badge.qualifying {
+      background: rgba(34,197,94,0.15);
+      color: var(--accent-green);
+    }
+
+    .team-status-badge.eliminated {
+      background: rgba(239,68,68,0.15);
+      color: var(--accent-red);
+    }
+
+    .team-status-badge.pending {
+      background: rgba(100,116,139,0.2);
+      color: var(--text-muted);
+    }
+
+    .team-filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .team-filter-bar input,
+    .team-filter-bar select {
+      max-width: 220px;
+    }
+
+    .team-filter-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .teams-count {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Team detail modal (inline) */
+    .team-detail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      padding: 2rem 1rem;
+      overflow-y: auto;
+    }
+
+    .team-detail-overlay.open {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .team-detail-card {
+      background: var(--bg-card);
+      border: 1px solid var(--accent-gold);
+      border-radius: var(--radius);
+      max-width: 600px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .team-detail-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    .team-detail-close:hover {
+      color: var(--text-primary);
+    }
+
+    .team-detail-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .team-detail-flag {
+      font-size: 3rem;
+    }
+
+    .team-detail-info h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .team-detail-meta {
+      display: flex;
+      gap: 1rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .team-detail-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-stat {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .detail-stat .ds-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+    }
+
+    .detail-stat .ds-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .team-detail-matches h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 600px) {
+      .teams-grid {
+        grid-template-columns: 1fr;
+      }
+      .team-detail-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="../" class="nav-brand">
+        <span class="trophy">🏆</span>
+        <span>WC 2026</span>
+        <span class="sub">· 赛事中心</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="../matches/">📋 赛事信息</a></li>
+        <li><a href="../dashboard/">📊 数据看板</a></li>
+        <li><a href="../news/">📰 资讯博客</a></li>
+        <li><a href="../teams/" class="active">🏟️ 球队</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>🏟️ 球队数据</h1>
+    <p class="subtitle">2026 美加墨世界杯 · 48 支参赛球队详情</p>
+  </div>
+
+  <div class="teams-container" id="teamsApp">
+    <div class="team-filter-bar">
+      <div>
+        <div class="team-filter-label">🏷️ 搜索</div>
+        <input id="filterTeam" type="text" placeholder="输入球队名称…" />
+      </div>
+      <div>
+        <div class="team-filter-label">📋 分组</div>
+        <select id="filterGroup">
+          <option value="all">全部</option>
+          <option value="A">A 组</option>
+          <option value="B">B 组</option>
+          <option value="C">C 组</option>
+          <option value="D">D 组</option>
+          <option value="E">E 组</option>
+          <option value="F">F 组</option>
+          <option value="G">G 组</option>
+          <option value="H">H 组</option>
+          <option value="I">I 组</option>
+          <option value="J">J 组</option>
+          <option value="K">K 组</option>
+          <option value="L">L 组</option>
+        </select>
+      </div>
+      <div>
+        <div class="team-filter-label">📊 状态</div>
+        <select id="filterStatus">
+          <option value="all">全部</option>
+          <option value="qualifying">晋级区</option>
+          <option value="eliminated">淘汰区</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="teams-count" id="teamsCount"></div>
+    <div class="teams-grid" id="teamsGrid"></div>
+  </div>
+
+  <!-- Team detail overlay -->
+  <div class="team-detail-overlay" id="teamDetail">
+    <div class="team-detail-card" id="teamDetailContent"></div>
+  </div>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof WC_DATA === 'undefined') return;
+
+      const grid = document.getElementById('teamsGrid');
+      const count = document.getElementById('teamsCount');
+      const filterTeam = document.getElementById('filterTeam');
+      const filterGroup = document.getElementById('filterGroup');
+      const filterStatus = document.getElementById('filterStatus');
+      const detailOverlay = document.getElementById('teamDetail');
+      const detailContent = document.getElementById('teamDetailContent');
+
+      // Build flat team list with group key
+      let allTeams = [];
+      Object.entries(WC_DATA.groups).forEach(([key, group]) => {
+        group.teams.forEach(t => {
+          const matches = group.matches.filter(m => m.home === t.code || m.away === t.code);
+          const form = matches
+            .filter(m => m.status === 'completed')
+            .map(m => {
+              const isHome = m.home === t.code;
+              const scored = isHome ? m.homeScore : m.awayScore;
+              const conceded = isHome ? m.awayScore : m.homeScore;
+              if (scored > conceded) return 'W';
+              if (scored < conceded) return 'L';
+              return 'D';
+            })
+            .join('');
+          allTeams.push({
+            ...t,
+            groupKey: key,
+            groupName: group.name,
+            matches,
+            form,
+            flag: t.flag || ''
+          });
+        });
+      });
+
+      function render() {
+        const nameQ = filterTeam.value.trim().toLowerCase();
+        const groupQ = filterGroup.value;
+        const statusQ = filterStatus.value;
+
+        let filtered = allTeams.filter(t => {
+          if (nameQ && !t.name.toLowerCase().includes(nameQ)) return false;
+          if (groupQ !== 'all' && t.groupKey !== groupQ) return false;
+          if (statusQ !== 'all') {
+            if (statusQ === 'eliminated') return t.status === 'eliminated';
+            if (statusQ === 'qualifying') return t.status === 'qualifying' && t.played > 0;
+          }
+          return true;
+        });
+
+        count.textContent = `共 ${filtered.length} 支球队`;
+        grid.innerHTML = filtered.map(t => `
+          <div class="team-card" data-code="${t.code}">
+            <div class="team-card-header">
+              <div class="team-card-flag">${t.flag}</div>
+              <div>
+                <div class="team-card-name">${t.name}</div>
+                <div class="team-card-group">${t.groupName} · ${t.status === 'qualifying' && t.played > 0 ? '<span class="team-status-badge qualifying">晋级区</span>' : t.status === 'eliminated' ? '<span class="team-status-badge eliminated">淘汰区</span>' : '<span class="team-status-badge pending">未赛</span>'}</div>
+              </div>
+            </div>
+            <div class="team-stats-row">
+              <span>⚽ <span class="stat-val">${t.played}</span> 场</span>
+              <span>🏆 <span class="stat-val">${t.won}</span> 胜</span>
+              <span>🤝 <span class="stat-val">${t.drawn}</span> 平</span>
+              <span>❌ <span class="stat-val">${t.lost}</span> 负</span>
+              <span>⚽ <span class="stat-val">${t.gf}</span>:${t.ga} GD ${t.gd > 0 ? '+' : ''}${t.gd}</span>
+              <span>📊 <span class="stat-val">${t.pts}</span> 分</span>
+            </div>
+            ${t.form ? `<div style="margin-top:0.5rem;font-size:0.8rem;letter-spacing:0.2rem">${t.form.split('').map(c => c === 'W' ? '<span style="color:var(--accent-green)">●</span>' : c === 'D' ? '<span style="color:var(--accent-gold)">●</span>' : '<span style="color:var(--accent-red)">●</span>').join('')} ${t.form}</div>` : ''}
+          </div>
+        `).join('');
+
+        // Click to open detail
+        grid.querySelectorAll('.team-card').forEach(card => {
+          card.addEventListener('click', () => openDetail(card.dataset.code));
+        });
+      }
+
+      function openDetail(code) {
+        const team = allTeams.find(t => t.code === code);
+        if (!team) return;
+
+        detailContent.innerHTML = `
+          <button class="team-detail-close" id="detailClose">✕</button>
+          <div class="team-detail-header">
+            <div class="team-detail-flag">${team.flag}</div>
+            <div class="team-detail-info">
+              <h2>${team.name}</h2>
+              <div class="team-detail-meta">
+                <span>📋 ${team.groupName}</span>
+                ${team.played > 0 ? `<span class="team-status-badge ${team.status}">${team.status === 'qualifying' ? '✅ 晋级区' : '❌ 淘汰区'}</span>` : '<span class="team-status-badge pending">⏳ 未赛</span>'}
+              </div>
+            </div>
+          </div>
+          <div class="team-detail-stats">
+            <div class="detail-stat"><div class="ds-val">${team.pts}</div><div class="ds-label">积分</div></div>
+            <div class="detail-stat"><div class="ds-val">${team.played}</div><div class="ds-label">已赛</div></div>
+            <div class="detail-stat"><div class="ds-val">${team.gf}</div><div class="ds-label">进球</div></div>
+            <div class="detail-stat"><div class="ds-val">${team.ga}</div><div class="ds-label">失球</div></div>
+          </div>
+          <div class="team-detail-matches">
+            <h3>⚽ 赛程</h3>
+            ${team.matches.map(m => {
+              const isHome = m.home === team.code;
+              const opp = isHome ? (WC_DATA.getTeam(m.away)?.flag || '') + ' ' + (WC_DATA.getTeam(m.away)?.name || m.away) : (WC_DATA.getTeam(m.home)?.flag || '') + ' ' + (WC_DATA.getTeam(m.home)?.name || m.home);
+              const score = m.homeScore !== null ? `${m.homeScore} - ${m.awayScore}` : 'vs';
+              const sClass = m.status === 'completed' ? '' : m.status === 'live' ? 'live' : '';
+              const sLabel = m.status === 'completed' ? 'FT' : m.status === 'live' ? 'LIVE' : m.date;
+              return `<div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--border-color);font-size:0.9rem">
+                <span>${isHome ? '' : '@ '}${opp}</span>
+                <span style="font-weight:700;color:var(--accent-gold)">${score}</span>
+                <span style="font-size:0.8rem;color:var(--text-muted)">${sLabel}</span>
+              </div>`;
+            }).join('')}
+          </div>
+        `;
+        detailOverlay.classList.add('open');
+        document.getElementById('detailClose').addEventListener('click', () => {
+          detailOverlay.classList.remove('open');
+        });
+        detailOverlay.addEventListener('click', (e) => {
+          if (e.target === detailOverlay) detailOverlay.classList.remove('open');
+        });
+      }
+
+      [filterTeam, filterGroup, filterStatus].forEach(el => {
+        el.addEventListener('input', render);
+        el.addEventListener('change', render);
+      });
+
+      render();
+    });
+  </script>
+
+</body>
+</html>
