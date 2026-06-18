@@ -54,6 +54,10 @@ const WCApp = {
     // Generate tournament date range
     this._buildDateRange();
 
+    // Sort teams by standings criteria and compute stats on initial data
+    this._recomputeStandings();
+    this._recomputeStats();
+
     // Render immediately with cached data.js
     this.renderAll();
 
@@ -203,12 +207,9 @@ const WCApp = {
       }
     }
 
-    if (changed) {
-      // Recompute standings
-      this._recomputeStandings();
-      // Recompute stats
-      this._recomputeStats();
-    }
+    // Always recompute standings and stats (ensures proper sorting even without score changes)
+    this._recomputeStandings();
+    this._recomputeStats();
     // Always extract top scorers from ESPN details (even if no score change)
     this._extractScorers();
 
