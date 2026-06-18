@@ -912,21 +912,37 @@ const WCApp = {
             </table>
           </div>
           <div class="group-matches">
-            ${group.matches.slice(0, 3).map(m => {
-              const home = group.teams.find(t => t.code === m.home);
-              const away = group.teams.find(t => t.code === m.away);
-              const statusClass = m.status;
-              const statusLabel = m.status === 'completed' ? 'FT' : m.status === 'live' ? 'LIVE' : m.date;
-              const score = m.homeScore !== null ? `${m.homeScore} - ${m.awayScore}` : 'vs';
+            ${[1, 2, 3].map(rn => {
+              const roundMatches = group.matches.filter(m => m.round === rn);
+              if (roundMatches.length === 0) return '';
               return `
-                <div class="match-item">
-                  <span class="match-date">R${m.round}</span>
-                  <span class="match-teams">
-                    ${home?.flag || ''} ${home?.code || m.home}
-                    <strong>${score}</strong>
-                    ${away?.flag || ''} ${away?.code || m.away}
-                  </span>
-                  <span class="match-status ${statusClass}">${statusLabel}</span>
+                <div class="round-group">
+                  <div class="round-label">R${rn}</div>
+                  ${roundMatches.map(m => {
+                    const home = group.teams.find(t => t.code === m.home);
+                    const away = group.teams.find(t => t.code === m.away);
+                    const statusClass = m.status;
+                    const statusLabel = m.status === 'completed'
+                      ? 'FT'
+                      : m.status === 'live'
+                        ? 'LIVE'
+                        : m.date.replace('Jun ', '');
+                    const score = m.homeScore !== null
+                      ? `<strong class="match-score">${m.homeScore} - ${m.awayScore}</strong>`
+                      : '<strong class="match-score vs">vs</strong>';
+                    return `
+                      <div class="match-item">
+                        <span class="match-teams">
+                          ${home?.flag || ''}
+                          <span class="team-code">${home?.code || m.home}</span>
+                          ${score}
+                          <span class="team-code">${away?.code || m.away}</span>
+                          ${away?.flag || ''}
+                        </span>
+                        <span class="match-status ${statusClass}">${statusLabel}</span>
+                      </div>
+                    `;
+                  }).join('')}
                 </div>
               `;
             }).join('')}
