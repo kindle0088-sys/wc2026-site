@@ -939,12 +939,10 @@ const WCApp = {
                       <div class="match-item">
                         <span class="match-teams">
                           ${home?.flag || ''}
-                          <span class="team-code">${home?.code || m.home}</span>
                           ${score}
-                          <span class="team-code">${away?.code || m.away}</span>
                           ${away?.flag || ''}
+                          <span class="match-status ${statusClass}">${statusLabel}</span>
                         </span>
-                        <span class="match-status ${statusClass}">${statusLabel}</span>
                       </div>
                     `;
                   }).join('')}
