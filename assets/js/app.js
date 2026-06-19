@@ -368,7 +368,7 @@ const WCApp = {
     }
     if (Object.keys(idToCode).length === 0) return;
 
-    // Extract goals from ESPN details
+    // Extract goals & assists from ESPN details
     const scorerMap = {};
     for (const date of Object.keys(this.espnStatus.dateMap)) {
       for (const key of Object.keys(this.espnStatus.dateMap[date])) {
@@ -376,9 +376,9 @@ const WCApp = {
         if (match.status !== 'completed' || !match.details?.length) continue;
 
         for (const d of match.details) {
-          if (d.type?.id !== '70' && d.type?.id !== '94' && d.type?.id !== '137' && d.type?.id !== '95' && d.type?.id !== '98') continue;
-          // Goal type IDs: 70=Goal, 94=Yellow (skip), 137=Goal-Header, 95=Red (skip), 98=Penalty
-          if (d.type?.id === '94' || d.type?.id === '95') continue;
+          // Goal type IDs: 70=Goal, 97=OwnGoal, 98=Penalty, 137=Header
+          const isGoal = d.type?.id === '70' || d.type?.id === '97' || d.type?.id === '98' || d.type?.id === '137';
+          if (!isGoal) continue;
           
           const athletes = d.athletesInvolved || [];
           const scorer = athletes[0];
@@ -390,28 +390,45 @@ const WCApp = {
           if (!name || !teamCode) continue;
 
           if (!scorerMap[name]) {
-            scorerMap[name] = { name, teamCode, goals: 0, matches: new Set() };
+            scorerMap[name] = { name, teamCode, goals: 0, assists: 0, matches: new Set() };
           }
           scorerMap[name].goals++;
           scorerMap[name].matches.add(match.eventId);
+          
+          // Assist extraction: second athlete is usually the assister
+          if (athletes.length >= 2 && athletes[1]?.displayName) {
+            const assisterName = athletes[1].displayName;
+            if (!scorerMap[assisterName]) {
+              const assisterTeamId = athletes[1].team?.id;
+              const assisterCode = idToCode[assisterTeamId] || teamCode;
+              scorerMap[assisterName] = { name: assisterName, teamCode: assisterCode, goals: 0, assists: 0, matches: new Set() };
+            }
+            scorerMap[assisterName].assists++;
+            scorerMap[assisterName].matches.add(match.eventId);
+          }
         }
       }
     }
 
-    // Build sorted top scorers array
-    const scorers = Object.values(scorerMap)
+    // Only replace if ESPN actually returned data
+    if (Object.keys(scorerMap).length === 0) return;
+
+    // Build sorted top scorers array (goals first, then assists)
+    let scorers = Object.values(scorerMap)
+      .filter(s => s.goals > 0 || s.assists > 0)
       .map(s => ({
         rank: 0,
         name: s.name,
+        teamCode: s.teamCode,
         team: this._getTeamName(s.teamCode) || s.teamCode,
         flag: this._findTeam(s.teamCode)?.flag || '',
         goals: s.goals,
-        assists: 0,
+        assists: s.assists,
         matches: s.matches.size
       }))
-      .sort((a, b) => b.goals - a.goals)
+      .sort((a, b) => b.goals - a.goals || b.assists - a.assists)
       .map((s, i) => ({ ...s, rank: i + 1 }))
-      .slice(0, 30); // Top 30
+      .slice(0, 30);
 
     this.data.topScorers = scorers;
   },
