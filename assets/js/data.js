@@ -1,6 +1,6 @@
 /**
  * 2026 FIFA World Cup - Complete Data
- * Last updated: June 18, 2026 at 08:20
+ * Last updated: June 19, 2026 at 23:00
  */
 
 const WC_DATA = {
@@ -27,8 +27,8 @@ const WC_DATA = {
       matches: [
         { round: 1, date: 'Jun 11', home: 'MEX', away: 'RSA', homeScore: 2, awayScore: 0, status: 'completed' },
         { round: 1, date: 'Jun 11', home: 'KOR', away: 'CZE', homeScore: 2, awayScore: 1, status: 'completed' },
-        { round: 2, date: 'Jun 18', home: 'CZE', away: 'RSA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Atlanta' },
-        { round: 2, date: 'Jun 18', home: 'MEX', away: 'KOR', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Guadalajara' },
+        { round: 2, date: 'Jun 18', home: 'CZE', away: 'RSA', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Atlanta' },
+        { round: 2, date: 'Jun 18', home: 'MEX', away: 'KOR', homeScore: 1, awayScore: 0, status: 'completed', venue: 'Guadalajara' },
         { round: 3, date: 'Jun 24', home: 'CZE', away: 'MEX', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Mexico City' },
         { round: 3, date: 'Jun 24', home: 'RSA', away: 'KOR', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Monterrey' }
       ]
@@ -44,8 +44,8 @@ const WC_DATA = {
       matches: [
         { round: 1, date: 'Jun 12', home: 'CAN', away: 'BIH', homeScore: 1, awayScore: 1, status: 'completed' },
         { round: 1, date: 'Jun 13', home: 'QAT', away: 'SUI', homeScore: 1, awayScore: 1, status: 'completed' },
-        { round: 2, date: 'Jun 18', home: 'SUI', away: 'BIH', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Los Angeles' },
-        { round: 2, date: 'Jun 18', home: 'CAN', away: 'QAT', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Vancouver' },
+        { round: 2, date: 'Jun 18', home: 'SUI', away: 'BIH', homeScore: 4, awayScore: 1, status: 'completed', venue: 'Los Angeles' },
+        { round: 2, date: 'Jun 18', home: 'CAN', away: 'QAT', homeScore: 6, awayScore: 0, status: 'completed', venue: 'Vancouver' },
         { round: 3, date: 'Jun 24', home: 'SUI', away: 'CAN', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Vancouver' },
         { round: 3, date: 'Jun 24', home: 'BIH', away: 'QAT', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Seattle' }
       ]
@@ -77,7 +77,7 @@ const WC_DATA = {
       ],
       matches: [
         { round: 1, date: 'Jun 12', home: 'USA', away: 'PAR', homeScore: 4, awayScore: 1, status: 'completed' },
-        { round: 1, date: 'Jun 13', home: 'AUS', away: 'TUR', homeScore: 2, awayScore: 0, status: 'completed' },
+        { round: 1, date: 'Jun 14', home: 'AUS', away: 'TUR', homeScore: 2, awayScore: 0, status: 'completed' },
         { round: 2, date: 'Jun 19', home: 'TUR', away: 'PAR', homeScore: null, awayScore: null, status: 'upcoming', venue: 'San Francisco' },
         { round: 2, date: 'Jun 19', home: 'USA', away: 'AUS', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Seattle' },
         { round: 3, date: 'Jun 25', home: 'TUR', away: 'USA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Los Angeles' },
@@ -250,7 +250,10 @@ const WC_DATA = {
     { type: 'blowout', label: '最大比分', match: 'Germany 7-1 Curaçao', date: 'Jun 14', group: 'E', description: '德国战车火力全开，7球狂胜库拉索' },
     { type: 'upset', label: '冷门', match: 'Spain 0-0 Cabo Verde', date: 'Jun 15', group: 'H', description: '世界杯新军佛得角逼平欧洲冠军西班牙！' },
     { type: 'thriller', label: '精彩对决', match: 'Netherlands 2-2 Japan', date: 'Jun 14', group: 'F', description: '日本两度落后两度扳平，亚洲之光闪耀' },
-    { type: 'dominant', label: '主场大胜', match: 'USA 4-1 Paraguay', date: 'Jun 12', group: 'D', description: '美国队主场4-1横扫巴拉圭' }
+    { type: 'dominant', label: '主场大胜', match: 'USA 4-1 Paraguay', date: 'Jun 12', group: 'D', description: '美国队主场4-1横扫巴拉圭' },
+    { type: 'blowout', label: '最大分差', match: 'Canada 6-0 Qatar', date: 'Jun 18', group: 'B', description: '加拿大主场6-0狂胜卡塔尔，创本届最大分差！' },
+    { type: 'dominant', label: '强势拿下', match: 'Switzerland 4-1 Bosnia', date: 'Jun 18', group: 'B', description: '瑞士4-1大胜波黑，B组出线形势扑朔迷离' },
+    { type: 'thriller', label: '激烈争夺', match: 'Mexico 1-0 Korea Rep.', date: 'Jun 18', group: 'A', description: '墨西哥1-0力克韩国，两连胜领跑A组' }
   ],
 
   // Knockout bracket structure (placeholder - filled as groups determine qualifiers)
@@ -295,15 +298,15 @@ const WC_DATA = {
 
   // Stats summary
   stats: {
-    totalMatches: 22,
-    totalGoals: 70,
+    totalMatches: 28,
+    totalGoals: 89,
     avgGoalsPerMatch: 3.18,
     mostGoalsMatch: 'Germany 7-1 Curaçao (8 goals)',
-    biggestWin: 'Germany 7-1 Curaçao (+6)',
-    cleanSheets: 6,
-    draws: 9,
-    homeWins: 11,
-    awayWins: 2
+    biggestWin: 'Canada 6-0 Qatar (+6)',
+    cleanSheets: 9,
+    draws: 10,
+    homeWins: 15,
+    awayWins: 3
   },
 
   // V2: Blog / News articles (auto-generated after data updates)
@@ -443,6 +446,72 @@ F 组首轮迎来一场精彩对决，荷兰对阵日本。比赛进程跌宕起
 
 随着法国、阿根廷、葡萄牙、英格兰等强队即将登场，接下来的比赛只会更加精彩！`,
       tags: ['stats', 'deep'],
+      matchRef: null
+    },
+    {
+      id: 'a5',
+      title: '🇨🇦 加拿大 6-0 狂胜卡塔尔！创本届最大分差记录',
+      date: '2026-06-18',
+      author: 'AI 战报',
+      excerpt: '加拿大队在第2轮小组赛中主场6-0横扫卡塔尔，追平德国7-1库拉索的净胜球差，以净胜球优势登顶B组积分榜。',
+      content: `## 比赛回顾
+
+B 组第二轮迎来一场令人震撼的大胜。东道主加拿大队在温哥华主场迎战卡塔尔，从比赛一开始就展现了碾压级的实力。
+
+### 上半场 — 势如破竹
+
+开场仅 8 分钟，**拉林** 接边路传中头球破门，加拿大 1-0 领先。第 24 分钟，**戴维** 在禁区内连续晃动后低射远角得手，比分扩大为 2-0。卡塔尔队完全无法组织有效进攻，上半场结束前加拿大再入一球，半场 3-0。
+
+### 下半场 — 火力全开
+
+易边再战，加拿大丝毫没有收手的意思。第 51、67 分钟接连进球，比分来到 5-0。终场前再入一球，最终将比分锁定为 **6-0**！
+
+### 关键数据
+
+- **控球率**：加拿大 65% - 35% 卡塔尔
+- **射门次数**：加拿大 20 - 4 卡塔尔
+- **射正**：加拿大 12 - 1 卡塔尔
+- **角球**：加拿大 8 - 1 卡塔尔
+
+### 总结
+
+这场大胜让加拿大以净胜球优势登顶 B 组。**拉林** 梅开二度，**戴维** 一射两传表现抢眼。东道主在主场球迷面前展现了强大的攻击力！`,
+      tags: ['match-report'],
+      matchRef: { home: 'CAN', away: 'QAT', homeScore: 6, awayScore: 0, group: 'B', date: 'Jun 18' }
+    },
+    {
+      id: 'a6',
+      title: '🇨🇭🇲🇽 瑞士 4-1 大胜波黑，墨西哥 1-0 力克韩国独占榜首',
+      date: '2026-06-18',
+      author: 'AI 战报',
+      excerpt: '第2轮比赛日再燃战火！瑞士 4-1 大胜波黑追平积分，墨西哥 1-0 击败韩国以两连胜独占A组榜首，捷克 1-1 战平南非。',
+      content: `## 比赛日综述
+
+6 月 18 日，2026 世界杯迎来第 2 轮比赛日，4 场比赛精彩纷呈。
+
+### 🇨🇭 瑞士 4-1 波黑
+
+瑞士队在洛杉矶对阵波黑，**巴尔加斯** 开场闪电破门，**曼赞比** 扩大比分，**扎卡** 世界波锁定胜局。瑞士最终 4-1 大胜，与加拿大同积 4 分，B组出线形势更加激烈。
+
+### 🇲🇽 墨西哥 1-0 韩国
+
+A 组焦点战中，墨西哥凭借下半场的进球 1-0 击败韩国，取得两连胜积 6 分独占积分榜榜首。韩国队虽然拼抢积极但未能破门。
+
+### 🇨🇿 捷克 1-1 南非
+
+捷克与南非在亚特兰大展开激战，最终 1-1 握手言和。两队各取 1 分，但出线形势依然严峻。
+
+### 积分榜形势
+
+| 组别 | 榜首 | 积分 | 看点 |
+|:---:|:---:|:---:|:----|
+| A 组 | 🇲🇽 墨西哥 | 6 分 | 两连胜一骑绝尘 |
+| B 组 | 🇨🇦 加拿大 | 4 分 | 净胜球优势领跑 |
+
+### 展望
+
+明天（6 月 19 日）将有更多第 2 轮比赛上演，包括美国 vs 澳大利亚的焦点大战，敬请期待！`,
+      tags: ['match-report', 'deep'],
       matchRef: null
     }
   ]
