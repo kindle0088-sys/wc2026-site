@@ -307,8 +307,8 @@
     <div class="team-detail-card" id="teamDetailContent"></div>
   </div>
 
-  <script src="../assets/js/data.js?v=6"></script>
-  <script src="../assets/js/app.js?v=6"></script>
+  <script src="../assets/js/data.js?v=7"></script>
+  <script src="../assets/js/app.js?v=7"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof WC_DATA === 'undefined') return;
@@ -343,6 +343,7 @@
             groupName: group.name,
             matches,
             form,
+            code: t.code,
             flag: t.flag || ''
           });
         });
@@ -367,7 +368,7 @@
         grid.innerHTML = filtered.map(t => `
           <div class="team-card" data-code="${t.code}">
             <div class="team-card-header">
-              <div class="team-card-flag">${t.flag}</div>
+              <div class="team-card-flag">${typeof WC_DATA !== 'undefined' && WC_DATA.getFlag ? WC_DATA.getFlag(t.code) : (t.flag || '')}</div>
               <div>
                 <div class="team-card-name">${t.name}</div>
                 <div class="team-card-group">${t.groupName} · ${t.status === 'qualifying' && t.played > 0 ? '<span class="team-status-badge qualifying">晋级区</span>' : t.status === 'eliminated' ? '<span class="team-status-badge eliminated">淘汰区</span>' : '<span class="team-status-badge pending">未赛</span>'}</div>
@@ -398,7 +399,7 @@
         detailContent.innerHTML = `
           <button class="team-detail-close" id="detailClose">✕</button>
           <div class="team-detail-header">
-            <div class="team-detail-flag">${team.flag}</div>
+            <div class="team-detail-flag">${WC_DATA.getFlag ? WC_DATA.getFlag(team.code) : (team.flag || '')}</div>
             <div class="team-detail-info">
               <h2>${team.name}</h2>
               <div class="team-detail-meta">
@@ -417,7 +418,7 @@
             <h3>⚽ 赛程</h3>
             ${team.matches.map(m => {
               const isHome = m.home === team.code;
-              const opp = isHome ? (WC_DATA.getTeam(m.away)?.flag || '') + ' ' + (WC_DATA.getTeam(m.away)?.name || m.away) : (WC_DATA.getTeam(m.home)?.flag || '') + ' ' + (WC_DATA.getTeam(m.home)?.name || m.home);
+              const opp = isHome ? (WC_DATA.getFlag ? WC_DATA.getFlag(m.away) : (WC_DATA.getTeam(m.away)?.flag || '')) + ' ' + (WC_DATA.getTeam(m.away)?.name || m.away) : (WC_DATA.getFlag ? WC_DATA.getFlag(m.home) : (WC_DATA.getTeam(m.home)?.flag || '')) + ' ' + (WC_DATA.getTeam(m.home)?.name || m.home);
               const score = m.homeScore !== null ? `${m.homeScore} - ${m.awayScore}` : 'vs';
               const sClass = m.status === 'completed' ? '' : m.status === 'live' ? 'live' : '';
               const sLabel = m.status === 'completed' ? 'FT' : m.status === 'live' ? 'LIVE' : m.date;

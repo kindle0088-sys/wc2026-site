@@ -253,8 +253,8 @@
     <p class="update-note">Data updated June 19, 2026 · Group stage in progress</p>
   </footer>
 
-  <script src="../assets/js/data.js?v=6"></script>
-  <script src="../assets/js/app.js?v=6"></script>
+  <script src="../assets/js/data.js?v=7"></script>
+  <script src="../assets/js/app.js?v=7"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof WC_DATA === 'undefined') return;
@@ -323,7 +323,7 @@
               </div>
               ${teams.map(t => `
                 <div class="adv-team-row">
-                  <span class="adv-team-flag">${t.flag || ''}</span>
+            <span class="adv-team-flag">${typeof WC_DATA !== 'undefined' && WC_DATA.getFlag ? WC_DATA.getFlag(t.code) : (t.flag || '')}</span>
                   <span class="adv-team-name">${t.name}</span>
                   <span class="adv-team-pts">${t.pts}p</span>
                   <div class="adv-team-bar-wrap">
