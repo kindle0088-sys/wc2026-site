@@ -403,7 +403,6 @@ const WCApp = {
       .map(s => ({
         rank: 0,
         name: s.name,
-        teamCode: s.teamCode,
         team: this._getTeamName(s.teamCode) || s.teamCode,
         flag: this._findTeam(s.teamCode)?.flag || '',
         goals: s.goals,
@@ -728,7 +727,7 @@ const WCApp = {
 
   _teamDisplay(code) {
     const t = this._findTeam(code);
-    return t ? `${typeof WC_DATA !== 'undefined' ? WC_DATA.getFlag(code) : (t.flag || '')} ${t.name}` : code;
+    return t ? `${t.flag} ${t.name}` : code;
   },
 
   _findTeam(code) {
@@ -793,7 +792,7 @@ const WCApp = {
                     ${s.goals >= 3 ? '<span class="golden-boot">👟</span>' : ''}
                   </div>
                 </td>
-                <td><span class="player-team">${typeof WC_DATA !== 'undefined' ? WC_DATA.getFlag(s.teamCode) : (s.flag || '')} ${s.team}</span></td>
+                <td><span class="player-team">${s.flag} ${s.team}</span></td>
                 <td><strong>${s.goals}</strong></td>
                 <td>${s.assists}</td>
                 <td>${s.matches}</td>
@@ -834,7 +833,7 @@ const WCApp = {
         const gdClass = t.gd > 0 ? 'gd-pos' : t.gd < 0 ? 'gd-neg' : '';
         html += `<tr class="${statusClass}">
           <td></td>
-          <td>${typeof WC_DATA !== 'undefined' ? WC_DATA.getFlag(t.code) : (t.flag || '')} ${t.name}</td>
+          <td>${t.flag} ${t.name}</td>
           <td>${t.played}</td>
           <td>${t.won}</td>
           <td>${t.drawn}</td>
@@ -890,7 +889,7 @@ const WCApp = {
                     <td class="rank">${i + 1}</td>
                     <td>
                       <div class="team-cell">
-                        <span class="team-flag">${typeof WC_DATA !== 'undefined' ? WC_DATA.getFlag(t.code) : (t.flag || '')}</span>
+                        <span class="team-flag">${t.flag}</span>
                         <span class="team-name">${t.name}</span>
                         ${t.played > 0 && t.status === 'qualifying' && i < 2
                           ? '<span class="qualify-dot green"></span>'
@@ -934,11 +933,11 @@ const WCApp = {
                     return `
                       <div class="match-item">
                         <span class="match-teams">
-                          ${typeof WC_DATA !== 'undefined' ? WC_DATA.getFlag(home?.code) : (home?.flag || '')}
+                          ${home?.flag || ''}
                           <span class="team-code">${home?.code || m.home}</span>
                           ${score}
                           <span class="team-code">${away?.code || m.away}</span>
-                          ${typeof WC_DATA !== 'undefined' ? WC_DATA.getFlag(away?.code) : (away?.flag || '')}
+                          ${away?.flag || ''}
                         </span>
                         <span class="match-status ${statusClass}">${statusLabel}</span>
                       </div>

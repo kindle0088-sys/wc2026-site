@@ -66,26 +66,6 @@ img {
   max-width: 100%;
 }
 
-/* --- Flag Images --- */
-.flag-img {
-  display: inline-block;
-  vertical-align: middle;
-  border-radius: 2px;
-  box-shadow: 0 0 0 0.5px rgba(255,255,255,0.1);
-  margin-right: 0.2rem;
-}
-
-.flag-img-large {
-  border-radius: 4px;
-  box-shadow: 0 0 0 0.5px rgba(255,255,255,0.1);
-}
-
-/* Override for browsers that render flag emoji correctly (mobile)
-   Keep emoji rendering nice for those that support it */
-@supports (font-variant-emoji: emoji) or (-webkit-text-size-adjust: none) {
-  /* Mobile browsers that support flag emoji - no changes needed */
-}
-
 /* --- Scrollbar --- */
 ::-webkit-scrollbar {
   width: 8px;

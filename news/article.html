@@ -33,8 +33,8 @@
     </div>
   </div>
 
-  <script src="../assets/js/data.js?v=7"></script>
-  <script src="../assets/js/app.js?v=7"></script>
+  <script src="../assets/js/data.js?v=6"></script>
+  <script src="../assets/js/app.js?v=6"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('articleApp');
@@ -80,7 +80,8 @@
       if (article.matchRef) {
         const mr = article.matchRef;
         const get = (code) => {
-          return WC_DATA.getFlag ? `${WC_DATA.getFlag(code)} ${WC_DATA.getTeam(code)?.name || code}` : `${WC_DATA.getTeam(code)?.flag || ''} ${WC_DATA.getTeam(code)?.name || code}`;
+          const t = WC_DATA.getTeam(code);
+          return t ? `${t.flag} ${t.name}` : code;
         };
         matchRefHtml = `
           <div class="article-match-ref">
