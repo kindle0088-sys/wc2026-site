@@ -606,6 +606,11 @@ const WCApp = {
 
     // Update live bar after render
     this._updateLiveBar();
+
+    // Parse emoji via Twemoji (renders flag emoji on all browsers)
+    if (typeof twemoji !== 'undefined') {
+      try { twemoji.parse(document.body, { folder: 'svg', ext: '.svg' }); } catch(e) {}
+    }
   },
 
   _updateTimestamps() {

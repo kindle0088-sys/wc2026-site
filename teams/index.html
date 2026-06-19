@@ -307,8 +307,8 @@
     <div class="team-detail-card" id="teamDetailContent"></div>
   </div>
 
-  <script src="../assets/js/data.js?v=6"></script>
-  <script src="../assets/js/app.js?v=6"></script>
+  <script src="../assets/js/data.js?v=7"></script>
+  <script src="../assets/js/app.js?v=7"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof WC_DATA === 'undefined') return;
@@ -444,8 +444,12 @@
       });
 
       render();
+      if (typeof twemoji !== 'undefined') {
+        try { twemoji.parse(document.body, { folder: 'svg', ext: '.svg' }); } catch(e) {}
+      }
     });
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

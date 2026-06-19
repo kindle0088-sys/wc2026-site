@@ -253,8 +253,8 @@
     <p class="update-note">Data updated June 19, 2026 · Group stage in progress</p>
   </footer>
 
-  <script src="../assets/js/data.js?v=6"></script>
-  <script src="../assets/js/app.js?v=6"></script>
+  <script src="../assets/js/data.js?v=7"></script>
+  <script src="../assets/js/app.js?v=7"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof WC_DATA === 'undefined') return;
@@ -353,8 +353,12 @@
       // But since app.js loaded before our inline script, we need to
       // also render advancement on initial load
       renderAdvancement();
+      if (typeof twemoji !== 'undefined') {
+        try { twemoji.parse(document.body, { folder: 'svg', ext: '.svg' }); } catch(e) {}
+      }
     });
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
