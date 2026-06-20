@@ -231,12 +231,16 @@
     <!-- Tab: Scorers / Advancement -->
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="tab-scorers">⚽ 射手榜</button>
+      <button class="tab-btn" data-tab="tab-assisters">🎯 助攻榜</button>
       <button class="tab-btn" data-tab="tab-advancement">📈 出线形势</button>
     </div>
 
     <div class="tab-wrapper">
       <div id="tab-scorers" class="tab-content active">
         <div id="top-scorers"></div>
+      </div>
+      <div id="tab-assisters" class="tab-content">
+        <div id="top-assisters"></div>
       </div>
       <div id="tab-advancement" class="tab-content">
         <div id="advancement-section"></div>
@@ -253,8 +257,8 @@
     <p class="update-note">Data updated June 19, 2026 · Group stage in progress</p>
   </footer>
 
-  <script src="../assets/js/data.js?v=7"></script>
-  <script src="../assets/js/app.js?v=7"></script>
+  <script src="../assets/js/data.js?v=8"></script>
+  <script src="../assets/js/app.js?v=8"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (typeof WC_DATA === 'undefined') return;

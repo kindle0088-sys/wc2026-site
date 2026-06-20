@@ -231,18 +231,32 @@ const WC_DATA = {
     return null;
   },
 
-  // Top scorers (mock data until official stats are available)
+  // Top scorers (real data from ESPN API — computed via per-match summary endpoint)
   topScorers: [
-    { rank: 1, name: 'Niclas Füllkrug', team: 'GER', flag: '🇩🇪', goals: 3, assists: 1, matches: 1 },
-    { rank: 2, name: 'Jamal Musiala', team: 'GER', flag: '🇩🇪', goals: 2, assists: 2, matches: 1 },
-    { rank: 3, name: 'Christian Pulisic', team: 'USA', flag: '🇺🇸', goals: 2, assists: 0, matches: 1 },
-    { rank: 4, name: 'Raúl Jiménez', team: 'MEX', flag: '🇲🇽', goals: 1, assists: 1, matches: 1 },
-    { rank: 5, name: 'Son Heung-min', team: 'KOR', flag: '🇰🇷', goals: 1, assists: 1, matches: 1 },
-    { rank: 6, name: 'Cody Gakpo', team: 'NED', flag: '🇳🇱', goals: 1, assists: 0, matches: 1 },
-    { rank: 7, name: 'Takefusa Kubo', team: 'JPN', flag: '🇯🇵', goals: 1, assists: 0, matches: 1 },
-    { rank: 8, name: 'Jackson Irvine', team: 'AUS', flag: '🇦🇺', goals: 1, assists: 0, matches: 1 },
-    { rank: 9, name: 'Che Adams', team: 'SCO', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', goals: 1, assists: 0, matches: 1 },
-    { rank: 10, name: 'Vitinha', team: 'POR', flag: '🇵🇹', goals: 0, assists: 0, matches: 0 }
+    { rank: 1, name: 'Lionel Messi', team: 'ARG', flag: '🇦🇷', goals: 3, assists: 0, matches: 1 },
+    { rank: 2, name: 'Jonathan David', team: 'CAN', flag: '🇨🇦', goals: 3, assists: 0, matches: 1 },
+    { rank: 3, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 2, assists: 1, matches: 2 },
+    { rank: 4, name: 'Cyle Larin', team: 'CAN', flag: '🇨🇦', goals: 2, assists: 0, matches: 2 },
+    { rank: 5, name: 'Folarin Balogun', team: 'USA', flag: '🇺🇸', goals: 2, assists: 0, matches: 1 },
+    { rank: 6, name: 'Ismael Saibari', team: 'MAR', flag: '🇲🇦', goals: 2, assists: 0, matches: 2 },
+    { rank: 7, name: 'Yasin Ayari', team: 'SWE', flag: '🇸🇪', goals: 2, assists: 0, matches: 1 },
+    { rank: 8, name: 'Elijah Just', team: 'NZL', flag: '🇳🇿', goals: 2, assists: 0, matches: 1 },
+    { rank: 9, name: 'Kylian Mbappé', team: 'FRA', flag: '🇫🇷', goals: 2, assists: 0, matches: 1 },
+    { rank: 10, name: 'Erling Haaland', team: 'NOR', flag: '🇳🇴', goals: 2, assists: 0, matches: 1 }
+  ],
+
+  // Top assisters (real data from ESPN API — computed via per-match summary endpoint)
+  topAssisters: [
+    { rank: 1, name: 'Alexander Isak', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 2, matches: 1 },
+    { rank: 2, name: 'Julio Enciso', team: 'PAR', flag: '🇵🇾', goals: 0, assists: 2, matches: 2 },
+    { rank: 3, name: 'Brahim Díaz', team: 'MAR', flag: '🇲🇦', goals: 0, assists: 2, matches: 2 },
+    { rank: 4, name: 'Joshua Kimmich', team: 'GER', flag: '🇩🇪', goals: 0, assists: 2, matches: 1 },
+    { rank: 5, name: 'Chris Wood', team: 'NZL', flag: '🇳🇿', goals: 0, assists: 2, matches: 1 },
+    { rank: 6, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 2, assists: 1, matches: 2 },
+    { rank: 7, name: 'Hwang In-Beom', team: 'KOR', flag: '🇰🇷', goals: 1, assists: 1, matches: 1 },
+    { rank: 8, name: 'Deniz Undav', team: 'GER', flag: '🇩🇪', goals: 1, assists: 1, matches: 1 },
+    { rank: 9, name: 'Viktor Gyökeres', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 1, matches: 1 },
+    { rank: 10, name: 'Luis Díaz', team: 'COL', flag: '🇨🇴', goals: 1, assists: 1, matches: 1 }
   ],
 
   // Big scorelines / upsets tracker

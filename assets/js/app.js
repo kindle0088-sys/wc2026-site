@@ -368,7 +368,7 @@ const WCApp = {
     }
     if (Object.keys(idToCode).length === 0) return;
 
-    // Extract goals & assists from ESPN details
+    // Extract goals from ESPN details (scoreboard endpoint)
     const scorerMap = {};
     for (const date of Object.keys(this.espnStatus.dateMap)) {
       for (const key of Object.keys(this.espnStatus.dateMap[date])) {
@@ -390,47 +390,39 @@ const WCApp = {
           if (!name || !teamCode) continue;
 
           if (!scorerMap[name]) {
-            scorerMap[name] = { name, teamCode, goals: 0, assists: 0, matches: new Set() };
+            scorerMap[name] = { name, teamCode, goals: 0, matches: new Set() };
           }
           scorerMap[name].goals++;
           scorerMap[name].matches.add(match.eventId);
-          
-          // Assist extraction: second athlete is usually the assister
-          if (athletes.length >= 2 && athletes[1]?.displayName) {
-            const assisterName = athletes[1].displayName;
-            if (!scorerMap[assisterName]) {
-              const assisterTeamId = athletes[1].team?.id;
-              const assisterCode = idToCode[assisterTeamId] || teamCode;
-              scorerMap[assisterName] = { name: assisterName, teamCode: assisterCode, goals: 0, assists: 0, matches: new Set() };
-            }
-            scorerMap[assisterName].assists++;
-            scorerMap[assisterName].matches.add(match.eventId);
-          }
         }
       }
     }
 
-    // Only replace if ESPN actually returned data
-    if (Object.keys(scorerMap).length === 0) return;
+    // If ESPN returned data, update topScorers (preserve assists from existing data)
+    if (Object.keys(scorerMap).length > 0) {
+      const oldScorers = this.data?.topScorers || [];
+      const oldAssistMap = {};
+      for (const s of oldScorers) {
+        oldAssistMap[s.name] = { assists: s.assists || 0, team: s.team, flag: s.flag || '' };
+      }
 
-    // Build sorted top scorers array (goals first, then assists)
-    let scorers = Object.values(scorerMap)
-      .filter(s => s.goals > 0 || s.assists > 0)
-      .map(s => ({
-        rank: 0,
-        name: s.name,
-        teamCode: s.teamCode,
-        team: this._getTeamName(s.teamCode) || s.teamCode,
-        flag: this._findTeam(s.teamCode)?.flag || '',
-        goals: s.goals,
-        assists: s.assists,
-        matches: s.matches.size
-      }))
-      .sort((a, b) => b.goals - a.goals || b.assists - a.assists)
-      .map((s, i) => ({ ...s, rank: i + 1 }))
-      .slice(0, 10); // Top 10
+      let scorers = Object.values(scorerMap)
+        .map(s => ({
+          rank: 0,
+          name: s.name,
+          teamCode: s.teamCode,
+          team: this._getTeamName(s.teamCode) || s.teamCode,
+          flag: this._findTeam(s.teamCode)?.flag || oldAssistMap[s.name]?.flag || '',
+          goals: s.goals,
+          assists: oldAssistMap[s.name]?.assists || 0,
+          matches: s.matches.size
+        }))
+        .sort((a, b) => b.goals - a.goals || b.assists - a.assists)
+        .map((s, i) => ({ ...s, rank: i + 1 }))
+        .slice(0, 10); // Top 10
 
-    this.data.topScorers = scorers;
+      this.data.topScorers = scorers;
+    }
   },
 
   _getTeamName(code) {
@@ -617,6 +609,7 @@ const WCApp = {
     this.renderBracket();
     this.renderDashboardStats();
     this.renderTopScorers();
+    this.renderTopAssisters();
     this.renderHighlights();
     this.renderAllGroupsTable();
     this.renderGroupCards();
@@ -784,7 +777,6 @@ const WCApp = {
     `).join('');
   },
 
-  // --- Top Scorers ---
   renderTopScorers() {
     const container = document.getElementById('top-scorers');
     if (!container || !this.data?.topScorers) return;
@@ -815,6 +807,52 @@ const WCApp = {
                 </td>
                 <td><span class="player-team">${s.flag} ${s.team}</span></td>
                 <td><strong>${s.goals}</strong></td>
+                <td>${s.matches}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  },
+
+  // --- Top Assisters ---
+  renderTopAssisters() {
+    const container = document.getElementById('top-assisters');
+    if (!container) return;
+
+    // Use offline data as base, or runtime-computed if available
+    const assisters = (this.data?.topAssisters || []).filter(s => s.assists > 0);
+
+    if (assisters.length === 0) {
+      container.innerHTML = '<p class="no-data">No assist data available yet</p>';
+      return;
+    }
+
+    container.innerHTML = `
+      <div class="scorers-table-wrap">
+        <table class="scorers-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th>Team</th>
+              <th>Assists</th>
+              <th>Matches</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${assisters.map((s, i) => `
+              <tr>
+                <td>${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : s.rank}</td>
+                <td>
+                  <div class="player-info">
+                    <span class="player-name">${s.name}</span>
+                    ${s.assists >= 3 ? '<span class="golden-boot">👟</span>' : ''}
+                  </div>
+                </td>
+                <td><span class="player-team">${s.flag} ${s.team}</span></td>
+                <td><strong>${s.assists}</strong></td>
                 <td>${s.matches}</td>
               </tr>
             `).join('')}
