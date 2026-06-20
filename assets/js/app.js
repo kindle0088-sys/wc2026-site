@@ -428,7 +428,7 @@ const WCApp = {
       }))
       .sort((a, b) => b.goals - a.goals || b.assists - a.assists)
       .map((s, i) => ({ ...s, rank: i + 1 }))
-      .slice(0, 30);
+      .slice(0, 10); // Top 10
 
     this.data.topScorers = scorers;
   },
@@ -800,7 +800,6 @@ const WCApp = {
               <th>Player</th>
               <th>Team</th>
               <th>Goals</th>
-              <th>Assists</th>
               <th>Matches</th>
             </tr>
           </thead>
@@ -816,7 +815,6 @@ const WCApp = {
                 </td>
                 <td><span class="player-team">${s.flag} ${s.team}</span></td>
                 <td><strong>${s.goals}</strong></td>
-                <td>${s.assists}</td>
                 <td>${s.matches}</td>
               </tr>
             `).join('')}
