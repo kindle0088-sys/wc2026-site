@@ -139,25 +139,150 @@ def update_match_in_content(content, home, away, hs, aws, status):
     return content, False
 
 
-def update_stats_in_content(content):
-    """Recount completed matches and goals, update stats block.
-    Returns (new_content, total_matches, total_goals, avg_goals)."""
-    # Find completed matches with numeric scores
-    score_pairs = re.findall(
-        r"homeScore:\s*(\d+),\s*awayScore:\s*(\d+),\s*status:\s*'completed'",
+def _parse_completed_matches(content):
+    """Parse all completed matches from content.
+    Returns list of (home_code, away_code, home_score, away_score)."""
+    pairs = re.findall(
+        r"home:\s*'(\w+)'\s*,\s*away:\s*'(\w+)'\s*,\s*homeScore:\s*(\d+),\s*awayScore:\s*(\d+),\s*status:\s*'completed'",
         content
     )
-    total = len(score_pairs)
-    goals = sum(int(h) + int(a) for h, a in score_pairs)
-    avg = round(goals / total, 2) if total > 0 else 0
+    return [(h, a, int(hs), int(aws)) for h, a, hs, aws in pairs]
 
-    stats_updates = [
+
+def _get_team_name_map(content):
+    """Build {code: name} map from team blocks."""
+    names = {}
+    for m in re.finditer(r"code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'", content):
+        names[m.group(1)] = m.group(2)
+    return names
+
+
+def update_standings_in_content(content):
+    """Recalculate all group standings from completed matches."""
+    tn = _get_team_name_map(content)
+    result = content
+    for g in 'ABCDEFGHIJKL':
+        hdr = f'\n    {g}: {{\n'
+        idx = result.find(hdr)
+        if idx < 0:
+            continue
+        teams_start = result.find('teams: [', idx)
+        if teams_start < 0:
+            continue
+        teams_end = result.find('\n      ],', teams_start)
+        if teams_end < 0:
+            continue
+        m_end = result.find('\n    },', teams_start)
+        if m_end < 0:
+            m_end = result.find('\n  },\n', teams_start)
+        if m_end < 0:
+            continue
+        teams_block = result[teams_start+9:teams_end]
+        matches_block = result[result.find('matches: [', teams_start)+10:m_end]
+        team_entries = []
+        for tm in re.finditer(
+            r"\{\s*code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'\s*,\s*flag:\s*'([^']+)'",
+            teams_block
+        ):
+            code = tm.group(1); name = tm.group(2); flag = tm.group(3)
+            sm = re.search(r"status:\s*'([^']+)'", teams_block[tm.start():tm.end()+60])
+            team_entries.append({'code': code, 'name': name, 'flag': flag,
+                                'status': sm.group(1) if sm else 'qualifying'})
+            tn[code] = name
+        if not team_entries:
+            continue
+        completed = []
+        for mm in re.finditer(
+            r"home:\s*'(\w+)'\s*,\s*away:\s*'(\w+)'\s*,\s*homeScore:\s*(\d+|null),\s*awayScore:\s*(\d+|null),\s*status:\s*'completed'",
+            matches_block
+        ):
+            hs_s = mm.group(3); aws_s = mm.group(4)
+            if hs_s != 'null' and aws_s != 'null':
+                completed.append((mm.group(1), mm.group(2), int(hs_s), int(aws_s)))
+        stats = {te['code']: {'p': 0, 'w': 0, 'd': 0, 'l': 0, 'gf': 0, 'ga': 0, 'gd': 0, 'pts': 0}
+                 for te in team_entries}
+        for h, a, hs, aws in completed:
+            for code, hsi, awi in [(h, hs, aws), (a, aws, hs)]:
+                if code in stats:
+                    s = stats[code]; s['p'] += 1; s['gf'] += hsi; s['ga'] += awi
+                    if hsi > awi:
+                        s['w'] += 1; s['pts'] += 3
+                    elif hsi < awi:
+                        s['l'] += 1
+                    else:
+                        s['d'] += 1; s['pts'] += 1
+        for code, s in stats.items():
+            s['gd'] = s['gf'] - s['ga']
+        team_entries.sort(key=lambda t: (-stats[t['code']]['pts'], -stats[t['code']]['gd'], -stats[t['code']]['gf']))
+        new_lines = []
+        for te in team_entries:
+            s = stats[te['code']]
+            ml = (f"        {{ code: '{te['code']}', name: '{te['name']}', flag: '{te['flag']}', "
+                  f"played: {s['p']}, won: {s['w']}, drawn: {s['d']}, lost: {s['l']}, "
+                  f"gf: {s['gf']}, ga: {s['ga']}, gd: {s['gd']}, pts: {s['pts']}, "
+                  f"status: '{te['status']}' }},")
+            new_lines.append(ml)
+        old_block = result[teams_start:teams_end + 11]
+        new_block = f"teams: [\n" + '\n'.join(new_lines) + f"\n      ],"
+        result = result[:teams_start] + new_block + result[teams_end + 11:]
+    return result
+
+
+def update_stats_in_content(content):
+    """Recount completed matches and compute ALL stats (8 fields).
+    Returns (new_content, total, goals, avg)."""
+    matches = _parse_completed_matches(content)
+    total = len(matches)
+    if total == 0:
+        return content, 0, 0, 0
+    goals = sum(hs + aws for _, _, hs, aws in matches)
+    avg = round(goals / total, 2)
+    hw = aw = draws = cs = 0
+    most_goals = 0
+    biggest_diff = 0
+    tn = _get_team_name_map(content)
+    for h, a, hs, aws in matches:
+        if hs > aws:
+            hw += 1
+            diff = hs - aws
+            if diff > biggest_diff:
+                biggest_diff = diff
+        elif aws > hs:
+            aw += 1
+            diff = aws - hs
+            if diff > biggest_diff:
+                biggest_diff = diff
+        else:
+            draws += 1
+        if hs == 0 or aws == 0:
+            cs += 1
+        totg = hs + aws
+        if totg > most_goals:
+            most_goals = totg
+    most_desc = ''
+    biggest_desc = ''
+    for h, a, hs, aws in matches:
+        totg = hs + aws
+        hname = tn.get(h, h)
+        aname = tn.get(a, a)
+        diff = abs(hs - aws)
+        if totg == most_goals and not most_desc:
+            most_desc = f"{hname} {hs}-{aws} {aname} ({totg} goals)"
+        if diff == biggest_diff and not biggest_desc:
+            biggest_desc = f"{hname} {hs}-{aws} {aname} (+{diff})"
+    updates = [
         (r'totalMatches:\s*\d+', f'totalMatches: {total}'),
         (r'totalGoals:\s*\d+', f'totalGoals: {goals}'),
         (r'avgGoalsPerMatch:\s*[\d.]+', f'avgGoalsPerMatch: {avg}'),
+        (r"mostGoalsMatch:\s*'[^']*'", f"mostGoalsMatch: '{most_desc}'"),
+        (r"biggestWin:\s*'[^']*'", f"biggestWin: '{biggest_desc}'"),
+        (r'cleanSheets:\s*\d+', f'cleanSheets: {cs}'),
+        (r'draws:\s*\d+', f'draws: {draws}'),
+        (r'homeWins:\s*\d+', f'homeWins: {hw}'),
+        (r'awayWins:\s*\d+', f'awayWins: {aw}'),
     ]
     result = content
-    for pat, repl in stats_updates:
+    for pat, repl in updates:
         result = re.sub(pat, repl, result)
     return result, total, goals, avg
 
@@ -259,9 +384,13 @@ def main():
     if updates == 0:
         log('No new match results to update.')
 
-    # Update stats
+    # Update stats + standings
     content, total, goals, avg = update_stats_in_content(content)
     log(f'Stats: {total} matches, {goals} goals, avg {avg}')
+
+    # Recalculate per-group standings
+    content = update_standings_in_content(content)
+    log('Standings recalculated from match results')
 
     # Update timestamp
     content, ts = update_timestamp(content)
