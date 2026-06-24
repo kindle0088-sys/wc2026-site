@@ -275,44 +275,82 @@ const WC_DATA = {
     { type: 'tight', label: '客场逆袭', match: 'Turkey 0-1 Paraguay', date: 'Jun 19', group: 'D', description: '巴拉圭1-0客胜土耳其，恩西索助攻加拉萨一锤定音' }
   ],
 
-  // Knockout bracket structure (placeholder - filled as groups determine qualifiers)
+  // Knockout bracket structure (FIFA 2026 official — fixed pairings)
   knockout: {
-    roundOf32: Array(16).fill(null).map((_, i) => ({
-      id: `R32-${i + 1}`,
-      match: i + 73,
-      home: null,
-      away: null,
-      homeScore: null,
-      awayScore: null,
-      date: i < 8 ? 'Jun 28-30' : 'Jul 1-3',
-      status: 'pending'
-    })),
-    roundOf16: Array(8).fill(null).map((_, i) => ({
-      id: `R16-${i + 1}`,
-      match: i + 89,
-      home: null,
-      away: null,
-      homeScore: null,
-      awayScore: null,
-      date: 'Jul 5-8',
-      status: 'pending'
-    })),
-    quarterFinals: Array(4).fill(null).map((_, i) => ({
-      id: `QF-${i + 1}`,
-      match: i + 97,
-      home: null,
-      away: null,
-      homeScore: null,
-      awayScore: null,
-      date: 'Jul 10-12',
-      status: 'pending'
-    })),
-    semiFinals: [
-      { id: 'SF-1', match: 101, home: null, away: null, homeScore: null, awayScore: null, date: 'Jul 15', venue: 'Dallas', status: 'pending' },
-      { id: 'SF-2', match: 102, home: null, away: null, homeScore: null, awayScore: null, date: 'Jul 16', venue: 'Atlanta', status: 'pending' }
+    // Round of 32 — June 28~July 3
+    roundOf32: [
+      // R32-1 (Match 73): 2A vs 2B — SoFi Stadium, Inglewood — June 28
+      { id: 'R32-1', match: 73, home: null, away: null, homeScore: null, awayScore: null, date: 'June 28', venue: 'SoFi Stadium · Inglewood', status: 'pending', pairing: '2A vs 2B' },
+      // R32-2 (Match 74): 1E (GER) vs 3(A/B/C/D/F) — Gillette Stadium, Foxborough — June 29
+      { id: 'R32-2', match: 74, home: 'GER', away: null, homeScore: null, awayScore: null, date: 'June 29', venue: 'Gillette Stadium · Foxborough', status: 'pending', pairing: '1E vs 3ABCDF' },
+      // R32-3 (Match 75): 1F vs 2C — Estadio BBVA, Monterrey — June 29
+      { id: 'R32-3', match: 75, home: null, away: null, homeScore: null, awayScore: null, date: 'June 29', venue: 'Estadio BBVA · Monterrey', status: 'pending', pairing: '1F vs 2C' },
+      // R32-4 (Match 76): 1C vs 2F — NRG Stadium, Houston — June 29
+      { id: 'R32-4', match: 76, home: null, away: null, homeScore: null, awayScore: null, date: 'June 29', venue: 'NRG Stadium · Houston', status: 'pending', pairing: '1C vs 2F' },
+      // R32-5 (Match 77): 1I vs 3(C/D/F/G/H) — MetLife Stadium, NJ — June 30
+      { id: 'R32-5', match: 77, home: null, away: null, homeScore: null, awayScore: null, date: 'June 30', venue: 'MetLife Stadium · NJ', status: 'pending', pairing: '1I vs 3CDFGH' },
+      // R32-6 (Match 78): 2E vs 2I — AT&T Stadium, Arlington — June 30
+      { id: 'R32-6', match: 78, home: null, away: null, homeScore: null, awayScore: null, date: 'June 30', venue: 'AT&T Stadium · Arlington', status: 'pending', pairing: '2E vs 2I' },
+      // R32-7 (Match 79): 1A (MEX) vs 3(C/E/F/H/I) — Estadio Azteca — June 30
+      { id: 'R32-7', match: 79, home: 'MEX', away: null, homeScore: null, awayScore: null, date: 'June 30', venue: 'Estadio Azteca · Mexico City', status: 'pending', pairing: '1A vs 3CEFHI' },
+      // R32-8 (Match 80): 1L vs 3(E/H/I/J/K) — Mercedes-Benz Stadium, Atlanta — July 1
+      { id: 'R32-8', match: 80, home: null, away: null, homeScore: null, awayScore: null, date: 'July 1', venue: 'Mercedes-Benz Stadium · Atlanta', status: 'pending', pairing: '1L vs 3EHIJK' },
+      // R32-9 (Match 81): 1D (USA) vs 3(B/E/F/I/J) — Levi's Stadium, Santa Clara — July 1
+      { id: 'R32-9', match: 81, home: 'USA', away: null, homeScore: null, awayScore: null, date: 'July 1', venue: "Levi's Stadium \u00b7 Santa Clara", status: 'pending', pairing: '1D vs 3BEFIJ' },
+      // R32-10 (Match 82): 1G vs 3(A/E/H/I/J) — Lumen Field, Seattle — July 1
+      { id: 'R32-10', match: 82, home: null, away: null, homeScore: null, awayScore: null, date: 'July 1', venue: 'Lumen Field · Seattle', status: 'pending', pairing: '1G vs 3AEHIJ' },
+      // R32-11 (Match 83): 2K vs 2L — BMO Field, Toronto — July 2
+      { id: 'R32-11', match: 83, home: null, away: null, homeScore: null, awayScore: null, date: 'July 2', venue: 'BMO Field · Toronto', status: 'pending', pairing: '2K vs 2L' },
+      // R32-12 (Match 84): 1H vs 2J — SoFi Stadium, Inglewood — July 2
+      { id: 'R32-12', match: 84, home: null, away: null, homeScore: null, awayScore: null, date: 'July 2', venue: 'SoFi Stadium · Inglewood', status: 'pending', pairing: '1H vs 2J' },
+      // R32-13 (Match 85): 1B vs 3(E/F/G/I/J) — BC Place, Vancouver — July 2
+      { id: 'R32-13', match: 85, home: null, away: null, homeScore: null, awayScore: null, date: 'July 2', venue: 'BC Place · Vancouver', status: 'pending', pairing: '1B vs 3EFGIJ' },
+      // R32-14 (Match 86): 1J (ARG) vs 2H — Hard Rock Stadium, Miami — July 2
+      { id: 'R32-14', match: 86, home: 'ARG', away: null, homeScore: null, awayScore: null, date: 'July 2', venue: 'Hard Rock Stadium · Miami', status: 'pending', pairing: '1J vs 2H' },
+      // R32-15 (Match 87): 1K (COL) vs 3(D/E/I/J/L) — Arrowhead Stadium, Kansas City — July 3
+      { id: 'R32-15', match: 87, home: 'COL', away: null, homeScore: null, awayScore: null, date: 'July 3', venue: 'Arrowhead Stadium · Kansas City', status: 'pending', pairing: '1K vs 3DEIJL' },
+      // R32-16 (Match 88): 2D vs 2G — AT&T Stadium, Dallas — July 3
+      { id: 'R32-16', match: 88, home: null, away: null, homeScore: null, awayScore: null, date: 'July 3', venue: 'AT&T Stadium · Dallas', status: 'pending', pairing: '2D vs 2G' },
     ],
-    thirdPlace: { id: '3P', match: 103, home: null, away: null, homeScore: null, awayScore: null, date: 'Jul 19', venue: 'Miami', status: 'pending' },
-    final: { id: 'F', match: 104, home: null, away: null, homeScore: null, awayScore: null, date: 'Jul 19', venue: 'NY/NJ · MetLife Stadium', status: 'pending' }
+    // Round of 16 — July 4~7
+    roundOf16: [
+      // R16-1 (Match 89): W74 vs W77 — Lincoln Financial Field, Philadelphia — July 4
+      { id: 'R16-1', match: 89, home: null, away: null, homeScore: null, awayScore: null, date: 'July 4', venue: 'Lincoln Financial Field · Philadelphia', status: 'pending', pairing: 'W74 vs W77' },
+      // R16-2 (Match 90): W73 vs W75 — NRG Stadium, Houston — July 4
+      { id: 'R16-2', match: 90, home: null, away: null, homeScore: null, awayScore: null, date: 'July 4', venue: 'NRG Stadium · Houston', status: 'pending', pairing: 'W73 vs W75' },
+      // R16-3 (Match 91): W76 vs W78 — MetLife Stadium, NJ — July 5
+      { id: 'R16-3', match: 91, home: null, away: null, homeScore: null, awayScore: null, date: 'July 5', venue: 'MetLife Stadium · NJ', status: 'pending', pairing: 'W76 vs W78' },
+      // R16-4 (Match 92): W79 vs W80 — Estadio Azteca, Mexico City — July 5
+      { id: 'R16-4', match: 92, home: null, away: null, homeScore: null, awayScore: null, date: 'July 5', venue: 'Estadio Azteca · Mexico City', status: 'pending', pairing: 'W79 vs W80' },
+      // R16-5 (Match 93): W83 vs W84 — AT&T Stadium, Arlington — July 6
+      { id: 'R16-5', match: 93, home: null, away: null, homeScore: null, awayScore: null, date: 'July 6', venue: 'AT&T Stadium · Arlington', status: 'pending', pairing: 'W83 vs W84' },
+      // R16-6 (Match 94): W81 vs W82 — Lumen Field, Seattle — July 6
+      { id: 'R16-6', match: 94, home: null, away: null, homeScore: null, awayScore: null, date: 'July 6', venue: 'Lumen Field · Seattle', status: 'pending', pairing: 'W81 vs W82' },
+      // R16-7 (Match 95): W86 vs W88 — Mercedes-Benz Stadium, Atlanta — July 7
+      { id: 'R16-7', match: 95, home: null, away: null, homeScore: null, awayScore: null, date: 'July 7', venue: 'Mercedes-Benz Stadium · Atlanta', status: 'pending', pairing: 'W86 vs W88' },
+      // R16-8 (Match 96): W85 vs W87 — BC Place, Vancouver — July 7
+      { id: 'R16-8', match: 96, home: null, away: null, homeScore: null, awayScore: null, date: 'July 7', venue: 'BC Place · Vancouver', status: 'pending', pairing: 'W85 vs W87' },
+    ],
+    // Quarter-finals — July 9~11
+    quarterFinals: [
+      // QF-1 (Match 97): W89 vs W90 — Gillette Stadium, Foxborough — July 9
+      { id: 'QF-1', match: 97, home: null, away: null, homeScore: null, awayScore: null, date: 'July 9', venue: 'Gillette Stadium · Foxborough', status: 'pending', pairing: 'W89 vs W90' },
+      // QF-2 (Match 98): W93 vs W94 — SoFi Stadium, Inglewood — July 10
+      { id: 'QF-2', match: 98, home: null, away: null, homeScore: null, awayScore: null, date: 'July 10', venue: 'SoFi Stadium · Inglewood', status: 'pending', pairing: 'W93 vs W94' },
+      // QF-3 (Match 99): W91 vs W92 — Hard Rock Stadium, Miami — July 11
+      { id: 'QF-3', match: 99, home: null, away: null, homeScore: null, awayScore: null, date: 'July 11', venue: 'Hard Rock Stadium · Miami', status: 'pending', pairing: 'W91 vs W92' },
+      // QF-4 (Match 100): W95 vs W96 — Arrowhead Stadium, Kansas City — July 11
+      { id: 'QF-4', match: 100, home: null, away: null, homeScore: null, awayScore: null, date: 'July 11', venue: 'Arrowhead Stadium · Kansas City', status: 'pending', pairing: 'W95 vs W96' },
+    ],
+    // Semi-finals — July 14/16
+    semiFinals: [
+      { id: 'SF-1', match: 101, home: null, away: null, homeScore: null, awayScore: null, date: 'July 14', venue: 'AT&T Stadium · Dallas', status: 'pending', pairing: 'W97 vs W98' },
+      { id: 'SF-2', match: 102, home: null, away: null, homeScore: null, awayScore: null, date: 'July 16', venue: 'Mercedes-Benz Stadium · Atlanta', status: 'pending', pairing: 'W99 vs W100' },
+    ],
+    // Third-place match — July 18 — Miami
+    thirdPlace: { id: '3P', match: 103, home: null, away: null, homeScore: null, awayScore: null, date: 'July 18', venue: 'Hard Rock Stadium · Miami', status: 'pending', pairing: 'SF Losers' },
+    // Final — July 19 — MetLife Stadium, NJ
+    final: { id: 'F', match: 104, home: null, away: null, homeScore: null, awayScore: null, date: 'July 19', venue: 'MetLife Stadium · NJ', status: 'pending', pairing: 'SF Winners' }
   },
 
   // Stats summary
