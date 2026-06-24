@@ -634,13 +634,17 @@ const WCApp = {
         const dateStr = lastUpdated.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
         const timeStr = lastUpdated.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
         el.textContent = `ESPN Live Data · Updated ${dateStr} at ${timeStr}`;
-        // Add ESPN badge
         if (!el.querySelector('.espn-badge')) {
           const badge = document.createElement('span');
           badge.className = 'espn-badge';
           badge.textContent = '🌐 LIVE';
           el.appendChild(badge);
         }
+      } else if (this.data?.lastUpdated) {
+        // Show cached timestamp from data.js (before ESPN fetch)
+        const cached = this.data.lastUpdated;
+        const monthDay = cached.split(' at ')[0];
+        el.textContent = `Data updated ${monthDay} · Group stage in progress`;
       }
     });
   },
