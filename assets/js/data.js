@@ -1,10 +1,10 @@
 /**
  * 2026 FIFA World Cup - Complete Data
- * Last updated: June 24, 2026 at 17:24
+ * Last updated: June 24, 2026 at 23:46
  */
 
 const WC_DATA = {
-  lastUpdated: 'June 24, 2026 at 17:24',
+  lastUpdated: 'June 24, 2026 at 23:46',
   tournament: {
     name: '2026 FIFA World Cup',
     host: 'Canada · Mexico · USA',
@@ -24,7 +24,7 @@ const WC_DATA = {
         { code: 'KOR', name: 'Korea Republic', flag: '🇰🇷', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 2, gd: 0, pts: 3, status: 'qualifying' },
         { code: 'CZE', name: 'Czech Republic', flag: '🇨🇿', played: 2, won: 0, drawn: 1, lost: 1, gf: 2, ga: 3, gd: -1, pts: 1, status: 'qualifying' },
         { code: 'RSA', name: 'South Africa', flag: '🇿🇦', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 3, gd: -2, pts: 1, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 11', home: 'MEX', away: 'RSA', homeScore: 2, awayScore: 0, status: 'completed' },
         { round: 1, date: 'Jun 11', home: 'KOR', away: 'CZE', homeScore: 2, awayScore: 1, status: 'completed' },
         { round: 2, date: 'Jun 18', home: 'CZE', away: 'RSA', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Atlanta' },
@@ -36,17 +36,17 @@ const WC_DATA = {
     B: {
       name: 'Group B',
       teams: [
-        { code: 'CAN', name: 'Canada', flag: '🇨🇦', played: 2, won: 1, drawn: 1, lost: 0, gf: 7, ga: 1, gd: 6, pts: 4, status: 'qualifying' },
-        { code: 'SUI', name: 'Switzerland', flag: '🇨🇭', played: 2, won: 1, drawn: 1, lost: 0, gf: 5, ga: 2, gd: 3, pts: 4, status: 'qualifying' },
-        { code: 'BIH', name: 'Bosnia', flag: '🇧🇦', played: 2, won: 0, drawn: 1, lost: 1, gf: 2, ga: 5, gd: -3, pts: 1, status: 'qualifying' },
-        { code: 'QAT', name: 'Qatar', flag: '🇶🇦', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 7, gd: -6, pts: 1, status: 'qualifying' },
-      ],     matches: [
+        { code: 'SUI', name: 'Switzerland', flag: '🇨🇭', played: 3, won: 2, drawn: 1, lost: 0, gf: 7, ga: 3, gd: 4, pts: 7, status: 'qualifying' },
+        { code: 'CAN', name: 'Canada', flag: '🇨🇦', played: 3, won: 1, drawn: 1, lost: 1, gf: 8, ga: 3, gd: 5, pts: 4, status: 'qualifying' },
+        { code: 'BIH', name: 'Bosnia', flag: '🇧🇦', played: 3, won: 1, drawn: 1, lost: 1, gf: 5, ga: 6, gd: -1, pts: 4, status: 'qualifying' },
+        { code: 'QAT', name: 'Qatar', flag: '🇶🇦', played: 3, won: 0, drawn: 1, lost: 2, gf: 2, ga: 10, gd: -8, pts: 1, status: 'qualifying' },
+      ],   matches: [
         { round: 1, date: 'Jun 12', home: 'CAN', away: 'BIH', homeScore: 1, awayScore: 1, status: 'completed' },
         { round: 1, date: 'Jun 13', home: 'QAT', away: 'SUI', homeScore: 1, awayScore: 1, status: 'completed' },
         { round: 2, date: 'Jun 18', home: 'SUI', away: 'BIH', homeScore: 4, awayScore: 1, status: 'completed', venue: 'Los Angeles' },
         { round: 2, date: 'Jun 18', home: 'CAN', away: 'QAT', homeScore: 6, awayScore: 0, status: 'completed', venue: 'Vancouver' },
-        { round: 3, date: 'Jun 24', home: 'SUI', away: 'CAN', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Vancouver' },
-        { round: 3, date: 'Jun 24', home: 'BIH', away: 'QAT', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Seattle' }
+        { round: 3, date: 'Jun 24', home: 'SUI', away: 'CAN', homeScore: 2, awayScore: 1, status: 'completed', venue: 'Vancouver' },
+        { round: 3, date: 'Jun 24', home: 'BIH', away: 'QAT', homeScore: 3, awayScore: 1, status: 'completed', venue: 'Seattle' }
       ]
     },
     C: {
@@ -56,7 +56,7 @@ const WC_DATA = {
         { code: 'MAR', name: 'Morocco', flag: '🇲🇦', played: 2, won: 1, drawn: 1, lost: 0, gf: 2, ga: 1, gd: 1, pts: 4, status: 'qualifying' },
         { code: 'SCO', name: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', played: 2, won: 1, drawn: 0, lost: 1, gf: 1, ga: 1, gd: 0, pts: 3, status: 'qualifying' },
         { code: 'HAI', name: 'Haiti', flag: '🇭🇹', played: 2, won: 0, drawn: 0, lost: 2, gf: 0, ga: 4, gd: -4, pts: 0, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 13', home: 'BRA', away: 'MAR', homeScore: 1, awayScore: 1, status: 'completed' },
         { round: 1, date: 'Jun 13', home: 'HAI', away: 'SCO', homeScore: 0, awayScore: 1, status: 'completed' },
         { round: 2, date: 'Jun 19', home: 'SCO', away: 'MAR', homeScore: 0, awayScore: 1, status: 'completed', venue: 'Boston' },
@@ -72,7 +72,7 @@ const WC_DATA = {
         { code: 'AUS', name: 'Australia', flag: '🇦🇺', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 2, gd: 0, pts: 3, status: 'qualifying' },
         { code: 'PAR', name: 'Paraguay', flag: '🇵🇾', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 4, gd: -2, pts: 3, status: 'qualifying' },
         { code: 'TUR', name: 'Turkey', flag: '🇹🇷', played: 2, won: 0, drawn: 0, lost: 2, gf: 0, ga: 3, gd: -3, pts: 0, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 12', home: 'USA', away: 'PAR', homeScore: 4, awayScore: 1, status: 'completed' },
         { round: 1, date: 'Jun 14', home: 'AUS', away: 'TUR', homeScore: 2, awayScore: 0, status: 'completed' },
         { round: 2, date: 'Jun 19', home: 'TUR', away: 'PAR', homeScore: 0, awayScore: 1, status: 'completed', venue: 'San Francisco' },
@@ -87,7 +87,7 @@ const WC_DATA = {
         { code: 'GER', name: 'Germany', flag: '🇩🇪', played: 2, won: 2, drawn: 0, lost: 0, gf: 9, ga: 2, gd: 7, pts: 6, status: 'qualifying' },
         { code: 'ECU', name: 'Ecuador', flag: '🇪🇨', played: 2, won: 0, drawn: 1, lost: 1, gf: 0, ga: 1, gd: -1, pts: 1, status: 'qualifying' },
         { code: 'CUW', name: 'Curaçao', flag: '🇨🇼', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 7, gd: -6, pts: 1, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 14', home: 'GER', away: 'CUW', homeScore: 7, awayScore: 1, status: 'completed' },
         { round: 1, date: 'Jun 14', home: 'CIV', away: 'ECU', homeScore: 1, awayScore: 0, status: 'completed' },
         { round: 2, date: 'Jun 20', home: 'GER', away: 'CIV', homeScore: 2, awayScore: 1, status: 'completed', venue: 'Toronto' },
@@ -103,7 +103,7 @@ const WC_DATA = {
         { code: 'JPN', name: 'Japan', flag: '🇯🇵', played: 2, won: 1, drawn: 1, lost: 0, gf: 6, ga: 2, gd: 4, pts: 4, status: 'qualifying' },
         { code: 'SWE', name: 'Sweden', flag: '🇸🇪', played: 2, won: 1, drawn: 0, lost: 1, gf: 6, ga: 6, gd: 0, pts: 3, status: 'qualifying' },
         { code: 'TUN', name: 'Tunisia', flag: '🇹🇳', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 9, gd: -8, pts: 0, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 14', home: 'NED', away: 'JPN', homeScore: 2, awayScore: 2, status: 'completed' },
         { round: 1, date: 'Jun 14', home: 'SWE', away: 'TUN', homeScore: 5, awayScore: 1, status: 'completed' },
         { round: 2, date: 'Jun 20', home: 'NED', away: 'SWE', homeScore: 5, awayScore: 1, status: 'completed', venue: 'Houston' },
@@ -119,7 +119,7 @@ const WC_DATA = {
         { code: 'IRN', name: 'Iran', flag: '🇮🇷', played: 2, won: 0, drawn: 2, lost: 0, gf: 2, ga: 2, gd: 0, pts: 2, status: 'qualifying' },
         { code: 'BEL', name: 'Belgium', flag: '🇧🇪', played: 2, won: 0, drawn: 2, lost: 0, gf: 1, ga: 1, gd: 0, pts: 2, status: 'qualifying' },
         { code: 'NZL', name: 'New Zealand', flag: '🇳🇿', played: 2, won: 0, drawn: 1, lost: 1, gf: 3, ga: 5, gd: -2, pts: 1, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 15', home: 'BEL', away: 'EGY', homeScore: 1, awayScore: 1, status: 'completed' },
         { round: 1, date: 'Jun 15', home: 'IRN', away: 'NZL', homeScore: 2, awayScore: 2, status: 'completed', venue: 'Los Angeles' },
         { round: 2, date: 'Jun 21', home: 'BEL', away: 'IRN', homeScore: 0, awayScore: 0, status: 'completed', venue: 'Los Angeles' },
@@ -135,7 +135,7 @@ const WC_DATA = {
         { code: 'URU', name: 'Uruguay', flag: '🇺🇾', played: 2, won: 0, drawn: 2, lost: 0, gf: 3, ga: 3, gd: 0, pts: 2, status: 'qualifying' },
         { code: 'CPV', name: 'Cabo Verde', flag: '🇨🇻', played: 2, won: 0, drawn: 2, lost: 0, gf: 2, ga: 2, gd: 0, pts: 2, status: 'qualifying' },
         { code: 'KSA', name: 'Saudi Arabia', flag: '🇸🇦', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 5, gd: -4, pts: 1, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 15', home: 'ESP', away: 'CPV', homeScore: 0, awayScore: 0, status: 'completed' },
         { round: 1, date: 'Jun 15', home: 'KSA', away: 'URU', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Miami' },
         { round: 2, date: 'Jun 21', home: 'ESP', away: 'KSA', homeScore: 4, awayScore: 0, status: 'completed', venue: 'Atlanta' },
@@ -151,7 +151,7 @@ const WC_DATA = {
         { code: 'NOR', name: 'Norway', flag: '🇳🇴', played: 2, won: 2, drawn: 0, lost: 0, gf: 7, ga: 3, gd: 4, pts: 6, status: 'qualifying' },
         { code: 'SEN', name: 'Senegal', flag: '🇸🇳', played: 2, won: 0, drawn: 0, lost: 2, gf: 3, ga: 6, gd: -3, pts: 0, status: 'qualifying' },
         { code: 'IRQ', name: 'Iraq', flag: '🇮🇶', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 7, gd: -6, pts: 0, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 16', home: 'FRA', away: 'SEN', homeScore: 3, awayScore: 1, status: 'completed', venue: 'NY/NJ', time: '15:00 EDT' },
         { round: 1, date: 'Jun 16', home: 'IRQ', away: 'NOR', homeScore: 1, awayScore: 4, status: 'completed', venue: 'Boston', time: '18:00 EDT' },
         { round: 2, date: 'Jun 22', home: 'FRA', away: 'IRQ', homeScore: 3, awayScore: 0, status: 'completed', venue: 'Philadelphia' },
@@ -167,7 +167,7 @@ const WC_DATA = {
         { code: 'AUT', name: 'Austria', flag: '🇦🇹', played: 2, won: 1, drawn: 0, lost: 1, gf: 3, ga: 3, gd: 0, pts: 3, status: 'qualifying' },
         { code: 'ALG', name: 'Algeria', flag: '🇩🇿', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 4, gd: -2, pts: 3, status: 'qualifying' },
         { code: 'JOR', name: 'Jordan', flag: '🇯🇴', played: 2, won: 0, drawn: 0, lost: 2, gf: 2, ga: 5, gd: -3, pts: 0, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 16', home: 'ARG', away: 'ALG', homeScore: 3, awayScore: 0, status: 'completed', venue: 'Kansas City', time: '20:00 EDT' },
         { round: 1, date: 'Jun 16', home: 'AUT', away: 'JOR', homeScore: 3, awayScore: 1, status: 'completed', venue: 'Santa Clara', time: '21:00 EDT' },
         { round: 2, date: 'Jun 22', home: 'ARG', away: 'AUT', homeScore: 2, awayScore: 0, status: 'completed', venue: 'Philadelphia' },
@@ -183,7 +183,7 @@ const WC_DATA = {
         { code: 'POR', name: 'Portugal', flag: '🇵🇹', played: 2, won: 1, drawn: 1, lost: 0, gf: 6, ga: 1, gd: 5, pts: 4, status: 'qualifying' },
         { code: 'COD', name: 'DR Congo', flag: '🇨🇩', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 2, gd: -1, pts: 1, status: 'qualifying' },
         { code: 'UZB', name: 'Uzbekistan', flag: '🇺🇿', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 8, gd: -7, pts: 0, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 17', home: 'POR', away: 'COD', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Seattle' },
         { round: 1, date: 'Jun 17', home: 'UZB', away: 'COL', homeScore: 1, awayScore: 3, status: 'completed', venue: 'Houston' },
         { round: 2, date: 'Jun 23', home: 'POR', away: 'UZB', homeScore: 5, awayScore: 0, status: 'completed', venue: 'Monterrey' },
@@ -199,7 +199,7 @@ const WC_DATA = {
         { code: 'GHA', name: 'Ghana', flag: '🇬🇭', played: 2, won: 1, drawn: 1, lost: 0, gf: 1, ga: 0, gd: 1, pts: 4, status: 'qualifying' },
         { code: 'CRO', name: 'Croatia', flag: '🇭🇷', played: 2, won: 1, drawn: 0, lost: 1, gf: 3, ga: 4, gd: -1, pts: 3, status: 'qualifying' },
         { code: 'PAN', name: 'Panama', flag: '🇵🇦', played: 2, won: 0, drawn: 0, lost: 2, gf: 0, ga: 2, gd: -2, pts: 0, status: 'qualifying' },
-      ],     matches: [
+      ],   matches: [
         { round: 1, date: 'Jun 17', home: 'ENG', away: 'CRO', homeScore: 4, awayScore: 2, status: 'completed', venue: 'Monterrey' },
         { round: 1, date: 'Jun 17', home: 'GHA', away: 'PAN', homeScore: 1, awayScore: 0, status: 'completed', venue: 'Atlanta' },
         { round: 2, date: 'Jun 23', home: 'ENG', away: 'GHA', homeScore: 0, awayScore: 0, status: 'completed', venue: 'Miami' },
@@ -342,14 +342,14 @@ const WC_DATA = {
 
   // Stats summary
   stats: {
-    totalMatches: 48,
-    totalGoals: 141,
-    avgGoalsPerMatch: 2.94,
+    totalMatches: 50,
+    totalGoals: 148,
+    avgGoalsPerMatch: 2.96,
     mostGoalsMatch: 'Germany 7-1 Curaçao (8 goals)',
     biggestWin: 'Canada 6-0 Qatar (+6)',
     cleanSheets: 23,
     draws: 14,
-    homeWins: 25,
+    homeWins: 27,
     awayWins: 9
   },
 
