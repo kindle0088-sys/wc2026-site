@@ -4,7 +4,7 @@
  */
 
 const WC_DATA = {
-  lastUpdated: 'June 24, 2026 at 16:46',
+  lastUpdated: 'June 25, 2026 at 11:30',
   tournament: {
     name: '2026 FIFA World Cup',
     host: 'Canada · Mexico · USA',
@@ -246,7 +246,7 @@ const WC_DATA = {
     { rank: 10, name: 'Ismael Saibari', team: 'MAR', flag: '🇲🇦', goals: 2, assists: 0, matches: 2 }
   ],
 
-  // Top assisters (real data from ESPN API — 40 matches)
+  // Top assisters (real data from ESPN API — 48 matches)
   topAssisters: [
     { rank: 1, name: 'Alexander Isak', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 3, matches: 2 },
     { rank: 2, name: 'Julio Enciso', team: 'PAR', flag: '🇵🇾', goals: 0, assists: 2, matches: 2 },
@@ -360,10 +360,10 @@ const WC_DATA = {
     avgGoalsPerMatch: 2.94,
     mostGoalsMatch: 'Germany 7-1 Curaçao (8 goals)',
     biggestWin: 'Canada 6-0 Qatar (+6)',
-    cleanSheets: 13,
-    draws: 10,
-    homeWins: 17,
-    awayWins: 5
+    cleanSheets: 23,
+    draws: 14,
+    homeWins: 25,
+    awayWins: 9
   },
 
   // V2: Blog / News articles (auto-generated after data updates)
