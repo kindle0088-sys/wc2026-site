@@ -1,6 +1,6 @@
 /**
  * 2026 FIFA World Cup - Complete Data
- * Last updated: June 19, 2026 at 23:00
+ * Last updated: June 21, 2026 at 00:00 (40 matches from ESPN)
  */
 
 const WC_DATA = {
@@ -87,16 +87,16 @@ const WC_DATA = {
     E: {
       name: 'Group E',
       teams: [
-        { code: 'GER', name: 'Germany', flag: '🇩🇪', played: 1, won: 1, drawn: 0, lost: 0, gf: 7, ga: 1, gd: 6, pts: 3, status: 'qualifying' },
-        { code: 'CIV', name: "Côte d'Ivoire", flag: '🇨🇮', played: 1, won: 1, drawn: 0, lost: 0, gf: 1, ga: 0, gd: 1, pts: 3, status: 'qualifying' },
-        { code: 'ECU', name: 'Ecuador', flag: '🇪🇨', played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 1, gd: -1, pts: 0, status: 'qualifying' },
-        { code: 'CUW', name: 'Curaçao', flag: '🇨🇼', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 7, gd: -6, pts: 0, status: 'eliminated' }
+        { code: 'GER', name: 'Germany', flag: '🇩🇪', played: 2, won: 2, drawn: 0, lost: 0, gf: 9, ga: 2, gd: 7, pts: 6, status: 'qualifying' },
+        { code: 'CIV', name: "Côte d'Ivoire", flag: '🇨🇮', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 2, gd: 0, pts: 3, status: 'qualifying' },
+        { code: 'ECU', name: 'Ecuador', flag: '🇪🇨', played: 2, won: 0, drawn: 1, lost: 1, gf: 0, ga: 1, gd: -1, pts: 1, status: 'qualifying' },
+        { code: 'CUW', name: 'Curaçao', flag: '🇨🇼', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 7, gd: -6, pts: 1, status: 'qualifying' }
       ],
       matches: [
         { round: 1, date: 'Jun 14', home: 'GER', away: 'CUW', homeScore: 7, awayScore: 1, status: 'completed' },
         { round: 1, date: 'Jun 14', home: 'CIV', away: 'ECU', homeScore: 1, awayScore: 0, status: 'completed' },
-        { round: 2, date: 'Jun 20', home: 'GER', away: 'CIV', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Toronto' },
-        { round: 2, date: 'Jun 20', home: 'ECU', away: 'CUW', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Kansas City' },
+        { round: 2, date: 'Jun 20', home: 'GER', away: 'CIV', homeScore: 2, awayScore: 1, status: 'completed', venue: 'Toronto' },
+        { round: 2, date: 'Jun 20', home: 'ECU', away: 'CUW', homeScore: 0, awayScore: 0, status: 'completed', venue: 'Kansas City' },
         { round: 3, date: 'Jun 25', home: 'ECU', away: 'GER', homeScore: null, awayScore: null, status: 'upcoming', venue: 'NY/NJ' },
         { round: 3, date: 'Jun 25', home: 'CUW', away: 'CIV', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Philadelphia' }
       ]
@@ -104,16 +104,16 @@ const WC_DATA = {
     F: {
       name: 'Group F',
       teams: [
-        { code: 'NED', name: 'Netherlands', flag: '🇳🇱', played: 1, won: 0, drawn: 1, lost: 0, gf: 2, ga: 2, gd: 0, pts: 1, status: 'qualifying' },
-        { code: 'JPN', name: 'Japan', flag: '🇯🇵', played: 1, won: 0, drawn: 1, lost: 0, gf: 2, ga: 2, gd: 0, pts: 1, status: 'qualifying' },
-        { code: 'SWE', name: 'Sweden', flag: '🇸🇪', played: 1, won: 1, drawn: 0, lost: 0, gf: 5, ga: 1, gd: 4, pts: 3, status: 'qualifying' },
-        { code: 'TUN', name: 'Tunisia', flag: '🇹🇳', played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 5, gd: -4, pts: 0, status: 'qualifying' }
+        { code: 'NED', name: 'Netherlands', flag: '🇳🇱', played: 2, won: 1, drawn: 1, lost: 0, gf: 7, ga: 3, gd: 4, pts: 4, status: 'qualifying' },
+        { code: 'JPN', name: 'Japan', flag: '🇯🇵', played: 2, won: 1, drawn: 1, lost: 0, gf: 6, ga: 2, gd: 4, pts: 4, status: 'qualifying' },
+        { code: 'SWE', name: 'Sweden', flag: '🇸🇪', played: 2, won: 1, drawn: 0, lost: 1, gf: 6, ga: 6, gd: 0, pts: 3, status: 'qualifying' },
+        { code: 'TUN', name: 'Tunisia', flag: '🇹🇳', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 9, gd: -8, pts: 0, status: 'qualifying' }
       ],
       matches: [
         { round: 1, date: 'Jun 14', home: 'NED', away: 'JPN', homeScore: 2, awayScore: 2, status: 'completed' },
         { round: 1, date: 'Jun 14', home: 'SWE', away: 'TUN', homeScore: 5, awayScore: 1, status: 'completed' },
-        { round: 2, date: 'Jun 20', home: 'NED', away: 'SWE', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Houston' },
-        { round: 2, date: 'Jun 20', home: 'TUN', away: 'JPN', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Monterrey' },
+        { round: 2, date: 'Jun 20', home: 'NED', away: 'SWE', homeScore: 5, awayScore: 1, status: 'completed', venue: 'Houston' },
+        { round: 2, date: 'Jun 20', home: 'TUN', away: 'JPN', homeScore: 0, awayScore: 4, status: 'completed', venue: 'Monterrey' },
         { round: 3, date: 'Jun 25', home: 'JPN', away: 'SWE', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Dallas' },
         { round: 3, date: 'Jun 25', home: 'TUN', away: 'NED', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Kansas City' }
       ]
@@ -121,16 +121,16 @@ const WC_DATA = {
     G: {
       name: 'Group G',
       teams: [
-        { code: 'BEL', name: 'Belgium', flag: '🇧🇪', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1, status: 'qualifying' },
-        { code: 'EGY', name: 'Egypt', flag: '🇪🇬', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1, status: 'qualifying' },
-        { code: 'IRN', name: 'Iran', flag: '🇮🇷', played: 1, won: 0, drawn: 1, lost: 0, gf: 2, ga: 2, gd: 0, pts: 1, status: 'qualifying' },
-        { code: 'NZL', name: 'New Zealand', flag: '🇳🇿', played: 1, won: 0, drawn: 1, lost: 0, gf: 2, ga: 2, gd: 0, pts: 1, status: 'qualifying' }
+        { code: 'EGY', name: 'Egypt', flag: '🇪🇬', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 2, gd: 2, pts: 4, status: 'qualifying' },
+        { code: 'NZL', name: 'New Zealand', flag: '🇳🇿', played: 2, won: 0, drawn: 1, lost: 1, gf: 3, ga: 5, gd: -2, pts: 1, status: 'qualifying' },
+        { code: 'BEL', name: 'Belgium', flag: '🇧🇪', played: 2, won: 0, drawn: 2, lost: 0, gf: 1, ga: 1, gd: 0, pts: 2, status: 'qualifying' },
+        { code: 'IRN', name: 'Iran', flag: '🇮🇷', played: 2, won: 0, drawn: 2, lost: 0, gf: 2, ga: 2, gd: 0, pts: 2, status: 'qualifying' }
       ],
       matches: [
         { round: 1, date: 'Jun 15', home: 'BEL', away: 'EGY', homeScore: 1, awayScore: 1, status: 'completed' },
         { round: 1, date: 'Jun 15', home: 'IRN', away: 'NZL', homeScore: 2, awayScore: 2, status: 'completed', venue: 'Los Angeles' },
-        { round: 2, date: 'Jun 21', home: 'BEL', away: 'IRN', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Los Angeles' },
-        { round: 2, date: 'Jun 21', home: 'NZL', away: 'EGY', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Vancouver' },
+        { round: 2, date: 'Jun 21', home: 'BEL', away: 'IRN', homeScore: 0, awayScore: 0, status: 'completed', venue: 'Los Angeles' },
+        { round: 2, date: 'Jun 21', home: 'NZL', away: 'EGY', homeScore: 1, awayScore: 3, status: 'completed', venue: 'Vancouver' },
         { round: 3, date: 'Jun 26', home: 'EGY', away: 'IRN', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Seattle' },
         { round: 3, date: 'Jun 26', home: 'NZL', away: 'BEL', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Vancouver' }
       ]
@@ -138,16 +138,16 @@ const WC_DATA = {
     H: {
       name: 'Group H',
       teams: [
-        { code: 'ESP', name: 'Spain', flag: '🇪🇸', played: 1, won: 0, drawn: 1, lost: 0, gf: 0, ga: 0, gd: 0, pts: 1, status: 'qualifying' },
-        { code: 'CPV', name: 'Cabo Verde', flag: '🇨🇻', played: 1, won: 0, drawn: 1, lost: 0, gf: 0, ga: 0, gd: 0, pts: 1, status: 'qualifying' },
-        { code: 'KSA', name: 'Saudi Arabia', flag: '🇸🇦', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1, status: 'qualifying' },
-        { code: 'URU', name: 'Uruguay', flag: '🇺🇾', played: 1, won: 0, drawn: 1, lost: 0, gf: 1, ga: 1, gd: 0, pts: 1, status: 'qualifying' }
+        { code: 'ESP', name: 'Spain', flag: '🇪🇸', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 0, gd: 4, pts: 4, status: 'qualifying' },
+        { code: 'URU', name: 'Uruguay', flag: '🇺🇾', played: 2, won: 0, drawn: 2, lost: 0, gf: 3, ga: 3, gd: 0, pts: 2, status: 'qualifying' },
+        { code: 'CPV', name: 'Cabo Verde', flag: '🇨🇻', played: 2, won: 0, drawn: 2, lost: 0, gf: 2, ga: 2, gd: 0, pts: 2, status: 'qualifying' },
+        { code: 'KSA', name: 'Saudi Arabia', flag: '🇸🇦', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 5, gd: -4, pts: 1, status: 'qualifying' }
       ],
       matches: [
         { round: 1, date: 'Jun 15', home: 'ESP', away: 'CPV', homeScore: 0, awayScore: 0, status: 'completed' },
         { round: 1, date: 'Jun 15', home: 'KSA', away: 'URU', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Miami' },
-        { round: 2, date: 'Jun 21', home: 'ESP', away: 'KSA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Atlanta' },
-        { round: 2, date: 'Jun 21', home: 'URU', away: 'CPV', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Miami' },
+        { round: 2, date: 'Jun 21', home: 'ESP', away: 'KSA', homeScore: 4, awayScore: 0, status: 'completed', venue: 'Atlanta' },
+        { round: 2, date: 'Jun 21', home: 'URU', away: 'CPV', homeScore: 2, awayScore: 2, status: 'completed', venue: 'Miami' },
         { round: 3, date: 'Jun 26', home: 'CPV', away: 'KSA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Houston' },
         { round: 3, date: 'Jun 26', home: 'URU', away: 'ESP', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Guadalajara' }
       ]
@@ -231,32 +231,32 @@ const WC_DATA = {
     return null;
   },
 
-  // Top scorers (real data from ESPN API — computed via per-match summary endpoint)
+  // Top scorers (real data from ESPN API — 40 matches)
   topScorers: [
-    { rank: 1, name: 'Lionel Messi', team: 'ARG', flag: '🇦🇷', goals: 3, assists: 0, matches: 1 },
-    { rank: 2, name: 'Jonathan David', team: 'CAN', flag: '🇨🇦', goals: 3, assists: 0, matches: 1 },
-    { rank: 3, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 2, assists: 1, matches: 2 },
-    { rank: 4, name: 'Cyle Larin', team: 'CAN', flag: '🇨🇦', goals: 2, assists: 0, matches: 2 },
-    { rank: 5, name: 'Folarin Balogun', team: 'USA', flag: '🇺🇸', goals: 2, assists: 0, matches: 1 },
-    { rank: 6, name: 'Ismael Saibari', team: 'MAR', flag: '🇲🇦', goals: 2, assists: 0, matches: 2 },
-    { rank: 7, name: 'Yasin Ayari', team: 'SWE', flag: '🇸🇪', goals: 2, assists: 0, matches: 1 },
-    { rank: 8, name: 'Elijah Just', team: 'NZL', flag: '🇳🇿', goals: 2, assists: 0, matches: 1 },
-    { rank: 9, name: 'Kylian Mbappé', team: 'FRA', flag: '🇫🇷', goals: 2, assists: 0, matches: 1 },
-    { rank: 10, name: 'Erling Haaland', team: 'NOR', flag: '🇳🇴', goals: 2, assists: 0, matches: 1 }
+    { rank: 1, name: 'Deniz Undav', team: 'GER', flag: '🇩🇪', goals: 3, assists: 1, matches: 2 },
+    { rank: 2, name: 'Lionel Messi', team: 'ARG', flag: '🇦🇷', goals: 3, assists: 0, matches: 1 },
+    { rank: 3, name: 'Jonathan David', team: 'CAN', flag: '🇨🇦', goals: 3, assists: 0, matches: 1 },
+    { rank: 4, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 2, assists: 1, matches: 2 },
+    { rank: 5, name: 'Crysencio Summerville', team: 'NED', flag: '🇳🇱', goals: 2, assists: 1, matches: 2 },
+    { rank: 6, name: 'Cody Gakpo', team: 'NED', flag: '🇳🇱', goals: 2, assists: 1, matches: 1 },
+    { rank: 7, name: 'Mikel Oyarzabal', team: 'ESP', flag: '🇪🇸', goals: 2, assists: 1, matches: 1 },
+    { rank: 8, name: 'Cyle Larin', team: 'CAN', flag: '🇨🇦', goals: 2, assists: 0, matches: 2 },
+    { rank: 9, name: 'Folarin Balogun', team: 'USA', flag: '🇺🇸', goals: 2, assists: 0, matches: 1 },
+    { rank: 10, name: 'Ismael Saibari', team: 'MAR', flag: '🇲🇦', goals: 2, assists: 0, matches: 2 }
   ],
 
-  // Top assisters (real data from ESPN API — computed via per-match summary endpoint)
+  // Top assisters (real data from ESPN API — 40 matches)
   topAssisters: [
-    { rank: 1, name: 'Alexander Isak', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 2, matches: 1 },
+    { rank: 1, name: 'Alexander Isak', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 3, matches: 2 },
     { rank: 2, name: 'Julio Enciso', team: 'PAR', flag: '🇵🇾', goals: 0, assists: 2, matches: 2 },
     { rank: 3, name: 'Brahim Díaz', team: 'MAR', flag: '🇲🇦', goals: 0, assists: 2, matches: 2 },
     { rank: 4, name: 'Joshua Kimmich', team: 'GER', flag: '🇩🇪', goals: 0, assists: 2, matches: 1 },
     { rank: 5, name: 'Chris Wood', team: 'NZL', flag: '🇳🇿', goals: 0, assists: 2, matches: 1 },
-    { rank: 6, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 2, assists: 1, matches: 2 },
-    { rank: 7, name: 'Hwang In-Beom', team: 'KOR', flag: '🇰🇷', goals: 1, assists: 1, matches: 1 },
-    { rank: 8, name: 'Deniz Undav', team: 'GER', flag: '🇩🇪', goals: 1, assists: 1, matches: 1 },
-    { rank: 9, name: 'Viktor Gyökeres', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 1, matches: 1 },
-    { rank: 10, name: 'Luis Díaz', team: 'COL', flag: '🇨🇴', goals: 1, assists: 1, matches: 1 }
+    { rank: 6, name: 'Denzel Dumfries', team: 'NED', flag: '🇳🇱', goals: 0, assists: 2, matches: 1 },
+    { rank: 7, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 2, assists: 1, matches: 2 },
+    { rank: 8, name: 'Crysencio Summerville', team: 'NED', flag: '🇳🇱', goals: 2, assists: 1, matches: 2 },
+    { rank: 9, name: 'Cody Gakpo', team: 'NED', flag: '🇳🇱', goals: 2, assists: 1, matches: 1 },
+    { rank: 10, name: 'Deniz Undav', team: 'GER', flag: '🇩🇪', goals: 3, assists: 1, matches: 2 }
   ],
 
   // Big scorelines / upsets tracker
@@ -316,9 +316,9 @@ const WC_DATA = {
 
   // Stats summary
   stats: {
-    totalMatches: 32,
-    totalGoals: 96,
-    avgGoalsPerMatch: 3.00,
+    totalMatches: 40,
+    totalGoals: 121,
+    avgGoalsPerMatch: 3.02,
     mostGoalsMatch: 'Germany 7-1 Curaçao (8 goals)',
     biggestWin: 'Canada 6-0 Qatar (+6)',
     cleanSheets: 13,
