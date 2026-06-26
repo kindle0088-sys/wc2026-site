@@ -139,16 +139,6 @@ def update_match_in_content(content, home, away, hs, aws, status):
     return content, False
 
 
-def _parse_completed_matches(content):
-    """Parse all completed matches from content.
-    Returns list of (home_code, away_code, home_score, away_score)."""
-    pairs = re.findall(
-        r"home:\s*'(\w+)'\s*,\s*away:\s*'(\w+)'\s*,\s*homeScore:\s*(\d+),\s*awayScore:\s*(\d+),\s*status:\s*'completed'",
-        content
-    )
-    return [(h, a, int(hs), int(aws)) for h, a, hs, aws in pairs]
-
-
 def _get_team_name_map(content):
     """Build {code: name} map from team blocks."""
     names = {}
@@ -157,63 +147,87 @@ def _get_team_name_map(content):
     return names
 
 
+def _get_team_info_map(content):
+    """Build {code: {'name': name, 'flag': flag}} map from team blocks."""
+    info = {}
+    for m in re.finditer(r"\{\s*code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'\s*,\s*flag:\s*'([^']+)'", content):
+        info[m.group(1)] = {'name': m.group(2), 'flag': m.group(3)}
+    return info
+
+
+def _parse_team_entries(teams_block, team_info):
+    """Parse existing team entries from a teams array."""
+    entries = []
+    for m in re.finditer(r"\{\s*code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'\s*,\s*flag:\s*'([^']+)'", teams_block):
+        code, name, flag = m.groups()
+        sm = re.search(r"status:\s*'([^']+)'", teams_block[m.start():m.end()+80])
+        entries.append({'code': code, 'name': name, 'flag': flag,
+                        'status': sm.group(1) if sm else 'qualifying'})
+    return entries
+
+
+def _parse_completed_matches(matches_block):
+    """Parse completed matches from a matches array."""
+    matches = []
+    for m in re.finditer(
+        r"home:\s*'(\w+)'\s*,\s*away:\s*'(\w+)'\s*,\s*homeScore:\s*(\d+|null),\s*awayScore:\s*(\d+|null),\s*status:\s*'completed'",
+        matches_block
+    ):
+        h, a, hs_s, aws_s = m.groups()
+        if hs_s != 'null' and aws_s != 'null':
+            matches.append((h, a, int(hs_s), int(aws_s)))
+    return matches
+
+
 def update_standings_in_content(content):
-    """Recalculate all group standings from completed matches."""
+    """Recalculate all group standings from completed matches, adding missing teams when needed."""
     tn = _get_team_name_map(content)
+    team_info = _get_team_info_map(content)
     result = content
     for g in 'ABCDEFGHIJKL':
-        hdr = f'\n    {g}: {{\n'
-        idx = result.find(hdr)
-        if idx < 0:
+        m = re.search(rf"\n    {g}: \{{(?P<body>.*?)(?=\n    [A-Z]: \{{|\n  \}},\n|\Z)", result, re.S)
+        if not m:
             continue
-        teams_start = result.find('teams: [', idx)
-        if teams_start < 0:
+        body = m.group('body')
+        body_start = m.start('body')
+        body_end = m.end('body')
+        teams_start = body.find('teams: [')
+        teams_end = body.find('\n      ],', teams_start)
+        matches_start = body.find('matches: [')
+        matches_end = body.find('\n      ],', matches_start)
+        if teams_start < 0 or teams_end < 0 or matches_start < 0 or matches_end < 0:
             continue
-        teams_end = result.find('\n      ],', teams_start)
-        if teams_end < 0:
-            continue
-        m_end = result.find('\n    },', teams_start)
-        if m_end < 0:
-            m_end = result.find('\n  },\n', teams_start)
-        if m_end < 0:
-            continue
-        teams_block = result[teams_start+9:teams_end]
-        matches_block = result[result.find('matches: [', teams_start)+10:m_end]
-        team_entries = []
-        for tm in re.finditer(
-            r"\{\s*code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'\s*,\s*flag:\s*'([^']+)'",
-            teams_block
-        ):
-            code = tm.group(1); name = tm.group(2); flag = tm.group(3)
-            sm = re.search(r"status:\s*'([^']+)'", teams_block[tm.start():tm.end()+60])
-            team_entries.append({'code': code, 'name': name, 'flag': flag,
-                                'status': sm.group(1) if sm else 'qualifying'})
-            tn[code] = name
-        if not team_entries:
-            continue
-        completed = []
-        for mm in re.finditer(
-            r"home:\s*'(\w+)'\s*,\s*away:\s*'(\w+)'\s*,\s*homeScore:\s*(\d+|null),\s*awayScore:\s*(\d+|null),\s*status:\s*'completed'",
-            matches_block
-        ):
-            hs_s = mm.group(3); aws_s = mm.group(4)
-            if hs_s != 'null' and aws_s != 'null':
-                completed.append((mm.group(1), mm.group(2), int(hs_s), int(aws_s)))
+        teams_block = body[teams_start+len('teams: ['):teams_end]
+        matches_block = body[matches_start+len('matches: ['):matches_end]
+        team_entries = _parse_team_entries(teams_block, team_info)
+        completed = _parse_completed_matches(matches_block)
+        team_codes = {te['code'] for te in team_entries}
+        for h, a, hs, aws in completed:
+            for code in (h, a):
+                if code not in team_codes:
+                    info = team_info.get(code, {'name': code, 'flag': '🏳️'})
+                    team_entries.append({'code': code, 'name': info['name'], 'flag': info['flag'], 'status': 'qualifying'})
+                    team_codes.add(code)
         stats = {te['code']: {'p': 0, 'w': 0, 'd': 0, 'l': 0, 'gf': 0, 'ga': 0, 'gd': 0, 'pts': 0}
                  for te in team_entries}
         for h, a, hs, aws in completed:
-            for code, hsi, awi in [(h, hs, aws), (a, aws, hs)]:
+            for code, scored, conceded in [(h, hs, aws), (a, aws, hs)]:
                 if code in stats:
-                    s = stats[code]; s['p'] += 1; s['gf'] += hsi; s['ga'] += awi
-                    if hsi > awi:
-                        s['w'] += 1; s['pts'] += 3
-                    elif hsi < awi:
+                    s = stats[code]
+                    s['p'] += 1
+                    s['gf'] += scored
+                    s['ga'] += conceded
+                    if scored > conceded:
+                        s['w'] += 1
+                        s['pts'] += 3
+                    elif scored < conceded:
                         s['l'] += 1
                     else:
-                        s['d'] += 1; s['pts'] += 1
+                        s['d'] += 1
+                        s['pts'] += 1
         for code, s in stats.items():
             s['gd'] = s['gf'] - s['ga']
-        team_entries.sort(key=lambda t: (-stats[t['code']]['pts'], -stats[t['code']]['gd'], -stats[t['code']]['gf']))
+        team_entries.sort(key=lambda t: (-stats[t['code']]['pts'], -stats[t['code']]['gd'], -stats[t['code']]['gf'], t['code']))
         new_lines = []
         for te in team_entries:
             s = stats[te['code']]
@@ -222,9 +236,9 @@ def update_standings_in_content(content):
                   f"gf: {s['gf']}, ga: {s['ga']}, gd: {s['gd']}, pts: {s['pts']}, "
                   f"status: '{te['status']}' }},")
             new_lines.append(ml)
-        old_block = result[teams_start:teams_end + 11]
-        new_block = f"teams: [\n" + '\n'.join(new_lines) + f"\n      ],"
-        result = result[:teams_start] + new_block + result[teams_end + 11:]
+        new_teams_block = 'teams: [\n' + '\n'.join(new_lines) + '\n      ],'
+        body = body[:teams_start] + new_teams_block + body[teams_end+len('\n      ],'):]
+        result = result[:body_start] + body + result[body_end:]
     return result
 
 
