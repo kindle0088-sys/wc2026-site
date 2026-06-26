@@ -85,6 +85,7 @@ const WC_DATA = {
       name: 'Group E',
       teams: [
         { code: 'GER', name: 'Germany', flag: '🇩🇪', played: 3, won: 2, drawn: 0, lost: 1, gf: 10, ga: 4, gd: 6, pts: 6, status: 'qualifying' },
+        { code: 'CIV', name: 'Côte d’Ivoire', flag: '🇨🇮', played: 3, won: 2, drawn: 0, lost: 1, gf: 4, ga: 2, gd: 2, pts: 6, status: 'qualifying' },
         { code: 'ECU', name: 'Ecuador', flag: '🇪🇨', played: 3, won: 1, drawn: 1, lost: 1, gf: 2, ga: 2, gd: 0, pts: 4, status: 'qualifying' },
         { code: 'CUW', name: 'Curaçao', flag: '🇨🇼', played: 3, won: 0, drawn: 1, lost: 2, gf: 1, ga: 9, gd: -8, pts: 1, status: 'qualifying' },
       ], matches: [
