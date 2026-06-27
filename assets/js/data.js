@@ -1,10 +1,10 @@
 /**
  * 2026 FIFA World Cup - Complete Data
- * Last updated: June 26, 2026 at 15:21
+ * Last updated: June 27, 2026 at 06:05
  */
 
 const WC_DATA = {
-  lastUpdated: 'June 26, 2026 at 15:21',
+  lastUpdated: 'June 27, 2026 at 06:05',
   tournament: {
     name: '2026 FIFA World Cup',
     host: 'Canada · Mexico · USA',
@@ -125,8 +125,8 @@ const WC_DATA = {
         { round: 1, date: 'Jun 15', home: 'IRN', away: 'NZL', homeScore: 2, awayScore: 2, status: 'completed', venue: 'Los Angeles' },
         { round: 2, date: 'Jun 21', home: 'BEL', away: 'IRN', homeScore: 0, awayScore: 0, status: 'completed', venue: 'Los Angeles' },
         { round: 2, date: 'Jun 21', home: 'NZL', away: 'EGY', homeScore: 1, awayScore: 3, status: 'completed', venue: 'Vancouver' },
-        { round: 3, date: 'Jun 26', home: 'EGY', away: 'IRN', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Seattle' },
-        { round: 3, date: 'Jun 26', home: 'NZL', away: 'BEL', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Vancouver' }
+        { round: 3, date: 'Jun 26', home: 'EGY', away: 'IRN', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Seattle' },
+        { round: 3, date: 'Jun 26', home: 'NZL', away: 'BEL', homeScore: 1, awayScore: 5, status: 'completed', venue: 'Vancouver' }
       ]
     },
     H: {
@@ -141,8 +141,8 @@ const WC_DATA = {
         { round: 1, date: 'Jun 15', home: 'KSA', away: 'URU', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Miami' },
         { round: 2, date: 'Jun 21', home: 'ESP', away: 'KSA', homeScore: 4, awayScore: 0, status: 'completed', venue: 'Atlanta' },
         { round: 2, date: 'Jun 21', home: 'URU', away: 'CPV', homeScore: 2, awayScore: 2, status: 'completed', venue: 'Miami' },
-        { round: 3, date: 'Jun 26', home: 'CPV', away: 'KSA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Houston' },
-        { round: 3, date: 'Jun 26', home: 'URU', away: 'ESP', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Guadalajara' }
+        { round: 3, date: 'Jun 26', home: 'CPV', away: 'KSA', homeScore: 0, awayScore: 0, status: 'completed', venue: 'Houston' },
+        { round: 3, date: 'Jun 26', home: 'URU', away: 'ESP', homeScore: 0, awayScore: 1, status: 'completed', venue: 'Guadalajara' }
       ]
     },
     I: {
@@ -157,8 +157,8 @@ const WC_DATA = {
         { round: 1, date: 'Jun 16', home: 'IRQ', away: 'NOR', homeScore: 1, awayScore: 4, status: 'completed', venue: 'Boston', time: '18:00 EDT' },
         { round: 2, date: 'Jun 22', home: 'FRA', away: 'IRQ', homeScore: 3, awayScore: 0, status: 'completed', venue: 'Philadelphia' },
         { round: 2, date: 'Jun 22', home: 'NOR', away: 'SEN', homeScore: 3, awayScore: 2, status: 'completed', venue: 'NY/NJ' },
-        { round: 3, date: 'Jun 26', home: 'NOR', away: 'FRA', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Boston' },
-        { round: 3, date: 'Jun 26', home: 'SEN', away: 'IRQ', homeScore: null, awayScore: null, status: 'upcoming', venue: 'Toronto' }
+        { round: 3, date: 'Jun 26', home: 'NOR', away: 'FRA', homeScore: 1, awayScore: 4, status: 'completed', venue: 'Boston' },
+        { round: 3, date: 'Jun 26', home: 'SEN', away: 'IRQ', homeScore: 5, awayScore: 0, status: 'completed', venue: 'Toronto' }
       ]
     },
     J: {
@@ -345,15 +345,15 @@ const WC_DATA = {
 
   // Stats summary
   stats: {
-    totalMatches: 60,
-    totalGoals: 177,
-    avgGoalsPerMatch: 2.95,
+    totalMatches: 66,
+    totalGoals: 196,
+    avgGoalsPerMatch: 2.97,
     mostGoalsMatch: 'Germany 7-1 Curaçao (8 goals)',
     biggestWin: 'Canada 6-0 Qatar (+6)',
-    cleanSheets: 28,
-    draws: 16,
-    homeWins: 31,
-    awayWins: 13
+    cleanSheets: 31,
+    draws: 18,
+    homeWins: 32,
+    awayWins: 16
   },
 
   // V2: Blog / News articles — 7 articles (match reports)
