@@ -220,7 +220,7 @@ const WC_DATA = {
     return null;
   },
 
-  // Top scorers (updated from ESPN API — all 72 matches)
+  // Top scorers (auto-generated from ESPN summary API)
   topScorers: [
     { rank: 1, name: 'Lionel Messi', team: 'ARG', flag: '🇦🇷', goals: 6, assists: 0, matches: 0 },
     { rank: 2, name: 'Kylian Mbappé', team: 'FRA', flag: '🇫🇷', goals: 4, assists: 2, matches: 0 },
@@ -232,14 +232,9 @@ const WC_DATA = {
     { rank: 8, name: 'Johan Manzambi', team: 'SUI', flag: '🇨🇭', goals: 3, assists: 1, matches: 0 },
     { rank: 9, name: 'Brian Brobbey', team: 'NED', flag: '🇳🇱', goals: 3, assists: 0, matches: 0 },
     { rank: 10, name: 'Matheus Cunha', team: 'BRA', flag: '🇧🇷', goals: 3, assists: 0, matches: 0 },
-    { rank: 11, name: 'Jonathan David', team: 'CAN', flag: '🇨🇦', goals: 3, assists: 0, matches: 0 },
-    { rank: 12, name: 'Harry Kane', team: 'ENG', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', goals: 3, assists: 0, matches: 0 },
-    { rank: 13, name: 'Yoane Wissa', team: 'COD', flag: '🇨🇩', goals: 3, assists: 0, matches: 0 },
-    { rank: 14, name: 'Elijah Just', team: 'NZL', flag: '🇳🇿', goals: 3, assists: 0, matches: 0 },
-    { rank: 15, name: 'Ismael Saibari', team: 'MAR', flag: '🇲🇦', goals: 3, assists: 0, matches: 0 },
   ],
 
-  // Top assisters (updated from ESPN API — all 72 matches)
+  // Top assisters (auto-generated from ESPN summary API)
   topAssisters: [
     { rank: 1, name: 'Alexander Isak', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 3, matches: 0 },
     { rank: 2, name: 'Bruno Guimarães', team: 'BRA', flag: '🇧🇷', goals: 0, assists: 3, matches: 0 },

@@ -310,6 +310,142 @@ def update_knockout_progression(content):
     return _advance_knockout_winners(content)
 
 
+def update_scorers_in_content(content):
+    """Fetch ESPN summary for all completed matches, extract top scorers & assisters.
+
+    Replaces the topScorers and topAssisters arrays in data.js with fresh data
+    from ESPN summary API (athletesInvolved in scoringPlay details).
+    Returns updated content.
+    """
+    import time as _time
+
+    # 1. Fetch all completed match event IDs from scoreboard API
+    log('Fetching scorers data from ESPN summary API...')
+    start = datetime.strptime(TOURNAMENT_START, '%Y-%m-%d')
+    end = datetime.utcnow() + timedelta(days=1)
+    event_ids = []
+    cur = start
+    while cur <= end:
+        ds = cur.strftime('%Y%m%d')
+        data = fetch(f'{ESPN_URL}?dates={ds}')
+        if data and 'events' in data:
+            for ev in data['events']:
+                comp = ev.get('competitions', [{}])[0]
+                st_id = (comp.get('status') or {}).get('type', {}).get('id', '0')
+                if st_id == '28':  # completed
+                    event_ids.append(ev['id'])
+        cur += timedelta(days=1)
+
+    if not event_ids:
+        log('No completed matches found for scorers update.')
+        return content
+
+    log(f'  Found {len(event_ids)} completed matches, fetching details...')
+
+    # 2. Fetch summary for each match to get athletesInvolved
+    scorer_map = {}  # name|team -> {name, team, goals, assists}
+    assist_map = {}  # name|team -> {name, team, goals, assists}
+    ok_count = 0
+
+    for eid in event_ids:
+        try:
+            req = urllib.request.Request(
+                f'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event={eid}',
+                headers={'User-Agent': 'WC2026-v3/1.0'}
+            )
+            with urllib.request.urlopen(req, timeout=10) as r:
+                sd = json.loads(r.read().decode())
+            details = (sd.get('header', {}).get('competitions', [{}])[0] or {}).get('details', [])
+            for d in details:
+                if not d.get('scoringPlay'):
+                    continue
+                team_obj = d.get('team', {})
+                team_abbr = team_obj.get('abbreviation', '')
+                athletes = d.get('athletesInvolved', [])
+                if not team_abbr and athletes:
+                    # Fallback: try to get abbreviation from athlete's team
+                    team_abbr = (athletes[0].get('team') or {}).get('abbreviation', '')
+                if not team_abbr:
+                    continue  # Skip if we can't determine team
+                if athletes and athletes[0].get('displayName'):
+                    scorer_name = athletes[0]['displayName']
+                    skey = f'{scorer_name}|{team_abbr}'
+                    if skey not in scorer_map:
+                        scorer_map[skey] = {'name': scorer_name, 'team': team_abbr, 'goals': 0, 'assists': 0}
+                    scorer_map[skey]['goals'] += 1
+                if len(athletes) > 1 and athletes[1].get('displayName'):
+                    assist_name = athletes[1]['displayName']
+                    akey = f'{assist_name}|{team_abbr}'
+                    if akey not in assist_map:
+                        assist_map[akey] = {'name': assist_name, 'team': team_abbr, 'goals': 0, 'assists': 0}
+                    assist_map[akey]['assists'] += 1
+                    # Also ensure assister appears in scorer_map (for combined stats)
+                    if akey not in scorer_map:
+                        scorer_map[akey] = {'name': assist_name, 'team': team_abbr, 'goals': 0, 'assists': 0}
+                    scorer_map[akey]['assists'] += 1
+            ok_count += 1
+            if ok_count % 20 == 0:
+                log(f'  Scorers: {ok_count}/{len(event_ids)} matches processed')
+            _time.sleep(0.1)  # rate limit
+        except Exception:
+            pass
+
+    log(f'  Processed {ok_count}/{len(event_ids)} matches for scorers/assists')
+
+    if ok_count == 0:
+        return content
+
+    # 3. Build sorted top 10 lists
+    all_players = list(scorer_map.values())
+    # Merge assists from assist_map for players who only appear as scorers
+    for p in all_players:
+        pkey = f'{p["name"]}|{p["team"]}'
+        if pkey in assist_map:
+            p['assists'] = assist_map[pkey]['assists']
+
+    top_scorers = sorted(all_players, key=lambda x: (-x['goals'], -x['assists']))[:10]
+    top_assisters = sorted(all_players, key=lambda x: (-x['assists'], -x['goals']))[:10]
+
+    # 4. Build flag lookup from data.js content
+    flag_map = {}
+    for m in re.finditer(r"code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'\s*,\s*flag:\s*'([^']+)'", content):
+        flag_map[m.group(1)] = {'name': m.group(2), 'flag': m.group(3)}
+
+    def fmt_entry(entry, idx):
+        team_info = flag_map.get(entry['team'], {'flag': '🏳️', 'name': entry['team']})
+        return (f"    {{ rank: {idx}, name: '{entry['name']}', team: '{entry['team']}', "
+                f"flag: '{team_info['flag']}', goals: {entry['goals']}, "
+                f"assists: {entry['assists']}, matches: 0 }}")
+
+    scorers_lines = [fmt_entry(e, i+1) for i, e in enumerate(top_scorers)]
+    assisters_lines = [fmt_entry(e, i+1) for i, e in enumerate(top_assisters)]
+
+    scorers_block = ('  // Top scorers (auto-generated from ESPN summary API)\n'
+                     '  topScorers: [\n' + ',\n'.join(scorers_lines) + '\n  ],')
+    assisters_block = ('  // Top assisters (auto-generated from ESPN summary API)\n'
+                       '  topAssisters: [\n' + ',\n'.join(assisters_lines) + '\n  ],')
+
+    # 5. Replace in content using regex
+    # Replace topScorers block
+    content = re.sub(
+        r'  // Top scorers.*?\n  topScorers: \[.*?\],',
+        scorers_block,
+        content,
+        flags=re.DOTALL
+    )
+    # Replace topAssisters block
+    content = re.sub(
+        r'  // Top assisters.*?\n  topAssisters: \[.*?\],',
+        assisters_block,
+        content,
+        flags=re.DOTALL
+    )
+
+    log(f'  Top scorer: {top_scorers[0]["name"]} ({top_scorers[0]["goals"]}G)')
+    log(f'  Top assister: {top_assisters[0]["name"]} ({top_assisters[0]["assists"]}A)')
+    return content
+
+
 def update_stats_in_content(content):
     """Recount completed matches and compute ALL stats (8 fields).
     Returns (new_content, total, goals, avg).
@@ -478,11 +614,10 @@ def main():
     # Knockout stage: update filled-in knockout teams from ESPN
     # This handles the case where ESPN already assigned specific teams to R16/QF/SF/F
     content = update_knockout_progression(content)
-    log('Knockout teams updated from ESPN bracket')
-
-    # Advance winners: when a knockout match completes, fill winner into next round
-    content = update_progression_in_content_v2(content)
     log('Knockout progression updated (winners advanced)')
+
+    # Update top scorers & assisters from ESPN summary API
+    content = update_scorers_in_content(content)
 
     # Update timestamp
     content, ts = update_timestamp(content)
