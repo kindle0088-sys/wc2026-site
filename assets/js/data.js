@@ -220,32 +220,37 @@ const WC_DATA = {
     return null;
   },
 
-  // Top scorers (real data from ESPN API — 40 matches)
+  // Top scorers (updated from ESPN API — all 72 matches)
   topScorers: [
-    { rank: 1, name: 'Deniz Undav', team: 'GER', flag: '🇩🇪', goals: 3, assists: 1, matches: 2 },
-    { rank: 2, name: 'Lionel Messi', team: 'ARG', flag: '🇦🇷', goals: 3, assists: 0, matches: 1 },
-    { rank: 3, name: 'Jonathan David', team: 'CAN', flag: '🇨🇦', goals: 3, assists: 0, matches: 1 },
-    { rank: 4, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 2, assists: 1, matches: 2 },
-    { rank: 5, name: 'Crysencio Summerville', team: 'NED', flag: '🇳🇱', goals: 2, assists: 1, matches: 2 },
-    { rank: 6, name: 'Cody Gakpo', team: 'NED', flag: '🇳🇱', goals: 2, assists: 1, matches: 1 },
-    { rank: 7, name: 'Mikel Oyarzabal', team: 'ESP', flag: '🇪🇸', goals: 2, assists: 1, matches: 1 },
-    { rank: 8, name: 'Cyle Larin', team: 'CAN', flag: '🇨🇦', goals: 2, assists: 0, matches: 2 },
-    { rank: 9, name: 'Folarin Balogun', team: 'USA', flag: '🇺🇸', goals: 2, assists: 0, matches: 1 },
-    { rank: 10, name: 'Ismael Saibari', team: 'MAR', flag: '🇲🇦', goals: 2, assists: 0, matches: 2 }
+    { rank: 1, name: 'Lionel Messi', team: 'ARG', flag: '🇦🇷', goals: 6, assists: 0, matches: 0 },
+    { rank: 2, name: 'Kylian Mbappé', team: 'FRA', flag: '🇫🇷', goals: 4, assists: 2, matches: 0 },
+    { rank: 3, name: 'Ousmane Dembélé', team: 'FRA', flag: '🇫🇷', goals: 4, assists: 1, matches: 0 },
+    { rank: 4, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 4, assists: 1, matches: 0 },
+    { rank: 5, name: 'Erling Haaland', team: 'NOR', flag: '🇳🇴', goals: 4, assists: 0, matches: 0 },
+    { rank: 6, name: 'Deniz Undav', team: 'GER', flag: '🇩🇪', goals: 3, assists: 2, matches: 0 },
+    { rank: 7, name: 'Ismaïla Sarr', team: 'SEN', flag: '🇸🇳', goals: 3, assists: 1, matches: 0 },
+    { rank: 8, name: 'Johan Manzambi', team: 'SUI', flag: '🇨🇭', goals: 3, assists: 1, matches: 0 },
+    { rank: 9, name: 'Brian Brobbey', team: 'NED', flag: '🇳🇱', goals: 3, assists: 0, matches: 0 },
+    { rank: 10, name: 'Matheus Cunha', team: 'BRA', flag: '🇧🇷', goals: 3, assists: 0, matches: 0 },
+    { rank: 11, name: 'Jonathan David', team: 'CAN', flag: '🇨🇦', goals: 3, assists: 0, matches: 0 },
+    { rank: 12, name: 'Harry Kane', team: 'ENG', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', goals: 3, assists: 0, matches: 0 },
+    { rank: 13, name: 'Yoane Wissa', team: 'COD', flag: '🇨🇩', goals: 3, assists: 0, matches: 0 },
+    { rank: 14, name: 'Elijah Just', team: 'NZL', flag: '🇳🇿', goals: 3, assists: 0, matches: 0 },
+    { rank: 15, name: 'Ismael Saibari', team: 'MAR', flag: '🇲🇦', goals: 3, assists: 0, matches: 0 },
   ],
 
-  // Top assisters (real data from ESPN API — 48 matches)
+  // Top assisters (updated from ESPN API — all 72 matches)
   topAssisters: [
-    { rank: 1, name: 'Alexander Isak', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 3, matches: 2 },
-    { rank: 2, name: 'Julio Enciso', team: 'PAR', flag: '🇵🇾', goals: 0, assists: 2, matches: 2 },
-    { rank: 3, name: 'Brahim Díaz', team: 'MAR', flag: '🇲🇦', goals: 0, assists: 2, matches: 2 },
-    { rank: 4, name: 'Joshua Kimmich', team: 'GER', flag: '🇩🇪', goals: 0, assists: 2, matches: 1 },
-    { rank: 5, name: 'Chris Wood', team: 'NZL', flag: '🇳🇿', goals: 0, assists: 2, matches: 1 },
-    { rank: 6, name: 'Denzel Dumfries', team: 'NED', flag: '🇳🇱', goals: 0, assists: 2, matches: 1 },
-    { rank: 7, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 2, assists: 1, matches: 2 },
-    { rank: 8, name: 'Crysencio Summerville', team: 'NED', flag: '🇳🇱', goals: 2, assists: 1, matches: 2 },
-    { rank: 9, name: 'Cody Gakpo', team: 'NED', flag: '🇳🇱', goals: 2, assists: 1, matches: 1 },
-    { rank: 10, name: 'Deniz Undav', team: 'GER', flag: '🇩🇪', goals: 3, assists: 1, matches: 2 }
+    { rank: 1, name: 'Alexander Isak', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 3, matches: 0 },
+    { rank: 2, name: 'Bruno Guimarães', team: 'BRA', flag: '🇧🇷', goals: 0, assists: 3, matches: 0 },
+    { rank: 3, name: 'Michael Olise', team: 'FRA', flag: '🇫🇷', goals: 0, assists: 3, matches: 0 },
+    { rank: 4, name: 'Kylian Mbappé', team: 'FRA', flag: '🇫🇷', goals: 4, assists: 2, matches: 0 },
+    { rank: 5, name: 'Deniz Undav', team: 'GER', flag: '🇩🇪', goals: 3, assists: 2, matches: 0 },
+    { rank: 6, name: 'Breel Embolo', team: 'SUI', flag: '🇨🇭', goals: 1, assists: 2, matches: 0 },
+    { rank: 7, name: 'Viktor Gyökeres', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 2, matches: 0 },
+    { rank: 8, name: 'Mohamed Salah', team: 'EGY', flag: '🇪🇬', goals: 1, assists: 2, matches: 0 },
+    { rank: 9, name: 'Iliman Ndiaye', team: 'SEN', flag: '🇸🇳', goals: 1, assists: 2, matches: 0 },
+    { rank: 10, name: 'Nathan Saliba', team: 'CAN', flag: '🇨🇦', goals: 1, assists: 2, matches: 0 },
   ],
 
   // Big scorelines / upsets tracker
