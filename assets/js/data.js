@@ -1,10 +1,10 @@
 /**
  * 2026 FIFA World Cup - Complete Data
- * Last updated: June 28, 2026 at 15:52
+ * Last updated: June 28, 2026 at 16:02
  */
 
 const WC_DATA = {
-  lastUpdated: 'June 28, 2026 at 15:52',
+  lastUpdated: 'June 28, 2026 at 16:02',
   tournament: {
     name: '2026 FIFA World Cup',
     host: 'Canada · Mexico · USA',
