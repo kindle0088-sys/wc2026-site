@@ -315,7 +315,7 @@ def update_scorers_in_content(content):
     """Fetch ESPN summary for all completed matches, extract top scorers & assisters.
 
     Replaces the topScorers and topAssisters arrays in data.js with fresh data
-    from ESPN summary API (athletesInvolved in scoringPlay details).
+    from ESPN summary API (participants in scoringPlay details).
     Returns updated content.
     """
     import time as _time
@@ -362,20 +362,20 @@ def update_scorers_in_content(content):
                     continue
                 team_obj = d.get('team', {})
                 team_abbr = team_obj.get('abbreviation', '')
-                athletes = d.get('athletesInvolved', [])
+                athletes = d.get('participants', [])
                 if not team_abbr and athletes:
                     # Fallback: try to get abbreviation from athlete's team
-                    team_abbr = (athletes[0].get('team') or {}).get('abbreviation', '')
+                    team_abbr = ((athletes[0].get('athlete') or {}).get('team') or {}).get('abbreviation', '')
                 if not team_abbr:
                     continue  # Skip if we can't determine team
-                if athletes and athletes[0].get('displayName'):
-                    scorer_name = athletes[0]['displayName']
+                if athletes and (athletes[0].get('athlete') or {}).get('displayName'):
+                    scorer_name = athletes[0]['athlete']['displayName']
                     skey = f'{scorer_name}|{team_abbr}'
                     if skey not in scorer_map:
                         scorer_map[skey] = {'name': scorer_name, 'team': team_abbr, 'goals': 0, 'assists': 0}
                     scorer_map[skey]['goals'] += 1
-                if len(athletes) > 1 and athletes[1].get('displayName'):
-                    assist_name = athletes[1]['displayName']
+                if len(athletes) > 1 and (athletes[1].get('athlete') or {}).get('displayName'):
+                    assist_name = athletes[1]['athlete']['displayName']
                     akey = f'{assist_name}|{team_abbr}'
                     if akey not in assist_map:
                         assist_map[akey] = {'name': assist_name, 'team': team_abbr, 'goals': 0, 'assists': 0}
