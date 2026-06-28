@@ -185,6 +185,8 @@
       font-weight: 600;
       font-size: 0.95rem;
     }
+    .r32-card .flag { font-size: 1.2rem; line-height: 1; }
+    .r32-card .team-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .r32-card .score {
       font-size: 1.1rem;
       font-weight: 800;
@@ -229,9 +231,8 @@
 
     @media (max-width: 768px) {
       .r32-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 768px) {
+      .r32-card .team-name { display: none; }
+      .r32-card .teams { gap: 0.25rem; }
       .hero h1 { font-size: 1.8rem; }
       .hero .emblem { font-size: 3rem; }
       .hero { padding: 2rem 1rem; margin-top: 1rem; }
@@ -337,10 +338,21 @@
       if (!grid) return;
       const r32 = WC_DATA.knockout.roundOf32;
       const statusMap = {completed:'FT', live:'LIVE', pending:''};
+      // Build team lookup: code → {flag, name}
+      const teamLookup = {};
+      for (const g of Object.values(WC_DATA.groups)) {
+        for (const t of g.teams) {
+          teamLookup[t.code] = { flag: t.flag, name: t.name };
+        }
+      }
+      const renderTeam = (code) => {
+        const t = teamLookup[code] || { flag: '🏳️', name: code };
+        return '<span class="team"><span class="flag">' + t.flag + '</span><span class="team-name">' + t.name + '</span></span>';
+      };
       grid.innerHTML = r32.map(m => {
         const sc = m.status === 'pending' ? '<span class="vs">VS</span>' : '<span class="score">' + (m.homeScore ?? '-') + '-' + (m.awayScore ?? '-') + '</span>';
         const badge = '<span class="status-badge ' + m.status + '">' + (statusMap[m.status] || m.date) + '</span>';
-        return '<div class="r32-card"><span class="match-id">' + m.id.replace('R32-','M') + '</span><div class="teams"><span class="team">' + m.home + '</span>' + sc + '<span class="team">' + m.away + '</span></div>' + badge + '</div>';
+        return '<div class="r32-card"><span class="match-id">' + m.id.replace('R32-','M') + '</span><div class="teams">' + renderTeam(m.home) + sc + renderTeam(m.away) + '</div>' + badge + '</div>';
       }).join('');
       // Update footer date
       const fd = document.getElementById('footer-date');
