@@ -7,6 +7,7 @@ WC2026 — ESPN → data.js 自动刷新脚本
   python3 tools/refresh_data.py --all               # + 更新 HTML 版本和时间戳
   python3 tools/refresh_data.py --dry-run           # 试运行，不写文件
   python3 tools/refresh_data.py --push              # + git commit + push
+  python3 tools/refresh_data.py --no-scorers        # 跳过射手榜/助攻榜更新（快速模式）
 """
 
 import json
@@ -50,7 +51,7 @@ def ok(msg):
 def fetch(url):
     req = urllib.request.Request(url, headers={'User-Agent': 'WC2026-v3/1.0'})
     try:
-        with urllib.request.urlopen(req, timeout=15) as r:
+        with urllib.request.urlopen(req, timeout=25) as r:
             return json.loads(r.read().decode())
     except Exception as e:
         wrn(f'Fetch failed: {url[:60]} — {e}')
@@ -353,7 +354,7 @@ def update_scorers_in_content(content):
                 f'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event={eid}',
                 headers={'User-Agent': 'WC2026-v3/1.0'}
             )
-            with urllib.request.urlopen(req, timeout=10) as r:
+            with urllib.request.urlopen(req, timeout=30) as r:
                 sd = json.loads(r.read().decode())
             details = (sd.get('header', {}).get('competitions', [{}])[0] or {}).get('details', [])
             for d in details:
@@ -386,7 +387,7 @@ def update_scorers_in_content(content):
             ok_count += 1
             if ok_count % 20 == 0:
                 log(f'  Scorers: {ok_count}/{len(event_ids)} matches processed')
-            _time.sleep(0.1)  # rate limit
+            _time.sleep(0.05)  # rate limit
         except Exception:
             pass
 
@@ -558,6 +559,7 @@ def main():
     dry = '--dry-run' in sys.argv
     full = '--all' in sys.argv
     push = '--push' in sys.argv
+    no_scorers = '--no-scorers' in sys.argv
     if not dry:
         shutil.copy2(DATA_FILE, BACKUP_FILE)
 
@@ -617,7 +619,10 @@ def main():
     log('Knockout progression updated (winners advanced)')
 
     # Update top scorers & assisters from ESPN summary API
-    content = update_scorers_in_content(content)
+    if no_scorers:
+        log('Skipping scorers update (--no-scorers)')
+    else:
+        content = update_scorers_in_content(content)
 
     # Update timestamp
     content, ts = update_timestamp(content)
