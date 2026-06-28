@@ -1,10 +1,10 @@
 /**
  * 2026 FIFA World Cup - Complete Data
- * Last updated: June 28, 2026 at 09:52
+ * Last updated: June 28, 2026 at 15:52
  */
 
 const WC_DATA = {
-  lastUpdated: 'June 28, 2026 at 09:52',
+  lastUpdated: 'June 28, 2026 at 15:52',
   tournament: {
     name: '2026 FIFA World Cup',
     host: 'Canada · Mexico · USA',
@@ -224,14 +224,14 @@ const WC_DATA = {
   topScorers: [
     { rank: 1, name: 'Lionel Messi', team: 'ARG', flag: '🇦🇷', goals: 6, assists: 0, matches: 0 },
     { rank: 2, name: 'Kylian Mbappé', team: 'FRA', flag: '🇫🇷', goals: 4, assists: 2, matches: 0 },
-    { rank: 3, name: 'Ousmane Dembélé', team: 'FRA', flag: '🇫🇷', goals: 4, assists: 1, matches: 0 },
-    { rank: 4, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 4, assists: 1, matches: 0 },
+    { rank: 3, name: 'Vinícius Júnior', team: 'BRA', flag: '🇧🇷', goals: 4, assists: 1, matches: 0 },
+    { rank: 4, name: 'Ousmane Dembélé', team: 'FRA', flag: '🇫🇷', goals: 4, assists: 1, matches: 0 },
     { rank: 5, name: 'Erling Haaland', team: 'NOR', flag: '🇳🇴', goals: 4, assists: 0, matches: 0 },
     { rank: 6, name: 'Deniz Undav', team: 'GER', flag: '🇩🇪', goals: 3, assists: 2, matches: 0 },
-    { rank: 7, name: 'Ismaïla Sarr', team: 'SEN', flag: '🇸🇳', goals: 3, assists: 1, matches: 0 },
-    { rank: 8, name: 'Johan Manzambi', team: 'SUI', flag: '🇨🇭', goals: 3, assists: 1, matches: 0 },
-    { rank: 9, name: 'Brian Brobbey', team: 'NED', flag: '🇳🇱', goals: 3, assists: 0, matches: 0 },
-    { rank: 10, name: 'Matheus Cunha', team: 'BRA', flag: '🇧🇷', goals: 3, assists: 0, matches: 0 },
+    { rank: 7, name: 'Johan Manzambi', team: 'SUI', flag: '🇨🇭', goals: 3, assists: 1, matches: 0 },
+    { rank: 8, name: 'Ismaïla Sarr', team: 'SEN', flag: '🇸🇳', goals: 3, assists: 1, matches: 0 },
+    { rank: 9, name: 'Ismael Saibari', team: 'MAR', flag: '🇲🇦', goals: 3, assists: 0, matches: 0 },
+    { rank: 10, name: 'Elijah Just', team: 'NZL', flag: '🇳🇿', goals: 3, assists: 0, matches: 0 }
   ],
 
   // Top assisters (auto-generated from ESPN summary API)
@@ -245,7 +245,7 @@ const WC_DATA = {
     { rank: 7, name: 'Viktor Gyökeres', team: 'SWE', flag: '🇸🇪', goals: 1, assists: 2, matches: 0 },
     { rank: 8, name: 'Mohamed Salah', team: 'EGY', flag: '🇪🇬', goals: 1, assists: 2, matches: 0 },
     { rank: 9, name: 'Iliman Ndiaye', team: 'SEN', flag: '🇸🇳', goals: 1, assists: 2, matches: 0 },
-    { rank: 10, name: 'Nathan Saliba', team: 'CAN', flag: '🇨🇦', goals: 1, assists: 2, matches: 0 },
+    { rank: 10, name: 'Nathan Saliba', team: 'CAN', flag: '🇨🇦', goals: 1, assists: 2, matches: 0 }
   ],
 
   // Big scorelines / upsets tracker
