@@ -121,6 +121,116 @@
       padding: 0 1rem;
     }
 
+
+    /* === R32 Knockout Section === */
+    .knockout-section {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .knockout-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .knockout-section h2 .live-dot {
+      width: 10px; height: 10px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .r32-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.75rem;
+    }
+    .r32-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      transition: var(--transition);
+    }
+    .r32-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+    .r32-card .match-id {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      min-width: 36px;
+    }
+    .r32-card .teams {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex      justify-content: center;
+    }
+    .r32-card .team {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .r32-card .score {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      min-width: 50px;
+      text-align: center;
+    }
+    .r32-card .vs { color: var(--text-muted); font-size: 0.85rem; }
+    .r32-card .status-badge {
+      font-size: 0.65rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .status-badge.live { background: rgba(239,68,68,0.15); color: #ef4444; }
+    .status-badge.completed { background: rgba(34,197,94,0.15); color: #22c55e; }
+    .status-badge.pending { background: rgba(148,163,184,0.15); color: #94a3b8; }
+
+    /* === Collapsible Group Stage === */
+    .group-stage-section {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .group-stage-section details {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .group-stage-section summary {
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      user-select: none;
+    }
+    .group-stage-section summary:hover { color: var(--accent-gold); }
+
+    @media (max-width: 768px) {
+      .r32-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 768px) {
       .hero h1 { font-size: 1.8rem; }
       .hero .emblem { font-size: 3rem; }
@@ -157,16 +267,23 @@
       <span>🏟️ 16 Host Cities</span>
       <span>👥 48 Teams</span>
       <span>⚽ 104 Matches</span>
-      <span>📅 Jun 11 – Jul 19</span>
+      <span>� Knockout Stage</span>
     </div>
   </section>
 
+  <!-- R32 Knockout Bracket Preview -->
+  <section class="knockout-section">
+    <h2><span class="live-dot"></span> R32 淘汰赛对阵</h2>
+    <div class="r32-grid" id="r32-grid"></div>
+  </section>
+
+  <!-- Module Cards -->
   <section class="modules">
     <a href="matches/" class="module-card">
-      <div class="icon">📋</div>
-      <h2>赛事信息</h2>
-      <p>小组赛看板模式 · 淘汰赛树形图<br>实时比分 · 赛程安排</p>
-      <span class="btn">进入赛事信息 →</span>
+      <div class="icon">🏆</div>
+      <h2>淘汰赛 · 赛事中心</h2>
+      <p>R32 实时对阵 · 晋级路径追踪<br>淘汰赛树形图 · 自动更新比分</p>
+      <span class="btn">查看淘汰赛 →</span>
     </a>
 
     <a href="dashboard/" class="module-card">
@@ -191,6 +308,14 @@
     </a>
   </section>
 
+  <!-- Collapsible Group Stage Summary -->
+  <section class="group-stage-section">
+    <details>
+      <summary>📋 小组赛结果回顾（点击查看）</summary>
+      <div id="group-summary" style="margin-top:1rem;"></div>
+    </details>
+  </section>
+
   <!-- Quick stats from data -->
   <section class="quick-stats">
     <div id="stats-bar" class="stats-bar"></div>
@@ -198,11 +323,29 @@
 
   <footer class="site-footer">
     <p>⚽ 2026 FIFA World Cup · Unofficial Fan Site</p>
-    <p class="update-note">Data updated June 28, 2026 · Group stage in progress</p>
+    <p class="update-note">Knockout Stage in progress · Last updated: <span id="footer-date"></span></p>
   </footer>
 
-  <script src="assets/js/data.js?v=24"></script>
-  <script src="assets/js/app.js?v=24"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+  <script src="assets/js/data.js?v=25"></script>
+  <script src="assets/js/app.js?v=25"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@twemoji/twemoji.min.js" crossorigin="anonymous"></script>
+  <script>
+    // Render R32 grid on homepage
+    (function() {
+      if (typeof WC_DATA === 'undefined') return;
+      const grid = document.getElementById('r32-grid');
+      if (!grid) return;
+      const r32 = WC_DATA.knockout.roundOf32;
+      const statusMap = {completed:'FT', live:'LIVE', pending:''};
+      grid.innerHTML = r32.map(m => {
+        const sc = m.status === 'pending' ? '<span class="vs">VS</span>' : '<span class="score">' + (m.homeScore ?? '-') + '-' + (m.awayScore ?? '-') + '</span>';
+        const badge = '<span class="status-badge ' + m.status + '">' + (statusMap[m.status] || m.date) + '</span>';
+        return '<div class="r32-card"><span class="match-id">' + m.id.replace('R32-','M') + '</span><div class="teams"><span class="team">' + m.home + '</span>' + sc + '<span class="team">' + m.away + '</span></div>' + badge + '</div>';
+      }).join('');
+      // Update footer date
+      const fd = document.getElementById('footer-date');
+      if (fd && WC_DATA.lastUpdated) fd.textContent = WC_DATA.lastUpdated;
+    })();
+  </script>
 </body>
 </html>

@@ -246,9 +246,74 @@ def update_standings_in_content(content):
     return result
 
 
+def _find_knockout_match(content, round_name, match_id):
+    """Find a knockout match block by id (e.g. 'R32-1') and return its bounds."""
+    pat = rf"\{{\s*id:\s*'{re.escape(match_id)}'.*?\}}"
+    m = re.search(pat, content, re.S)
+    return m
+
+
+def _advance_knockout_winners(content):
+    """Internal helper: advance completed knockout match winners into next round."""
+    progression = [
+        ('R32-1', 'R16-1', 'home'), ('R32-2', 'R16-1', 'away'),
+        ('R32-3', 'R16-2', 'home'), ('R32-4', 'R16-2', 'away'),
+        ('R32-5', 'R16-3', 'home'), ('R32-6', 'R16-3', 'away'),
+        ('R32-7', 'R16-4', 'home'), ('R32-8', 'R16-4', 'away'),
+        ('R32-9', 'R16-5', 'home'), ('R32-10', 'R16-5', 'away'),
+        ('R32-11', 'R16-6', 'home'), ('R32-12', 'R16-6', 'away'),
+        ('R32-13', 'R16-7', 'home'), ('R32-14', 'R16-7', 'away'),
+        ('R32-15', 'R16-8', 'home'), ('R32-16', 'R16-8', 'away'),
+        ('R16-1', 'QF-1', 'home'), ('R16-2', 'QF-1', 'away'),
+        ('R16-3', 'QF-2', 'home'), ('R16-4', 'QF-2', 'away'),
+        ('R16-5', 'QF-3', 'home'), ('R16-6', 'QF-3', 'away'),
+        ('R16-7', 'QF-4', 'home'), ('R16-8', 'QF-4', 'away'),
+        ('QF-1', 'SF-1', 'home'), ('QF-2', 'SF-1', 'away'),
+        ('QF-3', 'SF-2', 'home'), ('QF-4', 'SF-2', 'away'),
+        ('SF-1', 'F', 'home'), ('SF-2', 'F', 'away'),
+    ]
+    result = content
+    for src_id, dst_id, dst_slot in progression:
+        src_m = _find_knockout_match(result, None, src_id)
+        dst_m = _find_knockout_match(result, None, dst_id)
+        if not src_m or not dst_m:
+            continue
+        src_block = result[src_m.start():src_m.end()]
+        status_m = re.search(r"status:\s*'(\w+)'", src_block)
+        if not status_m or status_m.group(1) != 'completed':
+            continue
+        hs_m = re.search(r"homeScore:\s*(\d+)", src_block)
+        aws_m = re.search(r"awayScore:\s*(\d+)", src_block)
+        home_team_m = re.search(r"home:\s*'(\w+)'", src_block)
+        away_team_m = re.search(r"away:\s*'(\w+)'", src_block)
+        if not hs_m or not aws_m or not home_team_m or not away_team_m:
+            continue
+        hs = int(hs_m.group(1))
+        aws = int(aws_m.group(1))
+        winner = home_team_m.group(1) if hs > aws else away_team_m.group(1) if aws > hs else None
+        if not winner:
+            continue
+        dst_block = result[dst_m.end()]
+        if dst_slot == 'home':
+            dst_new = re.sub(r"(home:\s*)'(\w+|null)'", r"\g<1>'" + winner + "'", dst_block, count=1)
+        else:
+            dst_new = re.sub(r"(away:\s*)'(\w+|null)'", r"\g<1>'" + winner + "'", dst_block, count=1)
+        if dst_new != dst_block:
+            result = result[:dst_m.start()] + dst_new + result[dst_m.end():]
+    return result
+
+
+def update_knockout_progression(content):
+    """
+    After knockout matches complete, auto-fill winners into next round.
+    """
+    return _advance_knockout_winners(content)
+
+
 def update_stats_in_content(content):
     """Recount completed matches and compute ALL stats (8 fields).
-    Returns (new_content, total, goals, avg)."""
+    Returns (new_content, total, goals, avg).
+    """
     matches = _parse_completed_matches(content)
     total = len(matches)
     if total == 0:
@@ -409,6 +474,15 @@ def main():
     # Recalculate per-group standings
     content = update_standings_in_content(content)
     log('Standings recalculated from match results')
+
+    # Knockout stage: update filled-in knockout teams from ESPN
+    # This handles the case where ESPN already assigned specific teams to R16/QF/SF/F
+    content = update_knockout_progression(content)
+    log('Knockout teams updated from ESPN bracket')
+
+    # Advance winners: when a knockout match completes, fill winner into next round
+    content = update_progression_in_content_v2(content)
+    log('Knockout progression updated (winners advanced)')
 
     # Update timestamp
     content, ts = update_timestamp(content)
