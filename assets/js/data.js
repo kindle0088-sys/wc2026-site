@@ -282,23 +282,23 @@ const WC_DATA = {
       // R32-7 (Match 79): 1A (MEX) vs 3(C/E/F/H/I) — Estadio Azteca — June 30
       { id: 'R32-7', match: 79, home: 'MEX', away: 'ECU', homeScore: null, awayScore: null, date: 'June 30', venue: 'Estadio Azteca · Mexico City', status: 'pending', pairing: '1A vs 3CEFHI' },
       // R32-8 (Match 80): 1L vs 3(E/H/I/J/K) — Mercedes-Benz Stadium, Atlanta — July 1
-      { id: 'R32-8', match: 80, home: 'ENG', away: 'ALG', homeScore: null, awayScore: null, date: 'July 1', venue: 'Mercedes-Benz Stadium · Atlanta', status: 'pending', pairing: '1L vs 3EHIJK' },
+      { id: 'R32-8', match: 80, home: 'ENG', away: 'COD', homeScore: null, awayScore: null, date: 'July 1', venue: 'Mercedes-Benz Stadium · Atlanta', status: 'pending', pairing: '1L vs 3EHIJK' },
       // R32-9 (Match 81): 1D (USA) vs 3(B/E/F/I/J) — Levi's Stadium, Santa Clara — July 1
       { id: 'R32-9', match: 81, home: 'USA', away: 'BIH', homeScore: null, awayScore: null, date: 'July 1', venue: "Levi's Stadium \u00b7 Santa Clara", status: 'pending', pairing: '1D vs 3BEFIJ' },
       // R32-10 (Match 82): 1G vs 3(A/E/H/I/J) — Lumen Field, Seattle — July 1
-      { id: 'R32-10', match: 82, home: 'EGY', away: 'KOR', homeScore: null, awayScore: null, date: 'July 1', venue: 'Lumen Field · Seattle', status: 'pending', pairing: '1G vs 3AEHIJ' },
+      { id: 'R32-10', match: 82, home: 'BEL', away: 'ALG', homeScore: null, awayScore: null, date: 'July 1', venue: 'Lumen Field · Seattle', status: 'pending', pairing: '1G vs 3AEHIJ' },
       // R32-11 (Match 83): 2K vs 2L — BMO Field, Toronto — July 2
-      { id: 'R32-11', match: 83, home: 'POR', away: 'GHA', homeScore: null, awayScore: null, date: 'July 2', venue: 'BMO Field · Toronto', status: 'pending', pairing: '2K vs 2L' },
+      { id: 'R32-11', match: 83, home: 'POR', away: 'CRO', homeScore: null, awayScore: null, date: 'July 2', venue: 'BMO Field · Toronto', status: 'pending', pairing: '2K vs 2L' },
       // R32-12 (Match 84): 1H vs 2J — SoFi Stadium, Inglewood — July 2
       { id: 'R32-12', match: 84, home: 'ESP', away: 'AUT', homeScore: null, awayScore: null, date: 'July 2', venue: 'SoFi Stadium · Inglewood', status: 'pending', pairing: '1H vs 2J' },
       // R32-13 (Match 85): 1B vs 3(E/F/G/I/J) — BC Place, Vancouver — July 2
-      { id: 'R32-13', match: 85, home: 'SUI', away: 'SCO', homeScore: null, awayScore: null, date: 'July 2', venue: 'BC Place · Vancouver', status: 'pending', pairing: '1B vs 3EFGIJ' },
+      { id: 'R32-13', match: 85, home: 'SUI', away: 'SEN', homeScore: null, awayScore: null, date: 'July 2', venue: 'BC Place · Vancouver', status: 'pending', pairing: '1B vs 3EFGIJ' },
       // R32-14 (Match 86): 1J (ARG) vs 2H — Hard Rock Stadium, Miami — July 2
-      { id: 'R32-14', match: 86, home: 'ARG', away: 'URU', homeScore: null, awayScore: null, date: 'July 2', venue: 'Hard Rock Stadium · Miami', status: 'pending', pairing: '1J vs 2H' },
+      { id: 'R32-14', match: 86, home: 'ARG', away: 'CPV', homeScore: null, awayScore: null, date: 'July 2', venue: 'Hard Rock Stadium · Miami', status: 'pending', pairing: '1J vs 2H' },
       // R32-15 (Match 87): 1K (COL) vs 3(D/E/I/J/L) — Arrowhead Stadium, Kansas City — July 3
-      { id: 'R32-15', match: 87, home: 'COL', away: 'CRO', homeScore: null, awayScore: null, date: 'July 3', venue: 'Arrowhead Stadium · Kansas City', status: 'pending', pairing: '1K vs 3DEIJL' },
+      { id: 'R32-15', match: 87, home: 'COL', away: 'GHA', homeScore: null, awayScore: null, date: 'July 3', venue: 'Arrowhead Stadium · Kansas City', status: 'pending', pairing: '1K vs 3DEIJL' },
       // R32-16 (Match 88): 2D vs 2G — AT&T Stadium, Dallas — July 3
-      { id: 'R32-16', match: 88, home: 'AUS', away: 'IRN', homeScore: null, awayScore: null, date: 'July 3', venue: 'AT&T Stadium · Dallas', status: 'pending', pairing: '2D vs 2G' },
+      { id: 'R32-16', match: 88, home: 'AUS', away: 'EGY', homeScore: null, awayScore: null, date: 'July 3', venue: 'AT&T Stadium · Dallas', status: 'pending', pairing: '2D vs 2G' },
     ],
     // Round of 16 — July 4~7
     roundOf16: [
