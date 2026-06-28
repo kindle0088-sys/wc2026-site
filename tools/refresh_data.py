@@ -194,9 +194,13 @@ def update_standings_in_content(content):
         teams_start = body.find('teams: [')
         teams_end = body.find('\n      ],', teams_start)
         matches_start = body.find('matches: [')
-        matches_end = body.find('\n      ],', matches_start)
+        # The matches array ends with — "\n      ]\n    }" (no comma before ])
+        # Search for "\n      ]\n" to find the closing bracket of the matches array
+        matches_end = body.find('\n      ]\n', matches_start)
         if teams_start < 0 or teams_end < 0 or matches_start < 0 or matches_end < 0:
             continue
+        # Include the closing bracket
+        matches_end += len('\n      ]')
         teams_block = body[teams_start+len('teams: ['):teams_end]
         matches_block = body[matches_start+len('matches: ['):matches_end]
         team_entries = _parse_team_entries(teams_block, team_info)

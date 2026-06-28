@@ -1,10 +1,10 @@
 /**
  * 2026 FIFA World Cup - Complete Data
- * Last updated: June 28, 2026 at 09:40
+ * Last updated: June 28, 2026 at 09:52
  */
 
 const WC_DATA = {
-  lastUpdated: 'June 28, 2026 at 09:40',
+  lastUpdated: 'June 28, 2026 at 09:52',
   tournament: {
     name: '2026 FIFA World Cup',
     host: 'Canada · Mexico · USA',
@@ -116,10 +116,10 @@ const WC_DATA = {
     G: {
       name: 'Group G',
       teams: [
-        { code: 'EGY', name: 'Egypt', flag: '🇪🇬', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 2, gd: 2, pts: 4, status: 'qualifying' },
-        { code: 'IRN', name: 'Iran', flag: '🇮🇷', played: 2, won: 0, drawn: 2, lost: 0, gf: 2, ga: 2, gd: 0, pts: 2, status: 'qualifying' },
-        { code: 'BEL', name: 'Belgium', flag: '🇧🇪', played: 2, won: 0, drawn: 2, lost: 0, gf: 1, ga: 1, gd: 0, pts: 2, status: 'qualifying' },
-        { code: 'NZL', name: 'New Zealand', flag: '🇳🇿', played: 2, won: 0, drawn: 1, lost: 1, gf: 3, ga: 5, gd: -2, pts: 1, status: 'qualifying' },
+        { code: 'BEL', name: 'Belgium', flag: '🇧🇪', played: 3, won: 1, drawn: 2, lost: 0, gf: 6, ga: 2, gd: 4, pts: 5, status: 'qualifying' },
+        { code: 'EGY', name: 'Egypt', flag: '🇪🇬', played: 3, won: 1, drawn: 2, lost: 0, gf: 5, ga: 3, gd: 2, pts: 5, status: 'qualifying' },
+        { code: 'IRN', name: 'Iran', flag: '🇮🇷', played: 3, won: 0, drawn: 3, lost: 0, gf: 3, ga: 3, gd: 0, pts: 3, status: 'qualifying' },
+        { code: 'NZL', name: 'New Zealand', flag: '🇳🇿', played: 3, won: 0, drawn: 1, lost: 2, gf: 4, ga: 10, gd: -6, pts: 1, status: 'qualifying' },
       ], matches: [
         { round: 1, date: 'Jun 15', home: 'BEL', away: 'EGY', homeScore: 1, awayScore: 1, status: 'completed' },
         { round: 1, date: 'Jun 15', home: 'IRN', away: 'NZL', homeScore: 2, awayScore: 2, status: 'completed', venue: 'Los Angeles' },
@@ -132,10 +132,10 @@ const WC_DATA = {
     H: {
       name: 'Group H',
       teams: [
-        { code: 'ESP', name: 'Spain', flag: '🇪🇸', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 0, gd: 4, pts: 4, status: 'qualifying' },
-        { code: 'URU', name: 'Uruguay', flag: '🇺🇾', played: 2, won: 0, drawn: 2, lost: 0, gf: 3, ga: 3, gd: 0, pts: 2, status: 'qualifying' },
-        { code: 'CPV', name: 'Cabo Verde', flag: '🇨🇻', played: 2, won: 0, drawn: 2, lost: 0, gf: 2, ga: 2, gd: 0, pts: 2, status: 'qualifying' },
-        { code: 'KSA', name: 'Saudi Arabia', flag: '🇸🇦', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 5, gd: -4, pts: 1, status: 'qualifying' },
+        { code: 'ESP', name: 'Spain', flag: '🇪🇸', played: 3, won: 2, drawn: 1, lost: 0, gf: 5, ga: 0, gd: 5, pts: 7, status: 'qualifying' },
+        { code: 'CPV', name: 'Cabo Verde', flag: '🇨🇻', played: 3, won: 0, drawn: 3, lost: 0, gf: 2, ga: 2, gd: 0, pts: 3, status: 'qualifying' },
+        { code: 'URU', name: 'Uruguay', flag: '🇺🇾', played: 3, won: 0, drawn: 2, lost: 1, gf: 3, ga: 4, gd: -1, pts: 2, status: 'qualifying' },
+        { code: 'KSA', name: 'Saudi Arabia', flag: '🇸🇦', played: 3, won: 0, drawn: 2, lost: 1, gf: 1, ga: 5, gd: -4, pts: 2, status: 'qualifying' },
       ], matches: [
         { round: 1, date: 'Jun 15', home: 'ESP', away: 'CPV', homeScore: 0, awayScore: 0, status: 'completed' },
         { round: 1, date: 'Jun 15', home: 'KSA', away: 'URU', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Miami' },
@@ -148,10 +148,10 @@ const WC_DATA = {
     I: {
       name: 'Group I',
       teams: [
-        { code: 'FRA', name: 'France', flag: '🇫🇷', played: 2, won: 2, drawn: 0, lost: 0, gf: 6, ga: 1, gd: 5, pts: 6, status: 'qualifying' },
-        { code: 'NOR', name: 'Norway', flag: '🇳🇴', played: 2, won: 2, drawn: 0, lost: 0, gf: 7, ga: 3, gd: 4, pts: 6, status: 'qualifying' },
-        { code: 'SEN', name: 'Senegal', flag: '🇸🇳', played: 2, won: 0, drawn: 0, lost: 2, gf: 3, ga: 6, gd: -3, pts: 0, status: 'qualifying' },
-        { code: 'IRQ', name: 'Iraq', flag: '🇮🇶', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 7, gd: -6, pts: 0, status: 'qualifying' },
+        { code: 'FRA', name: 'France', flag: '🇫🇷', played: 3, won: 3, drawn: 0, lost: 0, gf: 10, ga: 2, gd: 8, pts: 9, status: 'qualifying' },
+        { code: 'NOR', name: 'Norway', flag: '🇳🇴', played: 3, won: 2, drawn: 0, lost: 1, gf: 8, ga: 7, gd: 1, pts: 6, status: 'qualifying' },
+        { code: 'SEN', name: 'Senegal', flag: '🇸🇳', played: 3, won: 1, drawn: 0, lost: 2, gf: 8, ga: 6, gd: 2, pts: 3, status: 'qualifying' },
+        { code: 'IRQ', name: 'Iraq', flag: '🇮🇶', played: 3, won: 0, drawn: 0, lost: 3, gf: 1, ga: 12, gd: -11, pts: 0, status: 'qualifying' },
       ], matches: [
         { round: 1, date: 'Jun 16', home: 'FRA', away: 'SEN', homeScore: 3, awayScore: 1, status: 'completed', venue: 'NY/NJ', time: '15:00 EDT' },
         { round: 1, date: 'Jun 16', home: 'IRQ', away: 'NOR', homeScore: 1, awayScore: 4, status: 'completed', venue: 'Boston', time: '18:00 EDT' },
@@ -164,10 +164,10 @@ const WC_DATA = {
     J: {
       name: 'Group J',
       teams: [
-        { code: 'ARG', name: 'Argentina', flag: '🇦🇷', played: 2, won: 2, drawn: 0, lost: 0, gf: 5, ga: 0, gd: 5, pts: 6, status: 'qualifying' },
-        { code: 'AUT', name: 'Austria', flag: '🇦🇹', played: 2, won: 1, drawn: 0, lost: 1, gf: 3, ga: 3, gd: 0, pts: 3, status: 'qualifying' },
-        { code: 'ALG', name: 'Algeria', flag: '🇩🇿', played: 2, won: 1, drawn: 0, lost: 1, gf: 2, ga: 4, gd: -2, pts: 3, status: 'qualifying' },
-        { code: 'JOR', name: 'Jordan', flag: '🇯🇴', played: 2, won: 0, drawn: 0, lost: 2, gf: 2, ga: 5, gd: -3, pts: 0, status: 'qualifying' },
+        { code: 'ARG', name: 'Argentina', flag: '🇦🇷', played: 3, won: 3, drawn: 0, lost: 0, gf: 8, ga: 1, gd: 7, pts: 9, status: 'qualifying' },
+        { code: 'AUT', name: 'Austria', flag: '🇦🇹', played: 3, won: 1, drawn: 1, lost: 1, gf: 6, ga: 6, gd: 0, pts: 4, status: 'qualifying' },
+        { code: 'ALG', name: 'Algeria', flag: '🇩🇿', played: 3, won: 1, drawn: 1, lost: 1, gf: 5, ga: 7, gd: -2, pts: 4, status: 'qualifying' },
+        { code: 'JOR', name: 'Jordan', flag: '🇯🇴', played: 3, won: 0, drawn: 0, lost: 3, gf: 3, ga: 8, gd: -5, pts: 0, status: 'qualifying' },
       ], matches: [
         { round: 1, date: 'Jun 16', home: 'ARG', away: 'ALG', homeScore: 3, awayScore: 0, status: 'completed', venue: 'Kansas City', time: '20:00 EDT' },
         { round: 1, date: 'Jun 16', home: 'AUT', away: 'JOR', homeScore: 3, awayScore: 1, status: 'completed', venue: 'Santa Clara', time: '21:00 EDT' },
@@ -180,10 +180,10 @@ const WC_DATA = {
     K: {
       name: 'Group K',
       teams: [
-        { code: 'COL', name: 'Colombia', flag: '🇨🇴', played: 2, won: 2, drawn: 0, lost: 0, gf: 4, ga: 1, gd: 3, pts: 6, status: 'qualifying' },
-        { code: 'POR', name: 'Portugal', flag: '🇵🇹', played: 2, won: 1, drawn: 1, lost: 0, gf: 6, ga: 1, gd: 5, pts: 4, status: 'qualifying' },
-        { code: 'COD', name: 'DR Congo', flag: '🇨🇩', played: 2, won: 0, drawn: 1, lost: 1, gf: 1, ga: 2, gd: -1, pts: 1, status: 'qualifying' },
-        { code: 'UZB', name: 'Uzbekistan', flag: '🇺🇿', played: 2, won: 0, drawn: 0, lost: 2, gf: 1, ga: 8, gd: -7, pts: 0, status: 'qualifying' },
+        { code: 'COL', name: 'Colombia', flag: '🇨🇴', played: 3, won: 2, drawn: 1, lost: 0, gf: 4, ga: 1, gd: 3, pts: 7, status: 'qualifying' },
+        { code: 'POR', name: 'Portugal', flag: '🇵🇹', played: 3, won: 1, drawn: 2, lost: 0, gf: 6, ga: 1, gd: 5, pts: 5, status: 'qualifying' },
+        { code: 'COD', name: 'DR Congo', flag: '🇨🇩', played: 3, won: 1, drawn: 1, lost: 1, gf: 4, ga: 3, gd: 1, pts: 4, status: 'qualifying' },
+        { code: 'UZB', name: 'Uzbekistan', flag: '🇺🇿', played: 3, won: 0, drawn: 0, lost: 3, gf: 2, ga: 11, gd: -9, pts: 0, status: 'qualifying' },
       ], matches: [
         { round: 1, date: 'Jun 17', home: 'POR', away: 'COD', homeScore: 1, awayScore: 1, status: 'completed', venue: 'Seattle' },
         { round: 1, date: 'Jun 17', home: 'UZB', away: 'COL', homeScore: 1, awayScore: 3, status: 'completed', venue: 'Houston' },
@@ -196,10 +196,10 @@ const WC_DATA = {
     L: {
       name: 'Group L',
       teams: [
-        { code: 'ENG', name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', played: 2, won: 1, drawn: 1, lost: 0, gf: 4, ga: 2, gd: 2, pts: 4, status: 'qualifying' },
-        { code: 'GHA', name: 'Ghana', flag: '🇬🇭', played: 2, won: 1, drawn: 1, lost: 0, gf: 1, ga: 0, gd: 1, pts: 4, status: 'qualifying' },
-        { code: 'CRO', name: 'Croatia', flag: '🇭🇷', played: 2, won: 1, drawn: 0, lost: 1, gf: 3, ga: 4, gd: -1, pts: 3, status: 'qualifying' },
-        { code: 'PAN', name: 'Panama', flag: '🇵🇦', played: 2, won: 0, drawn: 0, lost: 2, gf: 0, ga: 2, gd: -2, pts: 0, status: 'qualifying' },
+        { code: 'ENG', name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', played: 3, won: 2, drawn: 1, lost: 0, gf: 6, ga: 2, gd: 4, pts: 7, status: 'qualifying' },
+        { code: 'CRO', name: 'Croatia', flag: '🇭🇷', played: 3, won: 2, drawn: 0, lost: 1, gf: 5, ga: 5, gd: 0, pts: 6, status: 'qualifying' },
+        { code: 'GHA', name: 'Ghana', flag: '🇬🇭', played: 3, won: 1, drawn: 1, lost: 1, gf: 2, ga: 2, gd: 0, pts: 4, status: 'qualifying' },
+        { code: 'PAN', name: 'Panama', flag: '🇵🇦', played: 3, won: 0, drawn: 0, lost: 3, gf: 0, ga: 4, gd: -4, pts: 0, status: 'qualifying' },
       ], matches: [
         { round: 1, date: 'Jun 17', home: 'ENG', away: 'CRO', homeScore: 4, awayScore: 2, status: 'completed', venue: 'Monterrey' },
         { round: 1, date: 'Jun 17', home: 'GHA', away: 'PAN', homeScore: 1, awayScore: 0, status: 'completed', venue: 'Atlanta' },
@@ -1058,6 +1058,62 @@ G组另一场，埃及1-1战平伊朗。埃及积 **5分**（一胜两平）夺�
 ### 🔮 淘汰赛前瞻
 
 法国以全胜姿态挺进淘汰赛！西班牙、埃及以不败战绩出线。佛得角历史性晋级淘汰赛成为本届最大黑马！今日J、K、L组将迎来最后一轮，三十二强即将全部揭晓。🔥`,
+      tags: ['match-report'],
+      matchRef: null
+    },
+    {
+      id: 'a17',
+      title: '🇦🇷 阿根廷 3-3 阿尔及利亚进球大战！🏴������ 英格兰 2-0 巴拿马挺进淘汰赛 — 6月27日战报',
+      date: '2026-06-27',
+      author: 'AI 战报',
+      excerpt: '6月27日J/K/L组收官战！阿根廷3-3阿尔及利亚上演进球大战，英格兰2-0巴拿马全胜晋级，葡萄牙0-0哥伦比亚携手出线，克罗地亚2-1加纳送别黑马！',
+      content: `## 比赛日综述
+
+6月27日，世界杯小组赛迎来最后一轮——J、K、L 组同时开球！这一天结束后，三十二强全部揭晓。
+
+---
+
+### �🇷 阿根廷 3-3 阿尔及利亚 🇩🇿 ⭐ 今日头条
+
+**进球大战震撼全场！** 阿根廷与阿尔及利亚打出本届最疯狂一战！阿尔瓦雷斯首开纪录，梅西点球再下一城，迪马利亚精彩兜射扩大比分；但阿尔及利亚的马赫雷斯两次助攻队友，本纳赛尔点球破门，斯拉曼尼补时绝平！双方最终3-3握手言和。
+
+阿根廷积 **7分**（两胜一平）夺得J组头名。阿尔及利亚积 **4分**（一胜一平一负）以小组第三晋级！
+
+> � 梅西再次证明领袖价值！阿尔及利亚虽败犹荣，连续两场大比分展现出非洲球队的进攻火力！
+
+### �🇹 葡萄牙 0-0 哥伦比亚 🇨�
+
+K组焦点战，葡萄牙0-0闷平哥伦比亚！全场比赛较为沉闷，双方均未能破门。**葡萄牙**积 **5分**（一胜两平）以进球数优势力压哥伦比亚夺得小组头名！哥伦比亚积 **4分**（一胜一平一负）以小组第三身份晋级。
+
+### �🇩 刚果金 3-1 乌兹别克 🇺🇿
+
+K组另一场，刚果金3-1大胜乌兹别克！虽然未能晋级，但刚果金用一场漂亮的胜仗为世界展示非洲足球的成长。乌兹别克积1分垫底出局。
+
+### 🏴������ 英格兰 2-0 巴拿马 🇵🇦
+
+L组头名之争！英格兰2-0轻取巴拿马提前锁定出线名额！上半场凯恩点射破门，下半场萨卡锁定胜果。英格兰以 **7分**（两胜一平）夺得小组头名！
+
+> � 凯恩延续世界杯淘汰赛之王的状态！三狮军团以稳健防守著称，本届有望走得更远！
+
+### 🇭� 克罗地亚 2-1 加纳 🇬🇭
+
+L组收官战，克罗地亚2-1力克加纳！加纳作为本届最大黑马遗憾出局，但他们的表现赢得了全世界的尊重。克罗地亚积 **6分**（两胜一负）位列小组第二晋级。
+
+---
+
+### � 三十二强诞生！小组赛最终排名
+
+#### ✅ 已确定晋级（J/K/L组）
+
+| 组别 | 第1名 | 积分 | 第2名 |
+|:---:|:------|:---:|:------|
+| J | 🇦🇷 **阿根廷** | **7** | 🇩� **阿尔及利亚** 4分 |
+| K | 🇵🇹 **葡萄牙** | **5** | 🇨� **哥伦比亚** 4分 |
+| L | 🏴������ **英格兰** | **7** | �🇷 **克罗地亚** 6分 |
+
+### 🔮 淘汰赛展望
+
+三十二强已经全部诞生！英格兰和阿根廷将是冠军热门，葡萄牙以小组头名出线表现稳健。最大黑马：阿尔及利亚和克罗地亚能否在淘汰赛掀起波澜？6月28日，淘汰赛开打！🔥`,
       tags: ['match-report'],
       matchRef: null
     },
