@@ -1,1 +1,0 @@
-<!-- 旧版 update_data.py 已废弃 — v3 使用浏览器直连 ESPN API -->
