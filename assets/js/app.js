@@ -45,9 +45,17 @@ const WCApp = {
 
   // === Initialization ===
   async init() {
-    this.data = typeof WC_DATA !== 'undefined' ? JSON.parse(JSON.stringify(WC_DATA)) : null;
+    // Merge groups + knockout data into WC_DATA
+    if (typeof WC_GROUPS !== 'undefined' && typeof WC_KNOCKOUT !== 'undefined') {
+      this.data = JSON.parse(JSON.stringify({ ...WC_GROUPS, ...WC_KNOCKOUT }));
+    } else if (typeof WC_DATA !== 'undefined') {
+      this.data = JSON.parse(JSON.stringify(WC_DATA));
+    } else {
+      console.error('[WCApp] data files not loaded — cannot render');
+      return;
+    }
     if (!this.data) {
-      console.error('[WCApp] data.js not loaded — cannot render');
+      console.error('[WCApp] no data — cannot render');
       return;
     }
 
@@ -156,6 +164,7 @@ const WCApp = {
         if (typeof WC_DATA !== 'undefined') {
           WC_DATA.groups = this.data.groups;
           WC_DATA.stats = this.data.stats;
+          WC_DATA.knockout = this.data.knockout;
           // topScorers are NOT overwritten from scoreboard — they stay as data.js static values
         }
       }
@@ -681,6 +690,7 @@ const WCApp = {
         card.className = `bracket-match ${m.status}`;
         if (m.home && m.away) card.classList.add('winner');
 
+        const shootoutHtml = m.shootout ? `<div class="bracket-shootout">(${m.shootout})</div>` : '';
         card.innerHTML = `
           <div class="bracket-teams">
             <div class="bracket-team">
@@ -692,6 +702,7 @@ const WCApp = {
               <span class="bracket-score">${m.awayScore !== null ? m.awayScore : '—'}</span>
             </div>
           </div>
+          ${shootoutHtml}
           ${m.venue ? `<div class="bracket-meta">${m.date} · ${m.venue}</div>` : ''}
         `;
         col.appendChild(card);

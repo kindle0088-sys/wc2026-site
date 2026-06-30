@@ -195,6 +195,7 @@
       text-align: center;
     }
     .r32-card .vs { color: var(--text-muted); font-size: 0.85rem; }
+    .r32-shootout { font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-top: 0.25rem; }
     .r32-card .status-badge {
       font-size: 0.65rem;
       padding: 0.15rem 0.5rem;
@@ -327,20 +328,24 @@
     <p class="update-note">Knockout Stage in progress · Last updated: <span id="footer-date"></span></p>
   </footer>
 
-  <script src="assets/js/data.js?v=28"></script>
-  <script src="assets/js/app.js?v=28"></script>
+  <script src="assets/js/data-groups.js?v=1"></script>
+  <script src="assets/js/data-knockout.js?v=1"></script>
+  <script src="assets/js/app.js?v=29"></script>
   <script src="https://cdn.jsdelivr.net/npm/@twemoji/twemoji.min.js" crossorigin="anonymous"></script>
   <script>
     // Render R32 grid on homepage
     (function() {
-      if (typeof WC_DATA === 'undefined') return;
+      // Read from WC_KNOCKOUT (new) or WC_DATA (fallback)
+      const ko = (typeof WC_KNOCKOUT !== 'undefined') ? WC_KNOCKOUT.knockout : (typeof WC_DATA !== 'undefined' ? WC_DATA.knockout : null);
+      const groups = (typeof WC_GROUPS !== 'undefined') ? WC_GROUPS.groups : (typeof WC_DATA !== 'undefined' ? WC_DATA.groups : null);
+      if (!ko || !groups) return;
       const grid = document.getElementById('r32-grid');
       if (!grid) return;
-      const r32 = WC_DATA.knockout.roundOf32;
+      const r32 = ko.roundOf32;
       const statusMap = {completed:'FT', live:'LIVE', pending:''};
       // Build team lookup: code → {flag, name}
       const teamLookup = {};
-      for (const g of Object.values(WC_DATA.groups)) {
+      for (const g of Object.values(groups)) {
         for (const t of g.teams) {
           teamLookup[t.code] = { flag: t.flag, name: t.name };
         }
@@ -351,8 +356,9 @@
       };
       grid.innerHTML = r32.map(m => {
         const sc = m.status === 'pending' ? '<span class="vs">VS</span>' : '<span class="score">' + (m.homeScore ?? '-') + '-' + (m.awayScore ?? '-') + '</span>';
+        const shootout = m.shootout ? '<div class="r32-shootout">(' + m.shootout + ')</div>' : '';
         const badge = '<span class="status-badge ' + m.status + '">' + (statusMap[m.status] || m.date) + '</span>';
-        return '<div class="r32-card"><span class="match-id">' + m.id.replace('R32-','M') + '</span><div class="teams">' + renderTeam(m.home) + sc + renderTeam(m.away) + '</div>' + badge + '</div>';
+        return '<div class="r32-card"><span class="match-id">' + m.id.replace('R32-','M') + '</span><div class="teams">' + renderTeam(m.home) + sc + renderTeam(m.away) + '</div>' + shootout + badge + '</div>';
       }).join('');
       // Update footer date
       const fd = document.getElementById('footer-date');

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-WC2026 — ESPN → data.js 自动刷新脚本
+WC2026 — ESPN → data-knockout.js 自动刷新脚本
 
 用法:
-  python3 tools/refresh_data.py                     # 仅刷新 data.js
+  python3 tools/refresh_data.py                     # 仅刷新 data-knockout.js
   python3 tools/refresh_data.py --all               # + 更新 HTML 版本和时间戳
   python3 tools/refresh_data.py --dry-run           # 试运行，不写文件
   python3 tools/refresh_data.py --push              # + git commit + push
@@ -20,7 +20,8 @@ import urllib.request
 from datetime import datetime, timezone, timedelta
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_FILE = os.path.join(PROJECT_DIR, 'assets', 'js', 'data.js')
+DATA_FILE = os.path.join(PROJECT_DIR, 'assets', 'js', 'data-knockout.js')
+GROUPS_FILE = os.path.join(PROJECT_DIR, 'assets', 'js', 'data-groups.js')
 BACKUP_FILE = DATA_FILE + '.bak'
 
 HTML_PAGES = [
@@ -565,7 +566,7 @@ def main():
 
     with open(DATA_FILE) as f:
         orig = f.read()
-    log(f'Read data.js ({len(orig)} bytes)')
+    log(f'Read data-knockout.js ({len(orig)} bytes)')
 
     # Find current version from any HTML page
     ver = 7
@@ -582,16 +583,16 @@ def main():
     log('Fetching ESPN...')
     raw = fetch_espn()
     if not raw:
-        wrn('No ESPN data. Keeping data.js.')
+        wrn('No ESPN data. Keeping data-knockout.js.')
         return
 
     espn_m = parse_espn(raw)
     completed = {k: v for k, v in espn_m.items() if v['status'] == 'completed'}
     old_done = len(re.findall(r"status:\s*'completed'", orig))
     new_done = len(completed)
-    log(f'ESPN: {new_done} completed (data.js had {old_done})')
+    log(f'ESPN: {new_done} completed (data-knockout.js had {old_done})')
 
-    # Update each match
+    # Update each knockout match
     content = orig
     updates = 0
     for key, m in completed.items():
@@ -605,26 +606,33 @@ def main():
     if updates == 0:
         log('No new match results to update.')
 
-    # Update stats + standings
+    # Update stats (total matches, goals)
     content, total, goals, avg = update_stats_in_content(content)
     log(f'Stats: {total} matches, {goals} goals, avg {avg}')
 
-    # Recalculate per-group standings
-    content = update_standings_in_content(content)
-    log('Standings recalculated from match results')
-
-    # Knockout stage: update filled-in knockout teams from ESPN
-    # This handles the case where ESPN already assigned specific teams to R16/QF/SF/F
+    # Knockout progression: advance winners to next round
     content = update_knockout_progression(content)
     log('Knockout progression updated (winners advanced)')
 
-    # Update top scorers & assisters from ESPN summary API
+    # Update top scorers & assisters in data-groups.js
     if no_scorers:
         log('Skipping scorers update (--no-scorers)')
     else:
-        content = update_scorers_in_content(content)
+        # Read groups file, update scorers there
+        if os.path.exists(GROUPS_FILE):
+            with open(GROUPS_FILE) as f:
+                groups_orig = f.read()
+            groups_updated = update_scorers_in_content(groups_orig)
+            if groups_updated != groups_orig and not dry:
+                with open(GROUPS_FILE, 'w') as f:
+                    f.write(groups_updated)
+                ok('data-groups.js scorers updated')
+            elif groups_updated != groups_orig:
+                ok('data-groups.js scorers updated (dry run)')
+        else:
+            wrn('data-groups.js not found, skipping scorers')
 
-    # Update timestamp
+    # Update timestamp in knockout file
     content, ts = update_timestamp(content)
     month_day = ' '.join(ts.split()[:3]).rstrip(',')
     log(f'Timestamp: {ts}')
@@ -641,7 +649,7 @@ def main():
     if not dry and content != orig:
         with open(DATA_FILE, 'w') as f:
             f.write(content)
-        ok('data.js written')
+        ok('data-knockout.js written')
 
     if full or push:
         if not dry:

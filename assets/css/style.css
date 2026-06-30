@@ -532,6 +532,14 @@ img.emoji {
   border-top: 1px solid rgba(30, 41, 59, 0.5);
 }
 
+.bracket-match .bracket-shootout {
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-align: center;
+  margin-top: 0.2rem;
+  font-weight: 500;
+}
+
 .bracket-match.pending {
   opacity: 0.6;
 }
