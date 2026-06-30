@@ -690,17 +690,17 @@ const WCApp = {
         card.className = `bracket-match ${m.status}`;
         if (m.home && m.away) card.classList.add('winner');
 
-        const homePens = m.homePens !== undefined ? `<span class="bracket-pens">(${m.homePens})</span>` : '';
-        const awayPens = m.awayPens !== undefined ? `<span class="bracket-pens">(${m.awayPens})</span>` : '';
+        const homePens = m.homePens !== undefined ? `<span class="bracket-pens">(${m.homePens})</span> ` : '';
+        const awayPens = m.awayPens !== undefined ? ` <span class="bracket-pens">(${m.awayPens})</span>` : '';
         card.innerHTML = `
           <div class="bracket-teams">
             <div class="bracket-team">
-              <span class="team-info">${m.home ? this._teamDisplay(m.home) : '<span style="color:var(--text-muted)">TBD</span>'}</span>
-              <span class="bracket-score">${homePens}${m.homeScore !== null ? m.homeScore : '—'}</span>
+              <span class="team-info">${this._teamDisplay(m.home)}${homePens}</span>
+              <span class="bracket-score">${m.homeScore !== null ? m.homeScore : '—'}</span>
             </div>
             <div class="bracket-team">
-              <span class="team-info">${m.away ? this._teamDisplay(m.away) : '<span style="color:var(--text-muted)">TBD</span>'}</span>
-              <span class="bracket-score">${m.awayScore !== null ? m.awayScore : '—'}${awayPens}</span>
+              <span class="team-info">${this._teamDisplay(m.away)}${awayPens}</span>
+              <span class="bracket-score">${m.awayScore !== null ? m.awayScore : '—'}</span>
             </div>
           </div>
           ${m.venue ? `<div class="bracket-meta">${m.date} · ${m.venue}</div>` : ''}
