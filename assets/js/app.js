@@ -663,62 +663,69 @@ const WCApp = {
   // RENDERERS (preserved & adapted from v2)
   // ===========================================
 
-  // --- Bracket Renderer ---
+  // --- Bracket Renderer: Top/Bottom half side-by-side ---
   renderBracket() {
     const container = document.getElementById('knockout-bracket');
     if (!container || !this.data?.knockout) return;
     const ko = this.data.knockout;
 
-    const rounds = [
-      { key: 'roundOf32', label: 'Round of 32', count: 8 },
-      { key: 'roundOf16', label: 'Round of 16', count: 4 },
-      { key: 'quarterFinals', label: 'Quarter-finals', count: 2 },
-      { key: 'semiFinals', label: 'Semi-finals', count: 1 },
+    container.innerHTML = '';
+    const bracketWrapper = document.createElement('div');
+    bracketWrapper.className = 'bracket-wrapper';
+
+    // Helper: render a single match card
+    const renderMatch = (m, cssClass) => {
+      const card = document.createElement('div');
+      card.className = `bracket-match ${m.status || 'pending'} ${cssClass}`;
+      if (m.home && m.away) card.classList.add('winner');
+
+      const homePens = m.homePens !== undefined ? `<span class="bracket-pens">(${m.homePens})</span> ` : '';
+      const awayPens = m.awayPens !== undefined ? ` <span class="bracket-pens">(${m.awayPens})</span>` : '';
+      card.innerHTML = `
+        <div class="bracket-teams">
+          <div class="bracket-team">
+            <span class="team-info">${m.home ? this._teamDisplay(m.home) : '<span style="color:var(--text-muted)">TBD</span>'}${homePens}</span>
+            <span class="bracket-score">${m.homeScore !== null ? m.homeScore : '—'}</span>
+          </div>
+          <div class="bracket-team">
+            <span class="team-info">${m.away ? this._teamDisplay(m.away) : '<span style="color:var(--text-muted)">TBD</span>'}${awayPens}</span>
+            <span class="bracket-score">${m.awayScore !== null ? m.awayScore : '—'}</span>
+          </div>
+        </div>
+        ${m.venue ? `<div class="bracket-meta">${m.date} · ${m.venue}</div>` : ''}
+      `;
+      return card;
+    };
+
+    // === TOP HALF (R32-1~8 → R16-1~4 → QF-1~2 → SF-1) ===
+    const topHalf = document.createElement('div');
+    topHalf.className = 'bracket-half';
+
+    const topRounds = [
+      { key: 'roundOf32', label: 'Round of 32', slice: [0, 8] },
+      { key: 'roundOf16', label: 'Round of 16', slice: [0, 4] },
+      { key: 'quarterFinals', label: 'Quarter-finals', slice: [0, 2] },
+      { key: 'semiFinals', label: 'Semi-finals', slice: [0, 1] },
     ];
 
-    container.innerHTML = '';
-    const bracketHtml = document.createElement('div');
-    bracketHtml.className = 'bracket';
-
-    rounds.forEach(r => {
+    topRounds.forEach(r => {
       const col = document.createElement('div');
       col.className = 'bracket-round';
       col.innerHTML = `<div class="bracket-round-label">${r.label}</div>`;
-
-      (ko[r.key] || []).forEach(m => {
-        const card = document.createElement('div');
-        card.className = `bracket-match ${m.status}`;
-        if (m.home && m.away) card.classList.add('winner');
-
-        const homePens = m.homePens !== undefined ? `<span class="bracket-pens">(${m.homePens})</span> ` : '';
-        const awayPens = m.awayPens !== undefined ? ` <span class="bracket-pens">(${m.awayPens})</span>` : '';
-        card.innerHTML = `
-          <div class="bracket-teams">
-            <div class="bracket-team">
-              <span class="team-info">${this._teamDisplay(m.home)}${homePens}</span>
-              <span class="bracket-score">${m.homeScore !== null ? m.homeScore : '—'}</span>
-            </div>
-            <div class="bracket-team">
-              <span class="team-info">${this._teamDisplay(m.away)}${awayPens}</span>
-              <span class="bracket-score">${m.awayScore !== null ? m.awayScore : '—'}</span>
-            </div>
-          </div>
-          ${m.venue ? `<div class="bracket-meta">${m.date} · ${m.venue}</div>` : ''}
-        `;
-        col.appendChild(card);
-      });
-      bracketHtml.appendChild(col);
+      const matches = (ko[r.key] || []).slice(r.slice[0], r.slice[1]);
+      matches.forEach(m => col.appendChild(renderMatch(m)));
+      topHalf.appendChild(col);
     });
 
-    // Final column
-    const finalCol = document.createElement('div');
-    finalCol.className = 'bracket-round';
-    finalCol.innerHTML = `<div class="bracket-round-label" style="color:#fff;border-bottom-color:var(--accent-gold)">🏆 Final</div>`;
+    // === CENTER: Final + 3rd Place ===
+    const centerCol = document.createElement('div');
+    centerCol.className = 'bracket-center';
 
     const f = ko.final || {};
     const finalCard = document.createElement('div');
     finalCard.className = `bracket-match bracket-final ${f.status || 'pending'}`;
     finalCard.innerHTML = `
+      <div class="bracket-round-label" style="color:#fff;border-bottom-color:var(--accent-gold)">🏆 Final</div>
       <div class="bracket-teams">
         <div class="bracket-team">
           <span class="team-info">${f.home ? this._teamDisplay(f.home) : '<span style="color:var(--text-muted)">SF Winner 1</span>'}</span>
@@ -731,7 +738,7 @@ const WCApp = {
       </div>
       <div class="bracket-meta">${f.date || ''} · ${f.venue || ''}</div>
     `;
-    finalCol.appendChild(finalCard);
+    centerCol.appendChild(finalCard);
 
     // 3rd place
     const third = ko.thirdPlace || {};
@@ -751,9 +758,32 @@ const WCApp = {
       </div>
       <div class="bracket-meta">${third.date || ''} · ${third.venue || ''}</div>
     `;
-    finalCol.appendChild(thirdCard);
-    bracketHtml.appendChild(finalCol);
-    container.appendChild(bracketHtml);
+    centerCol.appendChild(thirdCard);
+
+    // === BOTTOM HALF (R32-9~16 → R16-5~8 → QF-3~4 → SF-2) ===
+    const bottomHalf = document.createElement('div');
+    bottomHalf.className = 'bracket-half';
+
+    const bottomRounds = [
+      { key: 'semiFinals', label: 'Semi-finals', slice: [1, 2] },
+      { key: 'quarterFinals', label: 'Quarter-finals', slice: [2, 4] },
+      { key: 'roundOf16', label: 'Round of 16', slice: [4, 8] },
+      { key: 'roundOf32', label: 'Round of 32', slice: [8, 16] },
+    ];
+
+    bottomRounds.forEach(r => {
+      const col = document.createElement('div');
+      col.className = 'bracket-round';
+      col.innerHTML = `<div class="bracket-round-label">${r.label}</div>`;
+      const matches = (ko[r.key] || []).slice(r.slice[0], r.slice[1]);
+      matches.forEach(m => col.appendChild(renderMatch(m)));
+      bottomHalf.appendChild(col);
+    });
+
+    bracketWrapper.appendChild(topHalf);
+    bracketWrapper.appendChild(centerCol);
+    bracketWrapper.appendChild(bottomHalf);
+    container.appendChild(bracketWrapper);
   },
 
   _teamDisplay(code) {

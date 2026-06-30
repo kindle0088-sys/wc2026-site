@@ -466,6 +466,38 @@ img.emoji {
   min-width: 900px;
 }
 
+/* --- New: Side-by-side top/bottom half layout --- */
+.bracket-wrapper {
+  display: flex;
+  gap: 1.2rem;
+  padding: 1rem 0;
+  min-width: 1000px;
+}
+
+.bracket-half {
+  flex: 1;
+  display: flex;
+  gap: 1.2rem;
+}
+
+.bracket-half:first-child {
+  /* Top half: R32 → R16 → QF → SF (left to right) */
+}
+
+.bracket-half:last-child {
+  /* Bottom half: SF → QF → R16 → R32 (left to right, reversed) */
+  flex-direction: row-reverse;
+}
+
+.bracket-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  min-width: 180px;
+  padding: 0 0.5rem;
+}
+
 .bracket-round {
   flex: 1;
   display: flex;
@@ -858,6 +890,17 @@ img.emoji {
   .bracket {
     min-width: 700px;
   }
+  .bracket-wrapper {
+    min-width: 800px;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .bracket-half {
+    flex-direction: row;
+  }
+  .bracket-half:last-child {
+    flex-direction: row-reverse;
+  }
 
   .standings-table .team-name {
     max-width: 70px;
@@ -890,6 +933,9 @@ img.emoji {
   .bracket {
     min-width: 600px;
     font-size: 0.75rem;
+  }
+  .bracket-wrapper {
+    min-width: 600px;
   }
 }
 
