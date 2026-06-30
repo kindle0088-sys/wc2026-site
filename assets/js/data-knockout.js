@@ -30,7 +30,7 @@ const WC_KNOCKOUT = {
         "date": "June 29",
         "venue": "Gillette Stadium · Foxborough",
         "status": "completed",
-        "shootout": "PAR 4-3",
+        "homePens": 3, "awayPens": 4,
         "winner": "PAR",
         "pairing": "1E vs 3ABCDF"
       },
@@ -44,7 +44,7 @@ const WC_KNOCKOUT = {
         "date": "June 29",
         "venue": "Estadio BBVA · Monterrey",
         "status": "completed",
-        "shootout": "MAR 3-2",
+        "homePens": 2, "awayPens": 3,
         "winner": "MAR",
         "pairing": "1F vs 2C"
       },
