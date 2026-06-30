@@ -270,7 +270,7 @@
       <span>🏟️ 16 Host Cities</span>
       <span>👥 48 Teams</span>
       <span>⚽ 104 Matches</span>
-      <span>� Knockout Stage</span>
+      <span>⚽ Knockout Stage</span>
     </div>
   </section>
 
@@ -364,7 +364,10 @@
       }).join('');
       // Update footer date
       const fd = document.getElementById('footer-date');
-      if (fd && WC_DATA.lastUpdated) fd.textContent = WC_DATA.lastUpdated;
+      if (fd) {
+        const ts = (typeof WC_KNOCKOUT !== 'undefined' ? WC_KNOCKOUT.lastUpdated : null) || (typeof WC_GROUPS !== 'undefined' ? WC_GROUPS.lastUpdated : null);
+        if (ts) fd.textContent = ts;
+      }
     })();
   </script>
 </body>

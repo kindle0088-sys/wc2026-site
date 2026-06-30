@@ -1,9 +1,9 @@
 const fs = require('fs');
 const vm = require('vm');
 
-const src = fs.readFileSync('assets/js/data.js', 'utf8');
+const src = fs.readFileSync('assets/js/data-groups.js', 'utf8');
 const ctx = {};
-vm.runInNewContext(src + '\nglobalThis.D = WC_DATA;', ctx);
+vm.runInNewContext(src + '\nglobalThis.D = WC_GROUPS;', ctx);
 const d = ctx.D;
 
 const glist = 'ABCDEFGHIJKL';

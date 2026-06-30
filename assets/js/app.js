@@ -319,13 +319,14 @@ const WCApp = {
     }
   },
 
-  _recomputeStats() {
+    _recomputeStats() {
     const data = this.data;
     let totalMatches = 0, totalGoals = 0, cleanSheets = 0, draws = 0;
     let homeWins = 0, awayWins = 0;
     let biggestGD = -1, biggestWinText = '';
     let mostGoalsMatch = 0, mostGoalsText = '';
 
+    // Count group stage matches
     for (const gk of Object.keys(data.groups)) {
       for (const m of data.groups[gk].matches) {
         if (m.status !== 'completed' || m.homeScore === null || m.awayScore === null) continue;
@@ -350,6 +351,49 @@ const WCApp = {
       }
     }
 
+    // Count knockout matches too
+    if (data.knockout) {
+      const koRounds = ['roundOf32', 'roundOf16', 'quarterFinals', 'semiFinals'];
+      for (const roundKey of koRounds) {
+        const matches = data.knockout[roundKey] || [];
+        for (const m of matches) {
+          if (m.status !== 'completed' || m.homeScore === null || m.awayScore === null) continue;
+          const hs = m.homeScore, as = m.awayScore;
+          totalMatches++;
+          totalGoals += hs + as;
+
+          if (hs === 0 || as === 0) cleanSheets++;
+          if (hs === as) draws++;
+          else if (hs > as) homeWins++;
+          else awayWins++;
+
+          const gd = Math.abs(hs - as);
+          if (gd > biggestGD) {
+            biggestGD = gd;
+            biggestWinText = `${this._getTeamName(m.home)} ${hs}-${as} ${this._getTeamName(m.away)} (+${gd})`;
+          }
+          if ((hs + as) > mostGoalsMatch) {
+            mostGoalsMatch = hs + as;
+            mostGoalsText = `${this._getTeamName(m.home)} ${hs}-${as} ${this._getTeamName(m.away)} (${hs+as} goals)`;
+          }
+        }
+      }
+      // Also check thirdPlace and final
+      for (const m of [data.knockout.thirdPlace, data.knockout.final]) {
+        if (!m || m.status !== 'completed' || m.homeScore === null || m.awayScore === null) continue;
+        const hs = m.homeScore, as = m.awayScore;
+        totalMatches++;
+        totalGoals += hs + as;
+        if (hs === 0 || as === 0) cleanSheets++;
+        if (hs === as) draws++;
+        else if (hs > as) homeWins++;
+        else awayWins++;
+        const gd = Math.abs(hs - as);
+        if (gd > biggestGD) { biggestGD = gd; biggestWinText = `${this._getTeamName(m.home)} ${hs}-${as} ${this._getTeamName(m.away)} (+${gd})`; }
+        if ((hs + as) > mostGoalsMatch) { mostGoalsMatch = hs + as; mostGoalsText = `${this._getTeamName(m.home)} ${hs}-${as} ${this._getTeamName(m.away)} (${hs+as} goals)`; }
+      }
+    }
+
     data.stats = {
       totalMatches,
       totalGoals,
@@ -361,78 +405,6 @@ const WCApp = {
       homeWins,
       awayWins
     };
-  },
-
-  // === Top Scorers Extraction (from ESPN details) ===
-  _extractScorers() {
-    if (!this.espnStatus?.dateMap) return;
-    
-    // Build ESPN team ID → our team code mapping
-    const idToCode = {};
-    for (const date of Object.keys(this.espnStatus.dateMap)) {
-      for (const key of Object.keys(this.espnStatus.dateMap[date])) {
-        const m = this.espnStatus.dateMap[date][key];
-        if (m.home && m.homeTeamId) idToCode[m.homeTeamId] = m.home;
-        if (m.away && m.awayTeamId) idToCode[m.awayTeamId] = m.away;
-      }
-    }
-    if (Object.keys(idToCode).length === 0) return;
-
-    // Extract goals from ESPN details (scoreboard endpoint)
-    const scorerMap = {};
-    for (const date of Object.keys(this.espnStatus.dateMap)) {
-      for (const key of Object.keys(this.espnStatus.dateMap[date])) {
-        const match = this.espnStatus.dateMap[date][key];
-        if (match.status !== 'completed' || !match.details?.length) continue;
-
-        for (const d of match.details) {
-          // Goal type IDs: 70=Goal, 97=OwnGoal, 98=Penalty, 137=Header
-          const isGoal = d.type?.id === '70' || d.type?.id === '97' || d.type?.id === '98' || d.type?.id === '137';
-          if (!isGoal) continue;
-          
-          const athletes = d.athletesInvolved || [];
-          const scorer = athletes[0];
-          if (!scorer?.displayName) continue;
-          
-          const name = scorer.displayName;
-          const teamId = scorer.team?.id;
-          const teamCode = idToCode[teamId] || '';
-          if (!name || !teamCode) continue;
-
-          if (!scorerMap[name]) {
-            scorerMap[name] = { name, teamCode, goals: 0, matches: new Set() };
-          }
-          scorerMap[name].goals++;
-          scorerMap[name].matches.add(match.eventId);
-        }
-      }
-    }
-
-    // If ESPN returned data, update topScorers (preserve assists from existing data)
-    if (Object.keys(scorerMap).length > 0) {
-      const oldScorers = this.data?.topScorers || [];
-      const oldAssistMap = {};
-      for (const s of oldScorers) {
-        oldAssistMap[s.name] = { assists: s.assists || 0, team: s.team, flag: s.flag || '' };
-      }
-
-      let scorers = Object.values(scorerMap)
-        .map(s => ({
-          rank: 0,
-          name: s.name,
-          teamCode: s.teamCode,
-          team: this._getTeamName(s.teamCode) || s.teamCode,
-          flag: this._findTeam(s.teamCode)?.flag || oldAssistMap[s.name]?.flag || '',
-          goals: s.goals,
-          assists: oldAssistMap[s.name]?.assists || 0,
-          matches: s.matches.size
-        }))
-        .sort((a, b) => b.goals - a.goals || b.assists - a.assists)
-        .map((s, i) => ({ ...s, rank: i + 1 }))
-        .slice(0, 10); // Top 10
-
-      this.data.topScorers = scorers;
-    }
   },
 
   _getTeamName(code) {
