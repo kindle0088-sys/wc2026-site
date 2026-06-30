@@ -110,34 +110,50 @@ def parse_espn(raw):
 
 def update_match_in_content(content, home, away, hs, aws, status):
     """
-    Find a match block `home: 'X', away: 'Y'` in data.js and update
-    homeScore, awayScore, and status.
-    Returns updated content and True if changed.
+    Find a match block in JSON format and update homeScore, awayScore, status.
+    Example JSON: "home": "RSA", "away": "CAN", "homeScore": 0, ...
     """
-    # Pattern: home: 'X', away: 'Y', homeScore: N, awayScore: N, status: 'S'
-    pat = (r"(home:\s*'" + re.escape(home) + r"'\s*,\s*away:\s*'" + re.escape(away) +
-           r"'\s*,\s*homeScore:\s*)(\d+|null)(\s*,\s*awayScore:\s*)(\d+|null)(\s*,\s*status:\s*')" +
-           r"([^']+)(')")
-    repl_hs = 'null' if hs is None else str(hs)
-    repl_aws = 'null' if aws is None else str(aws)
-    repl = r'\g<1>' + repl_hs + r'\g<3>' + repl_aws + r'\g<5>' + status + r'\g<7>'
+    import json
 
-    if re.search(pat, content):
-        new = re.sub(pat, repl, content)
-        if new != content:
-            return new, True
+    # Build search keys
+    key1 = f'"home": "{home}", "away": "{away}"'
+    key2 = f'"home": "{away}", "away": "{home}"'
 
-    # Try swapped (home/away reversed in data.js vs ESPN)
-    pat2 = (r"(home:\s*'" + re.escape(away) + r"'\s*,\s*away:\s*'" + re.escape(home) +
-            r"'\s*,\s*homeScore:\s*)(\d+|null)(\s*,\s*awayScore:\s*)(\d+|null)(\s*,\s*status:\s*')" +
-            r"([^']+)(')")
-    if re.search(pat2, content):
-        # Scores are reversed too
-        repl2 = r'\g<1>' + repl_aws + r'\g<3>' + repl_hs + r'\g<5>' + status + r'\g<7>'
-        new = re.sub(pat2, repl2, content)
-        if new != content:
-            return new, True
+    idx = content.find(key1)
+    swapped = False
+    if idx < 0:
+        idx = content.find(key2)
+        if idx < 0:
+            return content, False
+        swapped = True
 
+    # Find enclosing match object { ... }
+    start = content.rfind('{', 0, idx)
+    end = content.find('}', idx)
+    if start < 0 or end < 0:
+        return content, False
+
+    block = content[start:end+1]
+    new_block = block
+
+    # Determine score order
+    score_keys = ['homeScore', 'awayScore'] if not swapped else ['awayScore', 'homeScore']
+    vals = [hs, aws] if not swapped else [aws, hs]
+
+    for skey, val in zip(score_keys, vals):
+        old_val = 'null' if val is None else str(val)
+        sp = re.compile(rf'"{re.escape(skey)}":\s*(\d+|null)')
+        m = sp.search(new_block)
+        if m:
+            new_block = sp.sub(f'"{skey}": {old_val}', new_block)
+
+    # Update status
+    sp2 = re.compile(r'"status":\s*"[^"]*"')
+    if sp2.search(new_block):
+        new_block = sp2.sub(f'"status": "{status}"', new_block)
+
+    if new_block != block:
+        return content[:start] + new_block + content[end+1:], True
     return content, False
 
 
@@ -172,7 +188,7 @@ def _parse_completed_matches(matches_block):
     """Parse completed matches from a matches array."""
     matches = []
     for m in re.finditer(
-        r"home:\s*'(\w+)'\s*,\s*away:\s*'(\w+)'\s*,\s*homeScore:\s*(\d+|null),\s*awayScore:\s*(\d+|null),\s*status:\s*'completed'",
+        r'"home":\s*"(\w+)"\s*,\s*"away":\s*"(\w+)"\s*,\s*"homeScore":\s*(\d+|null)\s*,\s*"awayScore":\s*(\d+|null)\s*,\s*"status":\s*"completed"',
         matches_block
     ):
         h, a, hs_s, aws_s = m.groups()
@@ -410,34 +426,34 @@ def update_scorers_in_content(content):
 
     # 4. Build flag lookup from data.js content
     flag_map = {}
-    for m in re.finditer(r"code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'\s*,\s*flag:\s*'([^']+)'", content):
+    for m in re.finditer(r'"code":\s*"(\w+)"\s*,\s*"name":\s*"([^"]+)"\s*,\s*"flag":\s*"([^"]+)"', content):
         flag_map[m.group(1)] = {'name': m.group(2), 'flag': m.group(3)}
 
     def fmt_entry(entry, idx):
         team_info = flag_map.get(entry['team'], {'flag': '🏳️', 'name': entry['team']})
-        return (f"    {{ rank: {idx}, name: '{entry['name']}', team: '{entry['team']}', "
-                f"flag: '{team_info['flag']}', goals: {entry['goals']}, "
-                f"assists: {entry['assists']}, matches: 0 }}")
+        return (f'    {{ "rank": {idx}, "name": "{entry["name"]}", '
+                f'"team": "{entry["team"]}", '
+                f'"flag": "{team_info["flag"]}", '
+                f'"goals": {entry["goals"]}, '
+                f'"assists": {entry["assists"]}, "matches": 0 }}')
 
     scorers_lines = [fmt_entry(e, i+1) for i, e in enumerate(top_scorers)]
     assisters_lines = [fmt_entry(e, i+1) for i, e in enumerate(top_assisters)]
 
-    scorers_block = ('  // Top scorers (auto-generated from ESPN summary API)\n'
-                     '  topScorers: [\n' + ',\n'.join(scorers_lines) + '\n  ],')
-    assisters_block = ('  // Top assisters (auto-generated from ESPN summary API)\n'
-                       '  topAssisters: [\n' + ',\n'.join(assisters_lines) + '\n  ],')
+    scorers_block = ('  "topScorers": [\n' + ',\n'.join(scorers_lines) + '\n  ],')
+    assisters_block = ('  "topAssisters": [\n' + ',\n'.join(assisters_lines) + '\n  ],')
 
     # 5. Replace in content using regex
     # Replace topScorers block
     content = re.sub(
-        r'  // Top scorers.*?\n  topScorers: \[.*?\],',
+        r'\"topScorers\": \\[.*?\\],',
         scorers_block,
         content,
         flags=re.DOTALL
     )
     # Replace topAssisters block
     content = re.sub(
-        r'  // Top assisters.*?\n  topAssisters: \[.*?\],',
+        r'\"topAssisters\": \\[.*?\\],',
         assisters_block,
         content,
         flags=re.DOTALL
@@ -492,15 +508,15 @@ def update_stats_in_content(content):
         if diff == biggest_diff and not biggest_desc:
             biggest_desc = f"{hname} {hs}-{aws} {aname} (+{diff})"
     updates = [
-        (r'totalMatches:\s*\d+', f'totalMatches: {total}'),
-        (r'totalGoals:\s*\d+', f'totalGoals: {goals}'),
-        (r'avgGoalsPerMatch:\s*[\d.]+', f'avgGoalsPerMatch: {avg}'),
-        (r"mostGoalsMatch:\s*'[^']*'", f"mostGoalsMatch: '{most_desc}'"),
-        (r"biggestWin:\s*'[^']*'", f"biggestWin: '{biggest_desc}'"),
-        (r'cleanSheets:\s*\d+', f'cleanSheets: {cs}'),
-        (r'draws:\s*\d+', f'draws: {draws}'),
-        (r'homeWins:\s*\d+', f'homeWins: {hw}'),
-        (r'awayWins:\s*\d+', f'awayWins: {aw}'),
+        (r'\"totalMatches\":\\s*\\d+', f'\"totalMatches\": {total}'),
+        (r'\"totalGoals\":\\s*\\d+', f'\"totalGoals\": {goals}'),
+        (r'\"avgGoalsPerMatch\":\\s*[\\d.]+', f'\"avgGoalsPerMatch\": {avg}'),
+        (r'\"mostGoalsMatch\":\\s*\"[^\"]*\"', f'\"mostGoalsMatch\": \"{most_desc}\"'),
+        (r'\"biggestWin\":\\s*\"[^\"]*\"', f'\"biggestWin\": \"{biggest_desc}\"'),
+        (r'\"cleanSheets\":\\s*\\d+', f'\"cleanSheets\": {cs}'),
+        (r'\"draws\":\\s*\\d+', f'\"draws\": {draws}'),
+        (r'\"homeWins\":\\s*\\d+', f'\"homeWins\": {hw}'),
+        (r'\"awayWins\":\\s*\\d+', f'\"awayWins\": {aw}'),
     ]
     result = content
     for pat, repl in updates:
@@ -509,17 +525,17 @@ def update_stats_in_content(content):
 
 
 def update_timestamp(content):
-    """Update the Last updated comment AND the lastUpdated field in WC_DATA."""
+    """Update the Last updated comment AND the lastUpdated field."""
     now = datetime.now(timezone.utc)
     ts = now.strftime('%B %d, %Y at %H:%M')
     # Update the comment block
     pat = r"(Last updated:\s*)[^\n]+"
     if re.search(pat, content):
         content = re.sub(pat, fr'\1{ts}', content)
-    # Update the lastUpdated field in WC_DATA object
-    pat2 = r"(lastUpdated:\s*')[^']*(')"
+    # Update the lastUpdated JSON field
+    pat2 = r'(\"lastUpdated\":\\s*\")[^\"]*(\")'
     if re.search(pat2, content):
-        content = re.sub(pat2, fr'\g<1>{ts}\g<2>', content)
+        content = re.sub(pat2, fr'\\g<1>{ts}\\g<2>', content)
     return content, ts
 
 
@@ -544,7 +560,7 @@ def update_html(version, month_day):
         with open(path) as f:
             html = f.read()
         old = html
-        html = re.sub(r'(src="[^"]*data\.js\?v=)\d+', fr'\g<1>{version}', html)
+        html = re.sub(r'(src="[^"]*(?:data-groups|data-knockout)\.js\?v=)\d+', fr'\g<1>{version}', html)
         html = re.sub(r'(src="[^"]*app\.js\?v=)\d+', fr'\g<1>{version}', html)
         html = re.sub(r'Data updated [A-Za-z]+ \d+, \d{4}',
                       f'Data updated {month_day}', html)
@@ -588,7 +604,7 @@ def main():
 
     espn_m = parse_espn(raw)
     completed = {k: v for k, v in espn_m.items() if v['status'] == 'completed'}
-    old_done = len(re.findall(r"status:\s*'completed'", orig))
+    old_done = len(re.findall(r'"status":\s*"completed"', orig))
     new_done = len(completed)
     log(f'ESPN: {new_done} completed (data-knockout.js had {old_done})')
 
