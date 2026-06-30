@@ -158,27 +158,27 @@ def update_match_in_content(content, home, away, hs, aws, status):
 
 
 def _get_team_name_map(content):
-    """Build {code: name} map from team blocks."""
+    """Build {code: name} map from team blocks (JSON format)."""
     names = {}
-    for m in re.finditer(r"code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'", content):
+    for m in re.finditer(r'"code":\s*"(\w+)"\s*,\s*"name":\s*"([^"]+)"', content):
         names[m.group(1)] = m.group(2)
     return names
 
 
 def _get_team_info_map(content):
-    """Build {code: {'name': name, 'flag': flag}} map from team blocks."""
+    """Build {code: {name, flag}} map from team blocks (JSON format)."""
     info = {}
-    for m in re.finditer(r"\{\s*code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'\s*,\s*flag:\s*'([^']+)'", content):
+    for m in re.finditer(r'\{\s*"code":\s*"(\w+)"\s*,\s*"name":\s*"([^"]+)"\s*,\s*"flag":\s*"([^"]+)"', content):
         info[m.group(1)] = {'name': m.group(2), 'flag': m.group(3)}
     return info
 
 
 def _parse_team_entries(teams_block, team_info):
-    """Parse existing team entries from a teams array."""
+    """Parse team entries from a teams array (JSON format)."""
     entries = []
-    for m in re.finditer(r"\{\s*code:\s*'(\w+)'\s*,\s*name:\s*'([^']+)'\s*,\s*flag:\s*'([^']+)'", teams_block):
+    for m in re.finditer(r'\{\s*"code":\s*"(\w+)"\s*,\s*"name":\s*"([^"]+)"\s*,\s*"flag":\s*"([^"]+)"', teams_block):
         code, name, flag = m.groups()
-        sm = re.search(r"status:\s*'([^']+)'", teams_block[m.start():m.end()+80])
+        sm = re.search(r'"status":\s*"([^"]+)"', teams_block[m.start():m.end()+80])
         entries.append({'code': code, 'name': name, 'flag': flag,
                         'status': sm.group(1) if sm else 'qualifying'})
     return entries
@@ -265,8 +265,8 @@ def update_standings_in_content(content):
 
 
 def _find_knockout_match(content, round_name, match_id):
-    """Find a knockout match block by id (e.g. 'R32-1') and return its bounds."""
-    pat = rf"\{{\s*id:\s*'{re.escape(match_id)}'.*?\}}"
+    """Find a knockout match block by id (JSON format)."""
+    pat = rf'\{{\s*"id":\s*"{re.escape(match_id)}"'
     m = re.search(pat, content, re.S)
     return m
 
@@ -296,14 +296,14 @@ def _advance_knockout_winners(content):
         dst_m = _find_knockout_match(result, None, dst_id)
         if not src_m or not dst_m:
             continue
-        src_block = result[src_m.start():src_m.end()]
-        status_m = re.search(r"status:\s*'(\w+)'", src_block)
+        src_block = content[src_m.start():src_m.end()]
+        status_m = re.search(r'"status":\s*"(\w+)"', src_block)
         if not status_m or status_m.group(1) != 'completed':
             continue
-        hs_m = re.search(r"homeScore:\s*(\d+)", src_block)
-        aws_m = re.search(r"awayScore:\s*(\d+)", src_block)
-        home_team_m = re.search(r"home:\s*'(\w+)'", src_block)
-        away_team_m = re.search(r"away:\s*'(\w+)'", src_block)
+        hs_m = re.search(r'"homeScore":\s*(\d+)', src_block)
+        aws_m = re.search(r'"awayScore":\s*(\d+)', src_block)
+        home_team_m = re.search(r'"home":\s*"(\w+)"', src_block)
+        away_team_m = re.search(r'"away":\s*"(\w+)"', src_block)
         if not hs_m or not aws_m or not home_team_m or not away_team_m:
             continue
         hs = int(hs_m.group(1))
@@ -311,13 +311,14 @@ def _advance_knockout_winners(content):
         winner = home_team_m.group(1) if hs > aws else away_team_m.group(1) if aws > hs else None
         if not winner:
             continue
-        dst_block = result[dst_m.end()]
+        dst_block_start = dst_m.start()
+        dst_block = content[dst_block_start:dst_m.end()]
         if dst_slot == 'home':
-            dst_new = re.sub(r"(home:\s*)'(\w+|null)'", r"\g<1>'" + winner + "'", dst_block, count=1)
+            dst_new = re.sub(r'"home":\s*"(\w+|null)"', f'"home": "{winner}"', dst_block, count=1)
         else:
-            dst_new = re.sub(r"(away:\s*)'(\w+|null)'", r"\g<1>'" + winner + "'", dst_block, count=1)
+            dst_new = re.sub(r'"away":\s*"(\w+|null)"', f'"away": "{winner}"', dst_block, count=1)
         if dst_new != dst_block:
-            result = result[:dst_m.start()] + dst_new + result[dst_m.end():]
+            result = result[:dst_block_start] + dst_new + result[dst_m.end():]
     return result
 
 
@@ -389,18 +390,21 @@ def update_scorers_in_content(content):
                     scorer_name = athletes[0]['athlete']['displayName']
                     skey = f'{scorer_name}|{team_abbr}'
                     if skey not in scorer_map:
-                        scorer_map[skey] = {'name': scorer_name, 'team': team_abbr, 'goals': 0, 'assists': 0}
+                        scorer_map[skey] = {'name': scorer_name, 'team': team_abbr, 'goals': 0, 'assists': 0, 'matches': set()}
                     scorer_map[skey]['goals'] += 1
+                    scorer_map[skey]['matches'].add(eid)
                 if len(athletes) > 1 and (athletes[1].get('athlete') or {}).get('displayName'):
                     assist_name = athletes[1]['athlete']['displayName']
                     akey = f'{assist_name}|{team_abbr}'
                     if akey not in assist_map:
-                        assist_map[akey] = {'name': assist_name, 'team': team_abbr, 'goals': 0, 'assists': 0}
+                        assist_map[akey] = {'name': assist_name, 'team': team_abbr, 'goals': 0, 'assists': 0, 'matches': set()}
                     assist_map[akey]['assists'] += 1
+                    assist_map[akey]['matches'].add(eid)
                     # Also ensure assister appears in scorer_map (for combined stats)
                     if akey not in scorer_map:
-                        scorer_map[akey] = {'name': assist_name, 'team': team_abbr, 'goals': 0, 'assists': 0}
+                        scorer_map[akey] = {'name': assist_name, 'team': team_abbr, 'goals': 0, 'assists': 0, 'matches': set()}
                     scorer_map[akey]['assists'] += 1
+                    scorer_map[akey]['matches'].add(eid)
             ok_count += 1
             if ok_count % 20 == 0:
                 log(f'  Scorers: {ok_count}/{len(event_ids)} matches processed')
@@ -435,7 +439,7 @@ def update_scorers_in_content(content):
                 f'"team": "{entry["team"]}", '
                 f'"flag": "{team_info["flag"]}", '
                 f'"goals": {entry["goals"]}, '
-                f'"assists": {entry["assists"]}, "matches": 0 }}')
+                f'"assists": {entry["assists"]}, "matches": {len(entry["matches"])} }}')
 
     scorers_lines = [fmt_entry(e, i+1) for i, e in enumerate(top_scorers)]
     assisters_lines = [fmt_entry(e, i+1) for i, e in enumerate(top_assisters)]
