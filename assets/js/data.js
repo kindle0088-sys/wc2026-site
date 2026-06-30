@@ -1,10 +1,10 @@
 /**
  * 2026 FIFA World Cup - Complete Data
- * Last updated: June 28, 2026 at 16:02
+ * Last updated: June 30, 2026 at 10:00
  */
 
 const WC_DATA = {
-  lastUpdated: 'June 28, 2026 at 16:02',
+  lastUpdated: 'June 29, 2026 at 23:53',
   tournament: {
     name: '2026 FIFA World Cup',
     host: 'Canada · Mexico · USA',
@@ -268,15 +268,15 @@ const WC_DATA = {
     // Round of 32 — June 28~July 3
     roundOf32: [
       // R32-1 (Match 73): 2A vs 2B — SoFi Stadium, Inglewood — June 28
-      { id: 'R32-1', match: 73, home: 'RSA', away: 'CAN', homeScore: null, awayScore: null, date: 'June 28', venue: 'SoFi Stadium · Inglewood', status: 'pending', pairing: '2A vs 2B' },
+      { id: 'R32-1', match: 73, home: 'RSA', away: 'CAN', homeScore: 0, awayScore: 1, date: 'June 28', venue: 'SoFi Stadium · Inglewood', status: 'completed', winner: 'CAN', pairing: '2A vs 2B' },
       // R32-2 (Match 74): 1E (GER) vs 3(A/B/C/D/F) — Gillette Stadium, Foxborough — June 29
-      { id: 'R32-2', match: 74, home: 'GER', away: 'SWE', homeScore: null, awayScore: null, date: 'June 29', venue: 'Gillette Stadium · Foxborough', status: 'pending', pairing: '1E vs 3ABCDF' },
+      { id: 'R32-2', match: 74, home: 'GER', away: 'PAR', homeScore: 1, awayScore: 1, date: 'June 29', venue: 'Gillette Stadium · Foxborough', status: 'completed', shootout: 'PAR 4-3', winner: 'PAR', pairing: '1E vs 3ABCDF' },
       // R32-3 (Match 75): 1F vs 2C — Estadio BBVA, Monterrey — June 29
       { id: 'R32-3', match: 75, home: 'NED', away: 'MAR', homeScore: null, awayScore: null, date: 'June 29', venue: 'Estadio BBVA · Monterrey', status: 'pending', pairing: '1F vs 2C' },
       // R32-4 (Match 76): 1C vs 2F — NRG Stadium, Houston — June 29
-      { id: 'R32-4', match: 76, home: 'BRA', away: 'JPN', homeScore: null, awayScore: null, date: 'June 29', venue: 'NRG Stadium · Houston', status: 'pending', pairing: '1C vs 2F' },
+      { id: 'R32-4', match: 76, home: 'BRA', away: 'JPN', homeScore: 2, awayScore: 1, date: 'June 29', venue: 'NRG Stadium · Houston', status: 'completed', winner: 'BRA', pairing: '1C vs 2F' },
       // R32-5 (Match 77): 1I vs 3(C/D/F/G/H) — MetLife Stadium, NJ — June 30
-      { id: 'R32-5', match: 77, home: 'FRA', away: 'PAR', homeScore: null, awayScore: null, date: 'June 30', venue: 'MetLife Stadium · NJ', status: 'pending', pairing: '1I vs 3CDFGH' },
+      { id: 'R32-5', match: 77, home: 'FRA', away: 'SWE', homeScore: null, awayScore: null, date: 'June 30', venue: 'MetLife Stadium · NJ', status: 'pending', pairing: '1I vs 3CDFGH' },
       // R32-6 (Match 78): 2E vs 2I — AT&T Stadium, Arlington — June 30
       { id: 'R32-6', match: 78, home: 'CIV', away: 'NOR', homeScore: null, awayScore: null, date: 'June 30', venue: 'AT&T Stadium · Arlington', status: 'pending', pairing: '2E vs 2I' },
       // R32-7 (Match 79): 1A (MEX) vs 3(C/E/F/H/I) — Estadio Azteca — June 30
@@ -305,9 +305,9 @@ const WC_DATA = {
       // R16-1 (Match 89): W74 vs W77 — Lincoln Financial Field, Philadelphia — July 4
       { id: 'R16-1', match: 89, home: null, away: null, homeScore: null, awayScore: null, date: 'July 4', venue: 'Lincoln Financial Field · Philadelphia', status: 'pending', pairing: 'W74 vs W77' },
       // R16-2 (Match 90): W73 vs W75 — NRG Stadium, Houston — July 4
-      { id: 'R16-2', match: 90, home: null, away: null, homeScore: null, awayScore: null, date: 'July 4', venue: 'NRG Stadium · Houston', status: 'pending', pairing: 'W73 vs W75' },
+      { id: 'R16-2', match: 90, home: 'CAN', away: null, homeScore: null, awayScore: null, date: 'July 4', venue: 'NRG Stadium · Houston', status: 'pending', pairing: 'W73 vs W75' },
       // R16-3 (Match 91): W76 vs W78 — MetLife Stadium, NJ — July 5
-      { id: 'R16-3', match: 91, home: null, away: null, homeScore: null, awayScore: null, date: 'July 5', venue: 'MetLife Stadium · NJ', status: 'pending', pairing: 'W76 vs W78' },
+      { id: 'R16-3', match: 91, home: 'BRA', away: null, homeScore: null, awayScore: null, date: 'July 5', venue: 'MetLife Stadium · NJ', status: 'pending', pairing: 'W76 vs W78' },
       // R16-4 (Match 92): W79 vs W80 — Estadio Azteca, Mexico City — July 5
       { id: 'R16-4', match: 92, home: null, away: null, homeScore: null, awayScore: null, date: 'July 5', venue: 'Estadio Azteca · Mexico City', status: 'pending', pairing: 'W79 vs W80' },
       // R16-5 (Match 93): W83 vs W84 — AT&T Stadium, Arlington — July 6
@@ -345,8 +345,8 @@ const WC_DATA = {
 
   // Stats summary
   stats: {
-    totalMatches: 72,
-    totalGoals: 215,
+    totalMatches: 74,
+    totalGoals: 219,
     avgGoalsPerMatch: 2.99,
     mostGoalsMatch: 'Germany 7-1 Curaçao (8 goals)',
     biggestWin: 'Canada 6-0 Qatar (+6)',
