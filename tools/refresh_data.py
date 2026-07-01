@@ -112,10 +112,16 @@ def update_match_in_content(content, home, away, hs, aws, status):
     """
     Find a match block in JSON format and update homeScore, awayScore, status.
     Handles multi-line JSON with optional whitespace/newlines between fields.
+    ONLY updates roundOf32 matches (not R16/QF/SF/F) to avoid false matches.
     """
-    # Build regex to find the match block — handles newlines/whitespace between fields
+    # First, isolate the roundOf32 section to avoid matching R16+ matches with same teams
+    r32_match = re.search(r'"roundOf32":\s*\[(.*?)\]', content, re.DOTALL)
+    if not r32_match:
+        return content, False
+    r32_section = r32_match.group(1)
+    r32_start = r32_match.start(1)
+
     # Pattern: "home": "X", (with optional whitespace/newlines) "away": "Y"
-    # or "home": "Y", (ws) "away": "X"
     pat1 = re.compile(
         r'"home":\s*"{home}"\s*,\s*"away":\s*"{away}"'.format(home=re.escape(home), away=re.escape(away)),
         re.DOTALL
@@ -125,10 +131,10 @@ def update_match_in_content(content, home, away, hs, aws, status):
         re.DOTALL
     )
 
-    m = pat1.search(content)
+    m = pat1.search(r32_section)
     swapped = False
     if not m:
-        m = pat2.search(content)
+        m = pat2.search(r32_section)
         if not m:
             return content, False
         swapped = True
@@ -136,12 +142,12 @@ def update_match_in_content(content, home, away, hs, aws, status):
     idx = m.start()
 
     # Find enclosing match object { ... }
-    start = content.rfind('{', 0, idx)
-    end = content.find('}', idx)
+    start = r32_section.rfind('{', 0, idx)
+    end = r32_section.find('}', idx)
     if start < 0 or end < 0:
         return content, False
 
-    block = content[start:end+1]
+    block = r32_section[start:end+1]
     new_block = block
 
     # Determine score order
@@ -161,9 +167,8 @@ def update_match_in_content(content, home, away, hs, aws, status):
         new_block = sp2.sub(f'"status": "{status}"', new_block)
 
     if new_block != block:
-        return content[:start] + new_block + content[end+1:], True
+        return content[:r32_start + start] + new_block + content[r32_start + end + 1:], True
     return content, False
-
 
 def _get_team_name_map(content):
     """Build {code: name} map from team blocks (JSON format)."""
