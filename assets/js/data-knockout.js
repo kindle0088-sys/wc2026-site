@@ -1,6 +1,6 @@
 /**
  * 2026 FIFA World Cup - Knockout Stage Data
- * Last updated: July 01, 2026 at 00:42
+ * Last updated: July 01, 2026 at 12:56
  */
 
 const WC_KNOCKOUT = {
@@ -92,11 +92,12 @@ const WC_KNOCKOUT = {
         "match": 79,
         "home": "MEX",
         "away": "ECU",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 2,
+        "awayScore": 0,
         "date": "June 30",
         "venue": "Estadio Azteca · Mexico City",
-        "status": "pending",
+        "status": "completed",
+        "winner": "MEX",
         "pairing": "1A vs 3CEFHI"
       },
       {
@@ -212,14 +213,14 @@ const WC_KNOCKOUT = {
       {
         "id": "R16-1",
         "match": 89,
-        "home": "PAR",
-        "away": "FRA",
+        "home": "CAN",
+        "away": "PAR",
         "homeScore": null,
         "awayScore": null,
         "date": "July 4",
         "venue": "Lincoln Financial Field · Philadelphia",
         "status": "pending",
-        "pairing": "W74(W PAR) vs W77(W FRA)"
+        "pairing": "W73(2A CAN) vs W74(W PAR)"
       },
       {
         "id": "R16-2",
@@ -231,7 +232,7 @@ const WC_KNOCKOUT = {
         "date": "July 4",
         "venue": "NRG Stadium · Houston",
         "status": "pending",
-        "pairing": "W75(W MAR) vs W76(W BRA)"
+        "pairing": "W75(1F MAR) vs W76(1C BRA)"
       },
       {
         "id": "R16-3",
@@ -243,12 +244,12 @@ const WC_KNOCKOUT = {
         "date": "July 5",
         "venue": "MetLife Stadium · NJ",
         "status": "pending",
-        "pairing": "W77(W FRA) vs W78(W NOR)"
+        "pairing": "W77(1I FRA) vs W78(2E NOR)"
       },
       {
         "id": "R16-4",
         "match": 92,
-        "home": null,
+        "home": "MEX",
         "away": null,
         "homeScore": null,
         "awayScore": null,
@@ -408,14 +409,14 @@ const WC_KNOCKOUT = {
     }
   },
   "stats": {
-    "totalMatches": 75,
-    "totalGoals": 221,
-    "avgGoalsPerMatch": 2.99,
+    "totalMatches": 79,
+    "totalGoals": 239,
+    "avgGoalsPerMatch": 3.03,
     "mostGoalsMatch": "Germany 7-1 Curaçao (8 goals)",
     "biggestWin": "Canada 6-0 Qatar (+6)",
-    "cleanSheets": 33,
-    "draws": 20,
-    "homeWins": 34,
+    "cleanSheets": 39,
+    "draws": 22,
+    "homeWins": 39,
     "awayWins": 18
   },
   "articles": [
