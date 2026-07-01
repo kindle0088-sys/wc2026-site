@@ -1,6 +1,6 @@
 /**
  * 2026 FIFA World Cup - Knockout Stage Data
- * Last updated: June 29, 2026 at 23:53
+ * Last updated: July 01, 2026 at 00:42
  */
 
 const WC_KNOCKOUT = {
@@ -66,11 +66,12 @@ const WC_KNOCKOUT = {
         "match": 77,
         "home": "FRA",
         "away": "SWE",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 3,
+        "awayScore": 0,
         "date": "June 30",
         "venue": "MetLife Stadium · NJ",
-        "status": "pending",
+        "status": "completed",
+        "winner": "FRA",
         "pairing": "1I vs 3CDFGH"
       },
       {
@@ -78,11 +79,12 @@ const WC_KNOCKOUT = {
         "match": 78,
         "home": "CIV",
         "away": "NOR",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 1,
+        "awayScore": 2,
         "date": "June 30",
         "venue": "AT&T Stadium · Arlington",
-        "status": "pending",
+        "status": "completed",
+        "winner": "NOR",
         "pairing": "2E vs 2I"
       },
       {
@@ -125,7 +127,7 @@ const WC_KNOCKOUT = {
         "id": "R32-10",
         "match": 82,
         "home": "BEL",
-        "away": "ALG",
+        "away": "SEN",
         "homeScore": null,
         "awayScore": null,
         "date": "July 1",
@@ -161,7 +163,7 @@ const WC_KNOCKOUT = {
         "id": "R32-13",
         "match": 85,
         "home": "SUI",
-        "away": "SEN",
+        "away": "ALG",
         "homeScore": null,
         "awayScore": null,
         "date": "July 2",
@@ -210,38 +212,38 @@ const WC_KNOCKOUT = {
       {
         "id": "R16-1",
         "match": 89,
-        "home": null,
-        "away": null,
+        "home": "PAR",
+        "away": "FRA",
         "homeScore": null,
         "awayScore": null,
         "date": "July 4",
         "venue": "Lincoln Financial Field · Philadelphia",
         "status": "pending",
-        "pairing": "W74 vs W77"
+        "pairing": "W74(W PAR) vs W77(W FRA)"
       },
       {
         "id": "R16-2",
         "match": 90,
-        "home": "CAN",
-        "away": "MAR",
+        "home": "MAR",
+        "away": "BRA",
         "homeScore": null,
         "awayScore": null,
         "date": "July 4",
         "venue": "NRG Stadium · Houston",
         "status": "pending",
-        "pairing": "W73 vs W75"
+        "pairing": "W75(W MAR) vs W76(W BRA)"
       },
       {
         "id": "R16-3",
         "match": 91,
-        "home": "BRA",
-        "away": null,
+        "home": "FRA",
+        "away": "NOR",
         "homeScore": null,
         "awayScore": null,
         "date": "July 5",
         "venue": "MetLife Stadium · NJ",
         "status": "pending",
-        "pairing": "W76 vs W78"
+        "pairing": "W77(W FRA) vs W78(W NOR)"
       },
       {
         "id": "R16-4",

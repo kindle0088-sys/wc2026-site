@@ -111,21 +111,29 @@ def parse_espn(raw):
 def update_match_in_content(content, home, away, hs, aws, status):
     """
     Find a match block in JSON format and update homeScore, awayScore, status.
-    Example JSON: "home": "RSA", "away": "CAN", "homeScore": 0, ...
+    Handles multi-line JSON with optional whitespace/newlines between fields.
     """
-    import json
+    # Build regex to find the match block — handles newlines/whitespace between fields
+    # Pattern: "home": "X", (with optional whitespace/newlines) "away": "Y"
+    # or "home": "Y", (ws) "away": "X"
+    pat1 = re.compile(
+        r'"home":\s*"{home}"\s*,\s*"away":\s*"{away}"'.format(home=re.escape(home), away=re.escape(away)),
+        re.DOTALL
+    )
+    pat2 = re.compile(
+        r'"home":\s*"{away}"\s*,\s*"away":\s*"{home}"'.format(home=re.escape(home), away=re.escape(away)),
+        re.DOTALL
+    )
 
-    # Build search keys
-    key1 = f'"home": "{home}", "away": "{away}"'
-    key2 = f'"home": "{away}", "away": "{home}"'
-
-    idx = content.find(key1)
+    m = pat1.search(content)
     swapped = False
-    if idx < 0:
-        idx = content.find(key2)
-        if idx < 0:
+    if not m:
+        m = pat2.search(content)
+        if not m:
             return content, False
         swapped = True
+
+    idx = m.start()
 
     # Find enclosing match object { ... }
     start = content.rfind('{', 0, idx)
@@ -143,8 +151,8 @@ def update_match_in_content(content, home, away, hs, aws, status):
     for skey, val in zip(score_keys, vals):
         old_val = 'null' if val is None else str(val)
         sp = re.compile(rf'"{re.escape(skey)}":\s*(\d+|null)')
-        m = sp.search(new_block)
-        if m:
+        m2 = sp.search(new_block)
+        if m2:
             new_block = sp.sub(f'"{skey}": {old_val}', new_block)
 
     # Update status
