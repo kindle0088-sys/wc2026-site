@@ -4,7 +4,7 @@
  */
 
 const WC_KNOCKOUT = {
-  "lastUpdated": "June 29, 2026 at 23:53",
+  "lastUpdated": "July 01, 2026 at 00:42",
   "knockout": {
     "roundOf32": [
       {
