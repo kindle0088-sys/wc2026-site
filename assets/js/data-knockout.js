@@ -1,6 +1,6 @@
 /**
  * 2026 FIFA World Cup - Knockout Stage Data
- * Last updated: July 02, 2026 at 14:56
+ * Last updated: July 02, 2026 at 15:54
  */
 
 const WC_KNOCKOUT = {

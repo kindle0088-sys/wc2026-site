@@ -1483,189 +1483,29 @@ const WC_GROUPS = {
       ]
     }
   },
-  "topScorers": [
-    {
-      "rank": 1,
-      "name": "Lionel Messi",
-      "team": "ARG",
-      "flag": "🇦🇷",
-      "goals": 6,
-      "assists": 0,
-      "matches": 0
-    },
-    {
-      "rank": 2,
-      "name": "Kylian Mbappé",
-      "team": "FRA",
-      "flag": "🇫🇷",
-      "goals": 4,
-      "assists": 2,
-      "matches": 0
-    },
-    {
-      "rank": 3,
-      "name": "Vinícius Júnior",
-      "team": "BRA",
-      "flag": "🇧🇷",
-      "goals": 4,
-      "assists": 1,
-      "matches": 0
-    },
-    {
-      "rank": 4,
-      "name": "Ousmane Dembélé",
-      "team": "FRA",
-      "flag": "🇫🇷",
-      "goals": 4,
-      "assists": 1,
-      "matches": 0
-    },
-    {
-      "rank": 5,
-      "name": "Erling Haaland",
-      "team": "NOR",
-      "flag": "🇳🇴",
-      "goals": 4,
-      "assists": 0,
-      "matches": 0
-    },
-    {
-      "rank": 6,
-      "name": "Deniz Undav",
-      "team": "GER",
-      "flag": "🇩🇪",
-      "goals": 3,
-      "assists": 2,
-      "matches": 0
-    },
-    {
-      "rank": 7,
-      "name": "Johan Manzambi",
-      "team": "SUI",
-      "flag": "🇨🇭",
-      "goals": 3,
-      "assists": 1,
-      "matches": 0
-    },
-    {
-      "rank": 8,
-      "name": "Ismaïla Sarr",
-      "team": "SEN",
-      "flag": "🇸🇳",
-      "goals": 3,
-      "assists": 1,
-      "matches": 0
-    },
-    {
-      "rank": 9,
-      "name": "Ismael Saibari",
-      "team": "MAR",
-      "flag": "🇲🇦",
-      "goals": 3,
-      "assists": 0,
-      "matches": 0
-    },
-    {
-      "rank": 10,
-      "name": "Elijah Just",
-      "team": "NZL",
-      "flag": "🇳🇿",
-      "goals": 3,
-      "assists": 0,
-      "matches": 0
-    }
+    "topScorers": [
+    { "rank": 1, "name": "Kylian Mbappé", "team": "FRA", "flag": "🇫🇷", "goals": 6, "assists": 2, "matches": 3 },
+    { "rank": 2, "name": "Lionel Messi", "team": "ARG", "flag": "🇦🇷", "goals": 6, "assists": 0, "matches": 3 },
+    { "rank": 3, "name": "Erling Haaland", "team": "NOR", "flag": "🇳🇴", "goals": 5, "assists": 0, "matches": 3 },
+    { "rank": 4, "name": "Harry Kane", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 5, "assists": 0, "matches": 3 },
+    { "rank": 5, "name": "Ousmane Dembélé", "team": "FRA", "flag": "🇫🇷", "goals": 4, "assists": 2, "matches": 2 },
+    { "rank": 6, "name": "Vinícius Júnior", "team": "BRA", "flag": "🇧🇷", "goals": 4, "assists": 1, "matches": 3 },
+    { "rank": 7, "name": "Ismaïla Sarr", "team": "SEN", "flag": "🇸🇳", "goals": 4, "assists": 1, "matches": 3 },
+    { "rank": 8, "name": "Deniz Undav", "team": "GER", "flag": "🇩🇪", "goals": 3, "assists": 2, "matches": 2 },
+    { "rank": 9, "name": "Julián Quiñones", "team": "MEX", "flag": "🇲🇽", "goals": 3, "assists": 1, "matches": 3 },
+    { "rank": 10, "name": "Johan Manzambi", "team": "SUI", "flag": "🇨🇭", "goals": 3, "assists": 1, "matches": 2 }
   ],
-  "topAssisters": [
-    {
-      "rank": 1,
-      "name": "Alexander Isak",
-      "team": "SWE",
-      "flag": "🇸🇪",
-      "goals": 1,
-      "assists": 3,
-      "matches": 0
-    },
-    {
-      "rank": 2,
-      "name": "Bruno Guimarães",
-      "team": "BRA",
-      "flag": "🇧🇷",
-      "goals": 0,
-      "assists": 3,
-      "matches": 0
-    },
-    {
-      "rank": 3,
-      "name": "Michael Olise",
-      "team": "FRA",
-      "flag": "🇫🇷",
-      "goals": 0,
-      "assists": 3,
-      "matches": 0
-    },
-    {
-      "rank": 4,
-      "name": "Kylian Mbappé",
-      "team": "FRA",
-      "flag": "🇫🇷",
-      "goals": 4,
-      "assists": 2,
-      "matches": 0
-    },
-    {
-      "rank": 5,
-      "name": "Deniz Undav",
-      "team": "GER",
-      "flag": "🇩🇪",
-      "goals": 3,
-      "assists": 2,
-      "matches": 0
-    },
-    {
-      "rank": 6,
-      "name": "Breel Embolo",
-      "team": "SUI",
-      "flag": "🇨🇭",
-      "goals": 1,
-      "assists": 2,
-      "matches": 0
-    },
-    {
-      "rank": 7,
-      "name": "Viktor Gyökeres",
-      "team": "SWE",
-      "flag": "🇸🇪",
-      "goals": 1,
-      "assists": 2,
-      "matches": 0
-    },
-    {
-      "rank": 8,
-      "name": "Mohamed Salah",
-      "team": "EGY",
-      "flag": "🇪🇬",
-      "goals": 1,
-      "assists": 2,
-      "matches": 0
-    },
-    {
-      "rank": 9,
-      "name": "Iliman Ndiaye",
-      "team": "SEN",
-      "flag": "🇸🇳",
-      "goals": 1,
-      "assists": 2,
-      "matches": 0
-    },
-    {
-      "rank": 10,
-      "name": "Nathan Saliba",
-      "team": "CAN",
-      "flag": "🇨🇦",
-      "goals": 1,
-      "assists": 2,
-      "matches": 0
-    }
+    "topAssisters": [
+    { "rank": 1, "name": "Michael Olise", "team": "FRA", "flag": "🇫🇷", "goals": 0, "assists": 5, "matches": 0 },
+    { "rank": 2, "name": "Bruno Guimarães", "team": "BRA", "flag": "🇧🇷", "goals": 0, "assists": 4, "matches": 0 },
+    { "rank": 3, "name": "Alexander Isak", "team": "SWE", "flag": "🇸🇪", "goals": 1, "assists": 3, "matches": 1 },
+    { "rank": 4, "name": "Roberto Alvarado", "team": "MEX", "flag": "🇲🇽", "goals": 0, "assists": 3, "matches": 0 },
+    { "rank": 5, "name": "Florian Wirtz", "team": "GER", "flag": "🇩🇪", "goals": 0, "assists": 3, "matches": 0 },
+    { "rank": 6, "name": "Martin Ødegaard", "team": "NOR", "flag": "🇳🇴", "goals": 0, "assists": 3, "matches": 0 },
+    { "rank": 7, "name": "Kylian Mbappé", "team": "FRA", "flag": "🇫🇷", "goals": 6, "assists": 2, "matches": 3 },
+    { "rank": 8, "name": "Ousmane Dembélé", "team": "FRA", "flag": "🇫🇷", "goals": 4, "assists": 2, "matches": 2 },
+    { "rank": 9, "name": "Deniz Undav", "team": "GER", "flag": "🇩🇪", "goals": 3, "assists": 2, "matches": 2 },
+    { "rank": 10, "name": "Crysencio Summerville", "team": "NED", "flag": "🇳🇱", "goals": 2, "assists": 2, "matches": 2 }
   ],
   "highlights": [
     {

@@ -381,7 +381,7 @@ def update_scorers_in_content(content):
             for ev in data['events']:
                 comp = ev.get('competitions', [{}])[0]
                 st_id = (comp.get('status') or {}).get('type', {}).get('id', '0')
-                if st_id == '28':  # completed
+                if st_id in ('28', '45', '47'):  # completed (FT/AET/PEN)
                     event_ids.append(ev['id'])
         cur += timedelta(days=1)
 
