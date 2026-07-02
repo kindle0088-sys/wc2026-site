@@ -291,10 +291,10 @@ def _advance_knockout_winners(content):
         ('R32-3', 'R16-2', 'home'), ('R32-4', 'R16-2', 'away'),
         ('R32-5', 'R16-3', 'home'), ('R32-6', 'R16-3', 'away'),
         ('R32-7', 'R16-4', 'home'), ('R32-8', 'R16-4', 'away'),
-        ('R32-9', 'R16-5', 'home'), ('R32-10', 'R16-5', 'away'),
-        ('R32-11', 'R16-6', 'home'), ('R32-12', 'R16-6', 'away'),
-        ('R32-13', 'R16-7', 'home'), ('R32-14', 'R16-7', 'away'),
-        ('R32-15', 'R16-8', 'home'), ('R32-16', 'R16-8', 'away'),
+        ('R32-11', 'R16-5', 'home'), ('R32-12', 'R16-5', 'away'),
+        ('R32-9', 'R16-6', 'home'), ('R32-10', 'R16-6', 'away'),
+        ('R32-14', 'R16-7', 'home'), ('R32-16', 'R16-7', 'away'),
+        ('R32-13', 'R16-8', 'home'), ('R32-15', 'R16-8', 'away'),
         ('R16-1', 'QF-1', 'home'), ('R16-2', 'QF-1', 'away'),
         ('R16-3', 'QF-2', 'home'), ('R16-4', 'QF-2', 'away'),
         ('R16-5', 'QF-3', 'home'), ('R16-6', 'QF-3', 'away'),
@@ -304,12 +304,23 @@ def _advance_knockout_winners(content):
         ('SF-1', 'F', 'home'), ('SF-2', 'F', 'away'),
     ]
     result = content
+
+    def _get_block(text, pos):
+        """Find enclosing {} starting at position pos (pos should be at '{')."""
+        end = text.find('}', pos)
+        if end < 0:
+            return None, -1, -1
+        return text[pos:end+1], pos, end+1
+
     for src_id, dst_id, dst_slot in progression:
         src_m = _find_knockout_match(result, None, src_id)
         dst_m = _find_knockout_match(result, None, dst_id)
         if not src_m or not dst_m:
             continue
-        src_block = content[src_m.start():src_m.end()]
+        src_block, src_start, src_end = _get_block(result, src_m.start())
+        dst_block, dst_start, dst_end = _get_block(result, dst_m.start())
+        if src_block is None or dst_block is None:
+            continue
         status_m = re.search(r'"status":\s*"(\w+)"', src_block)
         if not status_m or status_m.group(1) != 'completed':
             continue
@@ -324,14 +335,20 @@ def _advance_knockout_winners(content):
         winner = home_team_m.group(1) if hs > aws else away_team_m.group(1) if aws > hs else None
         if not winner:
             continue
-        dst_block_start = dst_m.start()
-        dst_block = content[dst_block_start:dst_m.end()]
         if dst_slot == 'home':
-            dst_new = re.sub(r'"home":\s*"(\w+|null)"', f'"home": "{winner}"', dst_block, count=1)
+            dst_home_m = re.search(r'"home":\s*"(\w+)"', dst_block)
+            if dst_home_m:
+                dst_new = re.sub(r'"home":\s*"(\w+)"', f'"home": "{winner}"', dst_block, count=1)
+            else:
+                dst_new = re.sub(r'"home":\s*null', f'"home": "{winner}"', dst_block, count=1)
         else:
-            dst_new = re.sub(r'"away":\s*"(\w+|null)"', f'"away": "{winner}"', dst_block, count=1)
+            dst_away_m = re.search(r'"away":\s*"(\w+)"', dst_block)
+            if dst_away_m:
+                dst_new = re.sub(r'"away":\s*"(\w+)"', f'"away": "{winner}"', dst_block, count=1)
+            else:
+                dst_new = re.sub(r'"away":\s*null', f'"away": "{winner}"', dst_block, count=1)
         if dst_new != dst_block:
-            result = result[:dst_block_start] + dst_new + result[dst_m.end():]
+            result = result[:dst_start] + dst_new + result[dst_end:]
     return result
 
 

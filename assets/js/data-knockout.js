@@ -1,6 +1,6 @@
 /**
  * 2026 FIFA World Cup - Knockout Stage Data
- * Last updated: July 02, 2026 at 14:40
+ * Last updated: July 02, 2026 at 14:56
  */
 
 const WC_KNOCKOUT = {
@@ -250,7 +250,7 @@ const WC_KNOCKOUT = {
         "id": "R16-4",
         "match": 92,
         "home": "MEX",
-        "away": null,
+        "away": "ENG",
         "homeScore": null,
         "awayScore": null,
         "date": "July 5",
@@ -273,8 +273,8 @@ const WC_KNOCKOUT = {
       {
         "id": "R16-6",
         "match": 94,
-        "home": null,
-        "away": null,
+        "home": "USA",
+        "away": "BEL",
         "homeScore": null,
         "awayScore": null,
         "date": "July 6",
