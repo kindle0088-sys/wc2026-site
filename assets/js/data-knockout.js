@@ -1,6 +1,6 @@
 /**
  * 2026 FIFA World Cup - Knockout Stage Data
- * Last updated: July 01, 2026 at 12:56
+ * Last updated: July 02, 2026 at 14:40
  */
 
 const WC_KNOCKOUT = {
@@ -105,11 +105,11 @@ const WC_KNOCKOUT = {
         "match": 80,
         "home": "ENG",
         "away": "COD",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 2,
+        "awayScore": 1,
         "date": "July 1",
         "venue": "Mercedes-Benz Stadium · Atlanta",
-        "status": "pending",
+        "status": "completed",
         "pairing": "1L vs 3EHIJK"
       },
       {
@@ -117,11 +117,11 @@ const WC_KNOCKOUT = {
         "match": 81,
         "home": "USA",
         "away": "BIH",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 2,
+        "awayScore": 0,
         "date": "July 1",
         "venue": "Levi's Stadium · Santa Clara",
-        "status": "pending",
+        "status": "completed",
         "pairing": "1D vs 3BEFIJ"
       },
       {
@@ -129,11 +129,11 @@ const WC_KNOCKOUT = {
         "match": 82,
         "home": "BEL",
         "away": "SEN",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 3,
+        "awayScore": 2,
         "date": "July 1",
         "venue": "Lumen Field · Seattle",
-        "status": "pending",
+        "status": "completed",
         "pairing": "1G vs 3AEHIJ"
       },
       {

@@ -93,7 +93,7 @@ def parse_espn(raw):
             home = abbrA if is_home else abbrB
             away = abbrB if is_home else abbrA
             st_id = (comp.get('status') or {}).get('type', {}).get('id', '0')
-            if st_id == '28':
+            if st_id in ('28', '45', '47'):
                 status = 'completed'
             elif st_id == '26':
                 status = 'live'
