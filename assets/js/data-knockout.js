@@ -1,10 +1,10 @@
 /**
  * 2026 FIFA World Cup - Knockout Stage Data
- * Last updated: July 02, 2026 at 15:54
+ * Last updated: July 05, 2026 at 05:16
  */
 
 const WC_KNOCKOUT = {
-  "lastUpdated": "July 01, 2026 at 00:42",
+  "lastUpdated": "July 05, 2026 at 12:25",
   "knockout": {
     "roundOf32": [
       {
@@ -141,11 +141,11 @@ const WC_KNOCKOUT = {
         "match": 83,
         "home": "POR",
         "away": "CRO",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 2,
+        "awayScore": 1,
         "date": "July 2",
         "venue": "BMO Field · Toronto",
-        "status": "pending",
+        "status": "completed",
         "pairing": "2K vs 2L"
       },
       {
@@ -153,11 +153,11 @@ const WC_KNOCKOUT = {
         "match": 84,
         "home": "ESP",
         "away": "AUT",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 3,
+        "awayScore": 0,
         "date": "July 2",
         "venue": "SoFi Stadium · Inglewood",
-        "status": "pending",
+        "status": "completed",
         "pairing": "1H vs 2J"
       },
       {
@@ -165,11 +165,11 @@ const WC_KNOCKOUT = {
         "match": 85,
         "home": "SUI",
         "away": "ALG",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 2,
+        "awayScore": 0,
         "date": "July 2",
         "venue": "BC Place · Vancouver",
-        "status": "pending",
+        "status": "completed",
         "pairing": "1B vs 3EFGIJ"
       },
       {
@@ -177,11 +177,11 @@ const WC_KNOCKOUT = {
         "match": 86,
         "home": "ARG",
         "away": "CPV",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 3,
+        "awayScore": 2,
         "date": "July 2",
         "venue": "Hard Rock Stadium · Miami",
-        "status": "pending",
+        "status": "completed",
         "pairing": "1J vs 2H"
       },
       {
@@ -189,11 +189,11 @@ const WC_KNOCKOUT = {
         "match": 87,
         "home": "COL",
         "away": "GHA",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 1,
+        "awayScore": 0,
         "date": "July 3",
         "venue": "Arrowhead Stadium · Kansas City",
-        "status": "pending",
+        "status": "completed",
         "pairing": "1K vs 3DEIJL"
       },
       {
@@ -201,118 +201,120 @@ const WC_KNOCKOUT = {
         "match": 88,
         "home": "AUS",
         "away": "EGY",
-        "homeScore": null,
-        "awayScore": null,
+        "homeScore": 1,
+        "awayScore": 1,
         "date": "July 3",
         "venue": "AT&T Stadium · Dallas",
-        "status": "pending",
+        "status": "completed",
         "pairing": "2D vs 2G"
       }
     ],
     "roundOf16": [
-      {
-        "id": "R16-1",
-        "match": 89,
-        "home": "CAN",
-        "away": "PAR",
-        "homeScore": null,
-        "awayScore": null,
-        "date": "July 4",
-        "venue": "Lincoln Financial Field · Philadelphia",
-        "status": "pending",
-        "pairing": "W73(2A CAN) vs W74(W PAR)"
-      },
-      {
-        "id": "R16-2",
-        "match": 90,
-        "home": "MAR",
-        "away": "BRA",
-        "homeScore": null,
-        "awayScore": null,
-        "date": "July 4",
-        "venue": "NRG Stadium · Houston",
-        "status": "pending",
-        "pairing": "W75(1F MAR) vs W76(1C BRA)"
-      },
-      {
-        "id": "R16-3",
-        "match": 91,
-        "home": "FRA",
-        "away": "NOR",
-        "homeScore": null,
-        "awayScore": null,
-        "date": "July 5",
-        "venue": "MetLife Stadium · NJ",
-        "status": "pending",
-        "pairing": "W77(1I FRA) vs W78(2E NOR)"
-      },
-      {
-        "id": "R16-4",
-        "match": 92,
-        "home": "MEX",
-        "away": "ENG",
-        "homeScore": null,
-        "awayScore": null,
-        "date": "July 5",
-        "venue": "Estadio Azteca · Mexico City",
-        "status": "pending",
-        "pairing": "W79 vs W80"
-      },
-      {
-        "id": "R16-5",
-        "match": 93,
-        "home": null,
-        "away": null,
-        "homeScore": null,
-        "awayScore": null,
-        "date": "July 6",
-        "venue": "AT&T Stadium · Arlington",
-        "status": "pending",
-        "pairing": "W83 vs W84"
-      },
-      {
-        "id": "R16-6",
-        "match": 94,
-        "home": "USA",
-        "away": "BEL",
-        "homeScore": null,
-        "awayScore": null,
-        "date": "July 6",
-        "venue": "Lumen Field · Seattle",
-        "status": "pending",
-        "pairing": "W81 vs W82"
-      },
-      {
-        "id": "R16-7",
-        "match": 95,
-        "home": null,
-        "away": null,
-        "homeScore": null,
-        "awayScore": null,
-        "date": "July 7",
-        "venue": "Mercedes-Benz Stadium · Atlanta",
-        "status": "pending",
-        "pairing": "W86 vs W88"
-      },
-      {
-        "id": "R16-8",
-        "match": 96,
-        "home": null,
-        "away": null,
-        "homeScore": null,
-        "awayScore": null,
-        "date": "July 7",
-        "venue": "BC Place · Vancouver",
-        "status": "pending",
-        "pairing": "W85 vs W87"
-      }
-    ],
+          {
+            "id": "R16-1",
+            "match": 89,
+            "home": "CAN",
+            "away": "MAR",
+            "homeScore": 0,
+            "awayScore": 3,
+            "date": "July 4",
+            "venue": "NRG Stadium · Houston",
+            "status": "completed",
+            "winner": "MAR",
+            "pairing": "W73 vs W75"
+          },
+          {
+            "id": "R16-2",
+            "match": 90,
+            "home": "PAR",
+            "away": "FRA",
+            "homeScore": 0,
+            "awayScore": 1,
+            "date": "July 4",
+            "venue": "Lincoln Financial Field · Philadelphia",
+            "status": "completed",
+            "winner": "FRA",
+            "pairing": "W74 vs W77"
+          },
+          {
+            "id": "R16-3",
+            "match": 91,
+            "home": "BRA",
+            "away": "NOR",
+            "homeScore": null,
+            "awayScore": null,
+            "date": "July 5",
+            "venue": "MetLife Stadium · NJ",
+            "status": "pending",
+            "pairing": "W76 vs W78"
+          },
+          {
+            "id": "R16-4",
+            "match": 92,
+            "home": "MEX",
+            "away": "ENG",
+            "homeScore": null,
+            "awayScore": null,
+            "date": "July 5",
+            "venue": "Estadio Banorte · Mexico City",
+            "status": "pending",
+            "pairing": "W79 vs W80"
+          },
+          {
+            "id": "R16-5",
+            "match": 93,
+            "home": "ESP",
+            "away": "POR",
+            "homeScore": null,
+            "awayScore": null,
+            "date": "July 6",
+            "venue": "AT&T Stadium · Arlington",
+            "status": "pending",
+            "pairing": "W83 vs W84"
+          },
+          {
+            "id": "R16-6",
+            "match": 94,
+            "home": "BEL",
+            "away": "USA",
+            "homeScore": null,
+            "awayScore": null,
+            "date": "July 6",
+            "venue": "Lumen Field · Seattle",
+            "status": "pending",
+            "pairing": "W81 vs W82"
+          },
+          {
+            "id": "R16-7",
+            "match": 95,
+            "home": "ARG",
+            "away": "EGY",
+            "homeScore": null,
+            "awayScore": null,
+            "date": "July 7",
+            "venue": "Mercedes-Benz Stadium · Atlanta",
+            "status": "pending",
+            "pairing": "W86 vs W88"
+          },
+          {
+            "id": "R16-8",
+            "match": 96,
+            "home": "SUI",
+            "away": "COL",
+            "homeScore": null,
+            "awayScore": null,
+            "date": "July 7",
+            "venue": "BC Place · Vancouver",
+            "status": "pending",
+            "pairing": "W85 vs W87"
+          }
+        ],
     "quarterFinals": [
       {
         "id": "QF-1",
         "match": 97,
-        "home": null,
-        "away": null,
+        "home": "MAR",
+        "away": "FRA",
         "homeScore": null,
         "awayScore": null,
         "date": "July 9",

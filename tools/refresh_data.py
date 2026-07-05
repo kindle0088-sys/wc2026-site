@@ -287,12 +287,12 @@ def _find_knockout_match(content, round_name, match_id):
 def _advance_knockout_winners(content):
     """Internal helper: advance completed knockout match winners into next round."""
     progression = [
-        ('R32-1', 'R16-1', 'home'), ('R32-2', 'R16-1', 'away'),
-        ('R32-3', 'R16-2', 'home'), ('R32-4', 'R16-2', 'away'),
-        ('R32-5', 'R16-3', 'home'), ('R32-6', 'R16-3', 'away'),
+        ('R32-1', 'R16-1', 'home'), ('R32-3', 'R16-1', 'away'),
+        ('R32-2', 'R16-2', 'home'), ('R32-5', 'R16-2', 'away'),
+        ('R32-4', 'R16-3', 'home'), ('R32-6', 'R16-3', 'away'),
         ('R32-7', 'R16-4', 'home'), ('R32-8', 'R16-4', 'away'),
-        ('R32-11', 'R16-5', 'home'), ('R32-12', 'R16-5', 'away'),
-        ('R32-9', 'R16-6', 'home'), ('R32-10', 'R16-6', 'away'),
+        ('R32-12', 'R16-5', 'home'), ('R32-11', 'R16-5', 'away'),
+        ('R32-10', 'R16-6', 'home'), ('R32-9', 'R16-6', 'away'),
         ('R32-14', 'R16-7', 'home'), ('R32-16', 'R16-7', 'away'),
         ('R32-13', 'R16-8', 'home'), ('R32-15', 'R16-8', 'away'),
         ('R16-1', 'QF-1', 'home'), ('R16-2', 'QF-1', 'away'),
