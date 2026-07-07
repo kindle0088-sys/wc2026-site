@@ -1,10 +1,15 @@
 /**
  * 2026 FIFA World Cup - Knockout Stage Data
- * Last updated: July 07, 2026 at 14:51
+ * Last updated: July 08, 2026 at 00:08 CST
  */
 
 const WC_KNOCKOUT = {
-  "lastUpdated": "July 05, 2026 at 12:25",
+  "lastUpdated": "July 08, 2026 at 00:08 CST",
+      "_meta": {
+    "lastProcessedDate": "20260708",
+    "processedUpTo": "2026-07-08T00:08:42.269566+08:00",
+    "processedEventIds": [760414, 760464, 760485, 760480, 760418, 760475, 760456, 760469, 760496, 760508, 760429, 760461, 760431, 760452, 760423, 760422, 760458, 760489, 760481, 760472, 760474, 760446, 760436, 760465, 760482, 760503, 760460, 760447, 760476, 760501, 760494, 760479, 760470, 760486, 760416, 760488, 760468, 760435, 760455, 760492, 760424, 760467, 760443, 760491, 760466, 760432, 760441, 760430, 760428, 760483, 760433, 760457, 760444, 760462, 760419, 760497, 760453, 760509, 760499, 760505, 760490, 760507, 760500, 760463, 760487, 760426, 760427, 760425, 760420, 760415, 760417, 760445, 760459, 760477, 760471, 760442, 760473, 760421, 760454, 760478, 760510, 760504, 760493, 760439, 760506, 760449, 760495, 760450, 760498, 760440, 760484, 760438, 760437, 760502, 760451, 760448, 760434]
+  },
   "knockout": {
     "roundOf32": [
       {
@@ -267,8 +272,8 @@ const WC_KNOCKOUT = {
             "match": 93,
             "home": "ESP",
             "away": "POR",
-            "homeScore": 1,
-            "awayScore": 0,
+            "homeScore": 0,
+            "awayScore": 1,
             "date": "July 6",
             "venue": "AT&T Stadium · Arlington",
             "status": "completed",
@@ -280,8 +285,8 @@ const WC_KNOCKOUT = {
             "match": 94,
             "home": "BEL",
             "away": "USA",
-            "homeScore": 4,
-            "awayScore": 1,
+            "homeScore": 1,
+            "awayScore": 4,
             "date": "July 6",
             "venue": "Lumen Field · Seattle",
             "status": "completed",
@@ -341,8 +346,8 @@ const WC_KNOCKOUT = {
       {
         "id": "QF-3",
         "match": 99,
-        "home": "ESP",
-        "away": "BEL",
+        "home": "POR",
+        "away": "USA",
         "homeScore": null,
         "awayScore": null,
         "date": "July 11",
