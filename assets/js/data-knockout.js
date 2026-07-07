@@ -1,6 +1,6 @@
 /**
  * 2026 FIFA World Cup - Knockout Stage Data
- * Last updated: July 05, 2026 at 05:16
+ * Last updated: July 07, 2026 at 14:51
  */
 
 const WC_KNOCKOUT = {
@@ -241,11 +241,12 @@ const WC_KNOCKOUT = {
             "match": 91,
             "home": "BRA",
             "away": "NOR",
-            "homeScore": null,
-            "awayScore": null,
+            "homeScore": 1,
+            "awayScore": 2,
             "date": "July 5",
             "venue": "MetLife Stadium · NJ",
-            "status": "pending",
+            "status": "completed",
+            "winner": "NOR",
             "pairing": "W76 vs W78"
           },
           {
@@ -253,11 +254,12 @@ const WC_KNOCKOUT = {
             "match": 92,
             "home": "MEX",
             "away": "ENG",
-            "homeScore": null,
-            "awayScore": null,
+            "homeScore": 2,
+            "awayScore": 3,
             "date": "July 5",
             "venue": "Estadio Banorte · Mexico City",
-            "status": "pending",
+            "status": "completed",
+            "winner": "ENG",
             "pairing": "W79 vs W80"
           },
           {
@@ -265,11 +267,12 @@ const WC_KNOCKOUT = {
             "match": 93,
             "home": "ESP",
             "away": "POR",
-            "homeScore": null,
-            "awayScore": null,
+            "homeScore": 1,
+            "awayScore": 0,
             "date": "July 6",
             "venue": "AT&T Stadium · Arlington",
-            "status": "pending",
+            "status": "completed",
+            "winner": "ESP",
             "pairing": "W83 vs W84"
           },
           {
@@ -277,11 +280,12 @@ const WC_KNOCKOUT = {
             "match": 94,
             "home": "BEL",
             "away": "USA",
-            "homeScore": null,
-            "awayScore": null,
+            "homeScore": 4,
+            "awayScore": 1,
             "date": "July 6",
             "venue": "Lumen Field · Seattle",
-            "status": "pending",
+            "status": "completed",
+            "winner": "BEL",
             "pairing": "W81 vs W82"
           },
           {
@@ -325,26 +329,26 @@ const WC_KNOCKOUT = {
       {
         "id": "QF-2",
         "match": 98,
-        "home": null,
-        "away": null,
+        "home": "NOR",
+        "away": "ENG",
         "homeScore": null,
         "awayScore": null,
         "date": "July 10",
         "venue": "SoFi Stadium · Inglewood",
         "status": "pending",
-        "pairing": "W93 vs W94"
+        "pairing": "W91 vs W92"
       },
       {
         "id": "QF-3",
         "match": 99,
-        "home": null,
-        "away": null,
+        "home": "ESP",
+        "away": "BEL",
         "homeScore": null,
         "awayScore": null,
         "date": "July 11",
         "venue": "Hard Rock Stadium · Miami",
         "status": "pending",
-        "pairing": "W91 vs W92"
+        "pairing": "W93 vs W94"
       },
       {
         "id": "QF-4",
