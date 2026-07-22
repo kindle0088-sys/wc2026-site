@@ -1,10 +1,10 @@
 /**
  * 2026 FIFA World Cup - Group Stage Data
- * Last updated: June 29, 2026 at 23:53
+ * Last updated: July 22, 2026 at 08:34 CST
  */
 
 const WC_GROUPS = {
-  "lastUpdated": "June 29, 2026 at 23:53",
+  "lastUpdated": "July 22, 2026 at 08:34 CST",
   "tournament": {
     "name": "2026 FIFA World Cup",
     "host": "Canada · Mexico · USA",
@@ -13,7 +13,10 @@ const WC_GROUPS = {
     "teams": 48,
     "matches": 104,
     "cities": 16,
-    "status": "group_stage"
+    "status": "completed",
+    "champion": "ESP",
+    "runnerUp": "ARG",
+    "thirdPlace": "ENG"
   },
   "groups": {
     "A": {
@@ -1484,28 +1487,28 @@ const WC_GROUPS = {
     }
   },
                             "topScorers": [
-    { "rank": 1, "name": "Kylian Mbappé", "team": "FRA", "flag": "🇫🇷", "goals": 8, "assists": 3, "matches": 6 },
-    { "rank": 2, "name": "Lionel Messi", "team": "ARG", "flag": "🇦🇷", "goals": 8, "assists": 1, "matches": 5 },
-    { "rank": 3, "name": "Erling Haaland", "team": "NOR", "flag": "🇳🇴", "goals": 7, "assists": 0, "matches": 4 },
-    { "rank": 4, "name": "Harry Kane", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 6, "assists": 1, "matches": 4 },
-    { "rank": 5, "name": "Ousmane Dembélé", "team": "FRA", "flag": "🇫🇷", "goals": 5, "assists": 2, "matches": 4 },
-    { "rank": 6, "name": "Julián Quiñones", "team": "MEX", "flag": "🇲🇽", "goals": 4, "assists": 1, "matches": 4 },
-    { "rank": 7, "name": "Vinícius Júnior", "team": "BRA", "flag": "🇧🇷", "goals": 4, "assists": 1, "matches": 3 },
-    { "rank": 8, "name": "Jude Bellingham", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 4, "assists": 1, "matches": 3 },
-    { "rank": 9, "name": "Ismaïla Sarr", "team": "SEN", "flag": "🇸🇳", "goals": 4, "assists": 1, "matches": 3 },
-    { "rank": 10, "name": "Mikel Oyarzabal", "team": "ESP", "flag": "🇪🇸", "goals": 4, "assists": 1, "matches": 2 }
+    { "rank": 1, "name": "Lionel Messi", "team": "ARG", "flag": "🇦🇷", "goals": 9, "assists": 2, "matches": 7 },
+    { "rank": 2, "name": "Harry Kane", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 9, "assists": 1, "matches": 7 },
+    { "rank": 3, "name": "Kylian Mbappé", "team": "FRA", "flag": "🇫🇷", "goals": 7, "assists": 3, "matches": 7 },
+    { "rank": 4, "name": "Erling Haaland", "team": "NOR", "flag": "🇳🇴", "goals": 7, "assists": 0, "matches": 4 },
+    { "rank": 5, "name": "Julián Quiñones", "team": "MEX", "flag": "🇲🇽", "goals": 5, "assists": 1, "matches": 4 },
+    { "rank": 6, "name": "Bukayo Saka", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 5, "assists": 3, "matches": 7 },
+    { "rank": 7, "name": "Ousmane Dembélé", "team": "FRA", "flag": "🇫🇷", "goals": 4, "assists": 4, "matches": 7 },
+    { "rank": 8, "name": "Vinícius Júnior", "team": "BRA", "flag": "🇧🇷", "goals": 4, "assists": 1, "matches": 3 },
+    { "rank": 9, "name": "Jude Bellingham", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 4, "assists": 2, "matches": 7 },
+    { "rank": 10, "name": "Mikel Oyarzabal", "team": "ESP", "flag": "🇪🇸", "goals": 4, "assists": 1, "matches": 6 }
   ],
                             "topAssisters": [
-    { "rank": 1, "name": "Michael Olise", "team": "FRA", "flag": "🇫🇷", "goals": 0, "assists": 5, "matches": 3 },
-    { "rank": 2, "name": "Bruno Guimarães", "team": "BRA", "flag": "🇧🇷", "goals": 0, "assists": 4, "matches": 3 },
-    { "rank": 3, "name": "Brahim Díaz", "team": "MAR", "flag": "🇲🇦", "goals": 0, "assists": 4, "matches": 3 },
-    { "rank": 4, "name": "Kylian Mbappé", "team": "FRA", "flag": "🇫🇷", "goals": 8, "assists": 3, "matches": 6 },
-    { "rank": 5, "name": "Alexander Isak", "team": "SWE", "flag": "🇸🇪", "goals": 1, "assists": 3, "matches": 2 },
-    { "rank": 6, "name": "Roberto Alvarado", "team": "MEX", "flag": "🇲🇽", "goals": 0, "assists": 3, "matches": 3 },
-    { "rank": 7, "name": "Bukayo Saka", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 0, "assists": 3, "matches": 3 },
-    { "rank": 8, "name": "Florian Wirtz", "team": "GER", "flag": "🇩🇪", "goals": 0, "assists": 3, "matches": 3 },
-    { "rank": 9, "name": "Andreas Schjelderup", "team": "NOR", "flag": "🇳🇴", "goals": 0, "assists": 3, "matches": 2 },
-    { "rank": 10, "name": "Martin Ødegaard", "team": "NOR", "flag": "🇳🇴", "goals": 0, "assists": 3, "matches": 3 }
+    { "rank": 1, "name": "Ousmane Dembélé", "team": "FRA", "flag": "🇫🇷", "goals": 4, "assists": 4, "matches": 7 },
+    { "rank": 2, "name": "Bukayo Saka", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 5, "assists": 3, "matches": 7 },
+    { "rank": 3, "name": "Kylian Mbappé", "team": "FRA", "flag": "🇫🇷", "goals": 7, "assists": 3, "matches": 7 },
+    { "rank": 4, "name": "Lionel Messi", "team": "ARG", "flag": "🇦🇷", "goals": 9, "assists": 2, "matches": 7 },
+    { "rank": 5, "name": "Jude Bellingham", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 4, "assists": 2, "matches": 7 },
+    { "rank": 6, "name": "Rodri", "team": "ESP", "flag": "🇪🇸", "goals": 2, "assists": 2, "matches": 7 },
+    { "rank": 7, "name": "Nico Williams", "team": "ESP", "flag": "🇪🇸", "goals": 2, "assists": 2, "matches": 7 },
+    { "rank": 8, "name": "Harry Kane", "team": "ENG", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "goals": 9, "assists": 1, "matches": 7 },
+    { "rank": 9, "name": "Ángel Di María", "team": "ARG", "flag": "🇦🇷", "goals": 2, "assists": 2, "matches": 6 },
+    { "rank": 10, "name": "Pedri", "team": "ESP", "flag": "🇪🇸", "goals": 1, "assists": 2, "matches": 7 }
   ],
   "highlights": [
     {
