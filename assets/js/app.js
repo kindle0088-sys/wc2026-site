@@ -72,10 +72,14 @@ const WCApp = {
     // Inject ESPN live-data UI (status bar, auto-refresh)
     this._injectLiveUI();
 
-    // Fetch ESPN data in background
-    await this.fetchESPN();
+    // 2026-11-08 归档：停用 ESPN 拉取。
+    // 原实现对赛事期 39 个日期（06-11 → 07-19）逐一请求，赛事结束后纯属浪费，
+    // 还会因跨域/网络状况弹出「ESPN offline」误导性提示。
+    // 现完全改用 data-groups.js / data-knockout.js 静态缓存渲染。
+    // await this.fetchESPN();
 
-    // Start auto-refresh
+    // 自动刷新已于 2026-11-08 停用（2026 世界杯 07-19 结束，站点转为归档）。
+    // 调用点保留，函数体为空操作，避免任何调用路径报错。
     this._startAutoRefresh();
 
     // Tab hash handling
@@ -537,9 +541,9 @@ const WCApp = {
         statusText.textContent = '🔴 LIVE — Match in progress';
       } else {
         dot.className = 'live-dot';
-        statusText.textContent = '⚡ ESPN Live';
+        statusText.textContent = '📦 归档数据';
       }
-      timeText.textContent = `Updated ${timeAgo} · auto-refresh every 5 min`;
+      timeText.textContent = '赛事已于 2026-07-19 结束 · 数据截至 2026-07-25 · 不再自动刷新';
     } else if (this.espnStatus.error) {
       bar.classList.remove('hidden');
       dot.className = 'live-dot';
@@ -555,10 +559,9 @@ const WCApp = {
   },
 
   _startAutoRefresh() {
-    if (this.refreshTimer) clearInterval(this.refreshTimer);
-    this.refreshTimer = setInterval(async () => {
-      await this.fetchESPN();
-    }, this.REFRESH_INTERVAL);
+    // 2026-11-08：赛事已结束，停用 5 分钟轮询。
+    // 保留函数外壳（调用点不动）以便将来需要时一行恢复。
+    if (this.refreshTimer) { clearInterval(this.refreshTimer); this.refreshTimer = null; }
   },
 
   _buildDateRange() {
